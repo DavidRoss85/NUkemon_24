@@ -32,6 +32,7 @@ renderer.add_to_layer(square_sprite,1)
 text_box=InfoBox(0,568,1024,200,"Temporary text",(200,0,0))
 renderer.add_to_layer(text_box.get_sprite(),1)
 x=0
+my_text=""
 while running:
     for event in pygame.event.get():
         # Did the user hit a key?
@@ -45,6 +46,9 @@ while running:
 
     x = x+1 if x<255 else 0
     temp_sprite.blend_color((x,0,0))
+    my_text=(f"{my_text} a b c jhgfh n hgfuh jjkytg hfvdfj jngbcdffgd e f g "
+             f"!")
+    text_box.write_text(my_text)
 
     renderer.render_all()
     renderer.flip_screen()
