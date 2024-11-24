@@ -77,6 +77,14 @@ class Sprite(pygame.sprite.Sprite):
     def set_height(self,height):
         self.__rect.height=height
 
+    def set_new_default(self):
+        """
+        Copies the current state of the sprite into the original surface
+        Calling restore after this will return the sprite to this form
+        :return:
+        """
+        self.__original_surface = self.__surface.copy()  # Make whatever the image is the new default
+
     def draw_on_surface(self,surface:pygame.Surface,x=0,y=0):
         """
         Draw another surface onto the sprite
