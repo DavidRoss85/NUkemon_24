@@ -20,7 +20,7 @@ class Entity:
         self.__target=self
         self.__messenger=self
         self.__attack_move=self._Skill("Punch","physical",self.__base_stats.strength,0,"none")
-        self.__move_list={
+        self.__move_dict={
             "Attack":self.attack,
             "Defend":self.defend,
         }
@@ -59,7 +59,10 @@ class Entity:
         return self.__level
 
     def get_move_list(self)->list:
-        return list(self.__move_list.keys())
+        return list(self.__move_dict.keys())
+
+    def get_move_dictionary(self):
+        return self.__move_dict
 
     def get_target(self):
         return self.__target
@@ -109,7 +112,7 @@ class Entity:
         self.__target=target
 
     # def set_move_list(self):
-    #     return self.__move_list
+    #     return self.__move_dict
 
     def attack(self):
         self.__attack_move.dmg= self.__battle_stats.strength * roll_die(ATTACK_DICE)
@@ -171,7 +174,10 @@ class Entity:
 
     def execute_move(self,command):
         self.__condition.shield_up=False
-        self.__move_list[command]()
+        self.__move_dict[command]()
+
+    def update_move_dictionary(self, move):
+        self.__move_dict.update(move)
 
     def stub_command(self):
         pass

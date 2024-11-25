@@ -19,7 +19,7 @@ class Renderer:
     def add_to_layer(self,item,layer=0):
         self.__layers[layer].append(item)
 
-    def __render_surface(self,sprite):
+    def __render_surface(self,sprite,location):
         self.__main_surface.blit(sprite.get_surface(), sprite.get_rect())
 
     def render_all(self):
@@ -32,7 +32,11 @@ class Renderer:
         for layer in self.__layers:
             for item in layer:
                 if item.get_visible():
-                    self.__render_surface(item.get_sprite())
+                    sprite=item.get_sprite()
+                    rect=sprite.get_rect()
+                    rect.x=item.get_x()
+                    rect.y=item.get_y()
+                    self.__render_surface(sprite,rect)
 
         #Copy main surface to screen
         self.__screen.blit(self.__main_surface,self.__rect)

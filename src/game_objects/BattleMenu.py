@@ -18,8 +18,8 @@ class BattleMenu:
     DEFAULT_TEXT_END_PERCENT_X = (100 - (DEFAULT_TEXT_START_PERCENT_X * 2)) / 100
 
     def __init__(self,x,y,width,height,menu_list:list=[],box_color:tuple=(0,0,0),mask:tuple=MASK):
-        self.x=x
-        self.y=y
+        self.__x=x
+        self.__y=y
         self.width=width
         self.height=height
         self.menu_list=menu_list
@@ -47,14 +47,30 @@ class BattleMenu:
         self.__current_selection=selection
         self.display_menu()
 
+    def get_x(self):
+        return self.__x
+
+    def get_y(self):
+        return self.__y
+
     def get_visible(self):
         return self.__visible
 
     def get_current_selection(self):
-        return self.__current_selection
+        return self.menu_list[self.__current_selection]
 
     def get_sprite(self):
         return self.__sprite
+
+    def next_menu_item(self):
+        if self.__current_selection < len(self.menu_list) - 1:
+            self.__current_selection+=1
+            self.display_menu()
+
+    def prev_menu_item(self):
+        if self.__current_selection>0:
+            self.__current_selection-=1
+            self.display_menu()
 
     def display_menu(self):
         """

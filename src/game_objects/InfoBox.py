@@ -41,6 +41,12 @@ class InfoBox:
     def set_visible(self,value:bool=True):
         self.__visible=value
 
+    def get_x(self):
+        return self.__x
+
+    def get_y(self):
+        return self.__y
+
     def get_visible(self):
         return self.__visible
 
