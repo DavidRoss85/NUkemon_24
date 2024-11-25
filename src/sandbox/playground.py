@@ -44,7 +44,7 @@ player1.add_team_member(playable_character3)
 
 renderer = Renderer(SCREEN_WIDTH,SCREEN_HEIGHT,(255,255,0))
 
-# player1.change_character("Mina")
+player1.get_current_character().set_max_hp(1500)
 renderer.add_to_layer(player1)
 text_box= InfoBox(0, 568, 600, 200, "Temporary text", 5,(200, 0, 0))
 renderer.add_to_layer(text_box,1)
@@ -65,11 +65,10 @@ while running:
     # player_sprite.set_x(px)
     x = x+1 if x<255 else 0
     # player_sprite.blend_color((x, 0, 0))
-    my_text=(f"{my_text}{player1.current_character.get_name()} a b adfsdf dsaf sdf sdfsdfsdfsdafsf asdfa sdfOIDSFLKjf  "
-             f"!")
+    player1.set_curr_hp(px)
+    my_text=f"Your health: {player1.get_curr_hp()}\n \n \n \n"
     text_box.write_text(my_text)
-    player1.change_character("Mina")
 
     renderer.render_all()
     renderer.flip_screen()
-    clock.tick(2)
+    clock.tick(1)

@@ -7,7 +7,7 @@ class Player:
     def __init__(self):
         self.move_list=[]
         self.__team = dict()
-        self.current_character = None
+        self.current_character:Character = None
 
 
 
@@ -28,3 +28,9 @@ class Player:
 
     def get_sprite(self):
         return self.current_character.get_sprite()
+
+    def get_curr_hp(self):
+        return self.current_character.get_curr_hp()
+
+    def set_curr_hp(self,value):
+        self.current_character.set_curr_hp(value)

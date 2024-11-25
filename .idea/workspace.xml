@@ -5,12 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="16e25840-4465-4280-8191-9037ec0ad863" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/game_objects/BattleScreen.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/players/Enemy.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/players/Entity.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/graphics/Renderer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/Renderer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/players/Character.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/players/Character.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game_objects/InfoBox.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/game_objects/InfoBox.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/players/Player.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/players/Player.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sandbox/playground.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/sandbox/playground.py" afterDir="false" />
     </list>

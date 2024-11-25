@@ -93,11 +93,14 @@ class InfoBox:
         max_len=self.__width//self.__text_pixel_scale_width #Num characters to allow to match width of box (This is an approximation)
         total_length=0
         line_words=""
+        new_line=False
         for word in word_list:
+            if len(line_words) > 0 and line_words[-1] == "\n":
+                new_line=True
             #Add length of previous string with new word:
             total_length+=len(word)
             #Check if new length will exceed space requirements:
-            if total_length < max_len:
+            if total_length < max_len and not new_line:
                 #If it fits then append the new word to the old string:
                 line_words=f"{line_words} {word}"
                 #Add 1 to length to account for space character:
@@ -111,13 +114,23 @@ class InfoBox:
                 else:
                     #Otherwise push the old text into the bottom and start a new line of text with the new word
                     line_list.pop(0)
+                    line_words=line_words.rstrip("\n")
                     line_list.append(line_words)
                     line_words=word
                     total_length=len(word)
+                new_line=False
+
         #After all text has been evaluated, if there is still text left over, push it into last line:
         if len(line_words)>0:
-            line_list.pop(0)
-            line_list.append(line_words)
+            if line_words[-1]=="\n":
+                line_words=line_words.rstrip("\n")
+                line_list.append(line_words)
+                line_list.append("")
+                line_list.pop(0)
+                line_list.pop(0)
+            else:
+                line_list.append(line_words)
+                line_list.pop(0)
 
         #Return list containing lines of text
         return line_list
