@@ -28,10 +28,12 @@ running=True
 clock=pygame.time.Clock()
 
 player_sprite1=Sprite(200, 400, 200, 200, "../assets/images/test_images/Boy_backpack1_hmmm_bk.png", (64, 177, 64), (0, 0, 200))
+player_sprite2=Sprite(200, 400, 200, 200, "../assets/images/test_images/Emoji-Chill.png", (64, 177, 64), (0, 0, 200))
+
 enemy_sprite1=Sprite(200, 400, 100, 100, "../assets/images/test_images/Emoji-On-Fire.png", (64, 177, 64), (0, 0, 200))
 
 playable_character1=Character("Rory", 1, 150, 150, 10, 10,player_sprite1)
-playable_character2=Character("Mina", 1, 100, 200, 5, 15,enemy_sprite1)
+playable_character2=Character("Mina", 1, 100, 200, 5, 15,player_sprite2)
 playable_character3=Character("Chris", 1, 200, 100, 15, 5,player_sprite1)
 
 enemy_character1=Character("Wendie",1,200,200,5,5,enemy_sprite1,600,200)
