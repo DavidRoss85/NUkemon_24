@@ -1,5 +1,5 @@
 from src.graphics.Sprite import Sprite
-from src.players.Entity import Entity
+from src.Units.Entity import Entity
 
 class Character(Entity):
     def __init__(self,name,level,hp,mp,strength,intel,sprite,x=0,y=0):

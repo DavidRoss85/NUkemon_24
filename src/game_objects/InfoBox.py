@@ -8,7 +8,7 @@ MASK = UC.image_mask_color
 
 class InfoBox:
     #Static constants
-    DEFAULT_INFO_BOX_PIC = UC.info_box_image
+    DEFAULT_PIC = UC.info_box_image
     DEFAULT_FONT = UC.default_font
     DEFAULT_FONT_SIZE = UC.default_font_size
     DEFAULT_FONT_COLOR = UC.default_font_color
@@ -25,7 +25,8 @@ class InfoBox:
         self.__text=box_text
         self.__color=box_color
         self.__n_text_lines=n_lines
-        self.__background_pic = InfoBox.DEFAULT_INFO_BOX_PIC
+        self.__visible=True
+        self.__background_pic = InfoBox.DEFAULT_PIC
         self.__font=InfoBox.DEFAULT_FONT
         self.__font_size=InfoBox.DEFAULT_FONT_SIZE
         self.__font_color=InfoBox.DEFAULT_FONT_COLOR
@@ -37,6 +38,11 @@ class InfoBox:
         self.__sprite=Sprite(x, y, box_width, box_height, self.__background_pic, mask, box_color)
         self.write_text(self.__text)
 
+    def set_visible(self,value:bool=True):
+        self.__visible=value
+
+    def get_visible(self):
+        return self.__visible
 
     def get_sprite(self):
         return self.__sprite
@@ -66,7 +72,7 @@ class InfoBox:
             #Create a surface that will crop out any accidental over extended text (blend the color to something other than text color)
             fitted_surface=Sprite(0, 0, rect.width, rect.height, None, (0, 0, 0),(64,177,64))
             #Draw the text onto that surface
-            fitted_surface.get_surface().blit(font_surface, (0, 0, rect.width, rect.height))
+            fitted_surface.get_surface().blit(font_surface, (0, 0, rect.width, rect.height)) #This is a Sprite
             #Place text in the appropriate place in the box:
             self.__sprite.draw_on_surface(fitted_surface.get_surface(), rect.x, rect.y)
 

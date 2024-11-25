@@ -1,3 +1,5 @@
+from src.game_objects.BattleMenu import BattleMenu
+from src.game_objects.BattleScreen import BattleScreen
 from src.game_objects.InfoBox import InfoBox
 from src.graphics.Sprite import Sprite
 from src.graphics.Renderer import Renderer
@@ -5,7 +7,7 @@ from src.globals.UC import UC
 
 
 import pygame
-
+import pygame.locals as btn
 from pygame.locals import (
     K_UP,
     K_DOWN,
@@ -16,9 +18,8 @@ from pygame.locals import (
     QUIT,
 )
 
-from src.players.Entity import Entity
-from src.players.Character import Character
-from src.players.Player import Player
+from src.Units.Character import Character
+from src.players.Human import Player
 
 SCREEN_WIDTH = UC.screen_width
 SCREEN_HEIGHT = UC.screen_height
@@ -38,16 +39,20 @@ player1=Player()
 player1.add_team_member(playable_character1)
 player1.add_team_member(playable_character2)
 player1.add_team_member(playable_character3)
-
-
-
+print(player1.update_move_list())
 
 renderer = Renderer(SCREEN_WIDTH,SCREEN_HEIGHT,(255,255,0))
 
+text_box= InfoBox(0, 568, 680, 200, "Temporary text", 5,(200, 0, 0))
+user_menu=BattleMenu(681,568,347,200,player1.update_move_list())
+
+
+battle_screen=BattleScreen(player1,0,text_box,user_menu,0,0,0,0)
+battle_screen.create_layers(renderer)
+
 player1.get_current_character().set_max_hp(1500)
-renderer.add_to_layer(player1)
-text_box= InfoBox(0, 568, 600, 200, "Temporary text", 5,(200, 0, 0))
-renderer.add_to_layer(text_box,1)
+# renderer.add_to_layer(player1)
+# renderer.add_to_layer(text_box,1)
 x=0
 px=1024
 my_text=""
@@ -55,9 +60,19 @@ while running:
     for event in pygame.event.get():
         # Did the user hit a key?
         if event.type == KEYDOWN:
-            # Was it the Escape key? If so, stop the loop.
-            if event.key == K_ESCAPE:
-                running = False
+            match event.key:
+                case btn.K_ESCAPE:
+                    running=False
+                case btn.K_LEFT:
+                    player1.change_character("Mina")
+                case btn.K_RIGHT:
+                    player1.change_character("Rory")
+                case btn.K_UP:
+                    user_menu.set_current_selection(0)
+                case btn.K_DOWN:
+                    user_menu.set_current_selection(1)
+
+
         # Did the user click the window close button? If so, stop the loop.
         elif event.type == QUIT:
             running = False
@@ -71,4 +86,4 @@ while running:
 
     renderer.render_all()
     renderer.flip_screen()
-    clock.tick(1)
+    clock.tick(10)
