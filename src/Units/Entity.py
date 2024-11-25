@@ -1,5 +1,8 @@
 import random
 
+from src.game_objects.InfoBox import InfoBox
+from src.systems.Messenger import Messenger
+
 #Declare constants for game tuning
 ATTACK_DICE = 6
 DEFEND_DICE = 2
@@ -18,7 +21,7 @@ class Entity:
         self.__battle_stats=self._Stats(hp,mp,strength,intel)
         self.__condition=self._Condition()
         self.__target=self
-        self.__messenger=self
+        self.__messenger=None
         self.__attack_move=self._Skill("Punch","physical",self.__base_stats.strength,0,"none")
         self.__move_dict={
             "Attack":self.attack,
@@ -111,16 +114,18 @@ class Entity:
     def set_target(self,target):
         self.__target=target
 
+    def set_messenger(self,messenger):
+        self.__messenger=messenger
     # def set_move_list(self):
     #     return self.__move_dict
 
-    def attack(self):
+    def attack(self,target=None):
         self.__attack_move.dmg= self.__battle_stats.strength * roll_die(ATTACK_DICE)
-        self.deliver_message(self.__messenger,f"{self.__name} attacks with {self.__attack_move.name} for {self.__attack_move.dmg}!")
+        self.deliver_message(self.__messenger,f"{self.__name} attacks with {self.__attack_move.name} for {self.__attack_move.dmg}!\n ")
         self.__target.receive_attack(self.__attack_move)
 
-    def defend(self):
-        self.deliver_message(self.__messenger,f"{self.__name} guards themself.")
+    def defend(self,args=None):
+        self.deliver_message(self.__messenger,f"{self.__name} guards themself.\n ")
         self.__condition.shield_up=True
 
     def receive_attack(self,attack):
@@ -140,7 +145,7 @@ class Entity:
             self.__condition.affinities.get(attack.s_type) is True):
 
             #Update message
-            self.deliver_message(self.__messenger,f"{self.__name} is resistant to {attack.name} attack.")
+            self.deliver_message(self.__messenger,f"{self.__name} is resistant to {attack.name} attack.\n")
             #Affinities only deliver half damage
             final_dmg=int(final_dmg/AFFINITY_REDUCTION)
 
@@ -148,7 +153,7 @@ class Entity:
         if (self.__condition.aversions.get(attack.s_type) is not None and
                 self.__condition.affinities.get(attack.s_type) is True):
             # Update message
-            self.deliver_message(self.__messenger, f"{attack.name} is very effective!")
+            self.deliver_message(self.__messenger, f"{attack.name} is very effective!\n")
             # Aversions do double damage:
             final_dmg = int(final_dmg *AVERSION_MULTIPLIER)
 
@@ -156,25 +161,25 @@ class Entity:
         if (self.__condition.heal_affinity.get(attack.s_type) is not None and
                 self.__condition.affinities.get(attack.s_type) is True):
             # Update message
-            self.deliver_message(self.__messenger, f"HP UP")
+            self.deliver_message(self.__messenger, f"HP UP\n")
             # Healers give health:
             is_heal=True
 
         if is_heal:
             # Update message
-            self.deliver_message(self.__messenger, f"{self.__name} is healed for {final_dmg} points of health.")
+            self.deliver_message(self.__messenger, f"{self.__name} is healed for {final_dmg} points of health.\n ")
             # Add to health:
             self.set_curr_hp(self.__battle_stats.hp+final_dmg)
         else:
             #Update message
-            self.deliver_message(self.__messenger,f"{self.__name} receives {final_dmg} points of damage.")
+            self.deliver_message(self.__messenger,f"{self.__name} receives {final_dmg} points of damage.\n ")
             #Subtract final damage from health:
             self.set_curr_hp(self.__battle_stats.hp-final_dmg)
 
 
     def execute_move(self,command):
         self.__condition.shield_up=False
-        self.__move_dict[command]()
+        # self.__move_dict[command]()
 
     def update_move_dictionary(self, move):
         self.__move_dict.update(move)
@@ -182,8 +187,8 @@ class Entity:
     def stub_command(self):
         pass
 
-    def deliver_message(self, messenger, message):
-        #stub
+    def deliver_message(self, messenger:Messenger, message):
+        messenger.process_message(message)
         print(message)
 
     #----------------------Skill-------------------------------

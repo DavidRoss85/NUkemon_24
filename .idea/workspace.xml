@@ -5,6 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="16e25840-4465-4280-8191-9037ec0ad863" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/systems/Messenger.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Units/Character.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Units/Character.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Units/Entity.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Units/Entity.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Units/Team.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Units/Team.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game_objects/BattleScreen.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/BattleScreen.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/players/Human.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/players/Human.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sandbox/playground.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/sandbox/playground.py" afterDir="false" />
     </list>
@@ -32,18 +38,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.InfoBox.executor": "Run",
-    "Python.Player.executor": "Run",
-    "Python.Sprite.executor": "Run",
-    "Python.playground.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/David/Desktop/MySDE/Python/NUkemon/src/assets/images"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.InfoBox.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Player.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Sprite.executor&quot;: &quot;Run&quot;,
+    &quot;Python.playground.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/David/Desktop/MySDE/Python/NUkemon/src/assets/images&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\David\Desktop\MySDE\Python\NUkemon\src\assets\images" />
@@ -52,6 +58,7 @@
       <recent name="C:\Users\David\Desktop\MySDE\Python\NUkemon\src\players" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\David\Desktop\MySDE\Python\NUkemon\src\systems" />
       <recent name="C:\Users\David\Desktop\MySDE\Python\NUkemon\src\players" />
       <recent name="C:\Users\David\Desktop\MySDE\Python\NUkemon\src\assets\fonts" />
       <recent name="C:\Users\David\Desktop\MySDE\Python\NUkemon\src\assets\images\test_images" />

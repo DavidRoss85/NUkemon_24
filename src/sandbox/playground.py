@@ -1,5 +1,5 @@
 from src.game_objects.BattleMenu import BattleMenu
-from src.game_objects.BattleScreen import BattleScreen
+from src.systems.BattleScreen import BattleScreen
 from src.game_objects.InfoBox import InfoBox
 from src.graphics.Sprite import Sprite
 from src.graphics.Renderer import Renderer
@@ -7,19 +7,13 @@ from src.globals.UC import UC
 
 
 import pygame
-import pygame.locals as btn
 from pygame.locals import (
-    K_UP,
-    K_DOWN,
-    K_LEFT,
-    K_RIGHT,
-    K_ESCAPE,
-    KEYDOWN,
     QUIT,
 )
 
 from src.Units.Character import Character
 from src.players.Human import Player
+from src.systems.Messenger import Messenger
 
 SCREEN_WIDTH = UC.screen_width
 SCREEN_HEIGHT = UC.screen_height
@@ -54,7 +48,9 @@ renderer = Renderer(SCREEN_WIDTH,SCREEN_HEIGHT,(255,255,0))
 
 text_box= InfoBox(0, 568, 680, 200, "Temporary text", 5,(200, 0, 0))
 user_menu=BattleMenu(681, 568, 347, 200, player1.get_menu_list())
-
+messenger=Messenger(text_box)
+player1.set_messenger(messenger)
+enemy1.set_messenger(messenger)
 
 battle_screen=BattleScreen(player1,enemy1,text_box,user_menu,0,0,0,0)
 battle_screen.create_layers(renderer)
@@ -77,9 +73,10 @@ while running:
     x = x+1 if x<255 else 0
 
     player1.set_curr_hp(px)
-    my_text=f"Your health: {player1.get_curr_hp()}\n \n \n \n"
-    text_box.write_text(my_text)
+    messenger.stream_text()
+    # my_text=f"Your health: {player1.get_curr_hp()}\n \n \n \n"
+    # text_box.write_text(my_text)
 
     renderer.render_all()
     renderer.flip_screen()
-    clock.tick(10)
+    clock.tick(30)

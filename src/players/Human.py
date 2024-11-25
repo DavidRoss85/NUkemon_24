@@ -43,8 +43,8 @@ class Player(Team):
         return self.__visible
 
 ##This function needs an additional part to choose the player target or use sub menus:
-    def execute_menu_item(self,item):
-        self.__move_dict[item]()
+    def execute_menu_item(self,item,target=None):
+        self.__move_dict[item](target)
 
     #--TESTING:
     def test_set_target(self,target):

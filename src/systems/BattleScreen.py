@@ -53,6 +53,7 @@ class BattleScreen:
                 case btn.K_RETURN:
                     self.player.test_set_target(self.enemy.get_current_character())
                     self.player.execute_menu_item(self.player_menu.get_current_selection())
+                    self.player_menu.update_menu(self.player.get_menu_list())
         # Did the user click the window close button? If so, stop the loop.
         elif event.type == QUIT:
             running = False
