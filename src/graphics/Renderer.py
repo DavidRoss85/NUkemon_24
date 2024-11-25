@@ -16,8 +16,8 @@ class Renderer:
         self.__screen=pygame.display.set_mode((screen_width,screen_height))
         pygame.init()
 
-    def add_to_layer(self,sprite,layer=0):
-        self.__layers[layer].append(sprite)
+    def add_to_layer(self,item,layer=0):
+        self.__layers[layer].append(item)
 
     def __render_surface(self,sprite):
         self.__main_surface.blit(sprite.get_surface(), sprite.get_rect())
@@ -30,8 +30,8 @@ class Renderer:
 
         #Draw all layers on surface
         for layer in self.__layers:
-            for sprite in layer:
-                self.__render_surface(sprite)
+            for item in layer:
+                self.__render_surface(item.get_sprite())
 
         #Copy main surface to screen
         self.__screen.blit(self.__main_surface,self.__rect)
