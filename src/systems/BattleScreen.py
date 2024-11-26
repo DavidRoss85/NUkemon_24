@@ -26,11 +26,11 @@ class BattleScreen:
 
     def create_layers(self,renderer:Renderer):
         #Add all objects to layers
-        # renderer.add_to_layer(background)
+        renderer.add_to_layer(self.background)
         renderer.add_to_layer(self.enemy,1)
         renderer.add_to_layer(self.player,1)
-        # renderer.add_to_layer(enemylifbar,2)
-        # renderer.add_to_layer(playerlifbar,2)
+        renderer.add_to_layer(self.enemy_stat_box,2)
+        renderer.add_to_layer(self.player_stat_box,2)
         renderer.add_to_layer(self.message_box,2)
         renderer.add_to_layer(self.player_menu,3)
         # renderer.add_to_layer(effectslayer,4)
