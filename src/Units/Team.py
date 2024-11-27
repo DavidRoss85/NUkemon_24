@@ -8,13 +8,14 @@ class Team:
         self.current_character:Character = None
         self.__menu_options={
             "Switch": {"target": "team", "function":self.change_character},
-            "Do Magic": {"menu": {
-                    "fire": {"target": "enemies"},
-                    "water":{"target": "enemies"},
-                    "earth":{"target": "enemies"},
-                }
-            },
         }
+
+        # "Do Magic": {"menu": {
+        #     "fire": {"target": "enemies"},
+        #     "water": {"target": "enemies"},
+        #     "earth": {"target": "enemies"},
+        # }
+        # },
         self.__messanger=None
 
 

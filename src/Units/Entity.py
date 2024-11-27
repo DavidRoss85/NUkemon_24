@@ -24,7 +24,7 @@ class Entity:
         self.__messenger=None
         self.__attack_move=Skill("Punch","physical",self.__base_stats.strength,0,"none")
         self.__move_dict={
-            "Attack": {"target": "enemies", "function":self.attack},
+            "Attack": {"target": "active", "function":self.attack},
             "Defend":{"target":"self","function":self.defend},
         }
 
