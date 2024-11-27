@@ -5,17 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="16e25840-4465-4280-8191-9037ec0ad863" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/assets/images/backgrounds/school_background_01.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/images/backgrounds/school_background_02.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/images/backgrounds/school_background_03.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/images/backgrounds/school_background_04.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/images/stat_box.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/game_objects/Background.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/game_objects/StatBox.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Units/SkillClasses.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/globals/UC.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/globals/UC.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sandbox/playground.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/sandbox/playground.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/BattleScreen.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/BattleScreen.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Units/Character.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Units/Character.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Units/Entity.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Units/Entity.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/game_objects/StatBox.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/game_objects/StatBox.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/graphics/Sprite.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/Sprite.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,18 +36,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.InfoBox.executor": "Run",
-    "Python.Player.executor": "Run",
-    "Python.Sprite.executor": "Run",
-    "Python.playground.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/David/Desktop/MySDE/Python/NUkemon/src/assets/images/backgrounds"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.InfoBox.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Player.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Sprite.executor&quot;: &quot;Run&quot;,
+    &quot;Python.playground.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/David/Desktop/MySDE/Python/NUkemon/src/assets/images/backgrounds&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\David\Desktop\MySDE\Python\NUkemon\src\assets\images\backgrounds" />

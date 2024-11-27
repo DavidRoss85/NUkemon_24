@@ -69,13 +69,13 @@ class InfoBox:
             font_surface=self.write_line(line)
             #Get the bounding rect for the text surface (Used for positioning)
             rect = font_surface.get_rect()
-            #Set the x location of the text based on width of box
+            #Set the x location of the text based on __width of box
             rect.x = int(self.__width * self.__text_start_percent_x/100)
             #Set the text line based on the line number and size of box
             rect.y = self.__height // self.__text_pixel_scale_height * i + 1
-            #Set the total width of the surface to a percent of the width
+            #Set the total __width of the surface to a percent of the __width
             rect.width = int(self.__width * self.__text_end_percent_x)
-            #Create a surface that will crop out any accidental over extended text (blend the color to something other than text color)
+            #Create a surface that will crop out any accidental over extended text (blend the __color to something other than text __color)
             fitted_surface=Sprite(0, 0, rect.width, rect.height, None, (0, 0, 0),(64,177,64))
             #Draw the text onto that surface
             fitted_surface.get_surface().blit(font_surface, (0, 0, rect.width, rect.height)) #This is a Sprite
@@ -102,7 +102,7 @@ class InfoBox:
         for _ in range(self.__n_text_lines):
             line_list.append("")
 
-        max_len=self.__width//self.__text_pixel_scale_width #Num characters to allow to match width of box (This is an approximation)
+        max_len=self.__width//self.__text_pixel_scale_width #Num characters to allow to match __width of box (This is an approximation)
         total_length=0
         line_words=""
         new_line=False

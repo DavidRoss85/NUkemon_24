@@ -7,6 +7,9 @@ from src.players.Human import Player
 MASK = UC.image_mask_color
 
 class StatBox:
+    """
+    Displays the player or enemy Name/Level/HP/MP etc
+    """
     #Static constants
     DEFAULT_PIC = UC.stat_box_image
     DEFAULT_FONT = UC.default_font
@@ -24,19 +27,21 @@ class StatBox:
         self.__height=box_height
         self.__color=box_color
         self.__linked_object:Player=linked_object
-
+        self.__displayed_health=linked_object.get_current_character().get_curr_hp()
+        self.__displayed_mana = linked_object.get_current_character().get_curr_mp()
         self.__visible=True
         self.__background_pic = StatBox.DEFAULT_PIC
         self.__font=StatBox.DEFAULT_FONT
         self.__font_size=StatBox.DEFAULT_FONT_SIZE
         self.__font_color=StatBox.DEFAULT_FONT_COLOR
         self.__text_pixel_scale_width=StatBox.DEFAULT_TEXT_TO_PIXEL_SCALE_WIDTH
-        self.__text_pixel_scale_height=StatBox.DEFAULT_TEXT_TO_PIXEL_SCALE_HEIGHT
+        # self.__text_pixel_scale_height=StatBox.DEFAULT_TEXT_TO_PIXEL_SCALE_HEIGHT
         self.__text_start_percent_x=StatBox.DEFAULT_TEXT_START_PERCENT_X
         self.__text_end_percent_x=StatBox.DEFAULT_TEXT_END_PERCENT_X
 
         self.__sprite=Sprite(x, y, box_width, box_height, self.__background_pic, mask, box_color)
         self.display_stats()
+
 
     def set_visible(self,value:bool=True):
         self.__visible=value
@@ -74,22 +79,28 @@ class StatBox:
 
     def display_health(self):
         curr_char=self.__linked_object.get_current_character()
-        health_fraction= curr_char.get_curr_hp()/curr_char.get_max_hp()
+        max_hp=curr_char.get_max_hp()
+        curr_hp=curr_char.get_curr_hp()
+        self.__displayed_health= self.__displayed_health-1 if curr_hp < self.__displayed_health < max_hp else curr_hp
+        health_fraction= self.__displayed_health/max_hp
 
         health_bar_red=Sprite(self.__width//10,self.__height//2.5,self.__width//1.25,self.__height//10,None,(1,1,1),(255,0,0))
         rect_red=health_bar_red.get_rect()
         self.__sprite.draw_on_surface(health_bar_red.get_surface(),rect_red.x,rect_red.y)
 
-        health_bar_green=Sprite(rect_red.x,rect_red.y,int(rect_red.width*health_fraction),rect_red.height,None,(1,1,1),(0,255,0))
+        health_bar_green=Sprite(rect_red.x, rect_red.y, int(rect_red.width * health_fraction), rect_red.height, None, (1, 1, 1), (0, 255, 0))
         # rect=health_bar_green.get_rect()
         self.__sprite.draw_on_surface(health_bar_green.get_surface(),rect_red.x,rect_red.y)
 
-        health_text=self.write_text(f"{curr_char.get_curr_hp()}/{curr_char.get_max_hp()}",None,self.__font_size//2)
+        health_text=self.write_text(f"{curr_hp}/{max_hp}",None,self.__font_size//2)
         self.__sprite.draw_on_surface(health_text, rect_red.x, rect_red.y+self.__height//10)
 
     def display_mana(self):
         curr_char = self.__linked_object.get_current_character()
-        mana_fraction = curr_char.get_curr_mp() / curr_char.get_max_mp()
+        max_mp=curr_char.get_max_mp()
+        curr_mp=curr_char.get_curr_mp()
+        self.__displayed_mana=self.__displayed_mana-1 if curr_mp < self.__displayed_mana < max_mp else curr_mp
+        mana_fraction = curr_mp / max_mp
 
         mana_bar_red = Sprite(self.__width // 2, self.__height // 2, self.__width // 2.5, self.__height // 20,
                               None, (1, 1, 1), (255,0, 0))

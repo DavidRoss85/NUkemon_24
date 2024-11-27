@@ -1,7 +1,7 @@
 import random
 
-from src.game_objects.InfoBox import InfoBox
 from src.systems.Messenger import Messenger
+from src.Units.SkillClasses import *
 
 #Declare constants for game tuning
 ATTACK_DICE = 6
@@ -17,17 +17,16 @@ class Entity:
     def __init__(self,name,level,hp,mp,strength,intel):
         self.__name=name
         self.__level = level
-        self.__base_stats=self._Stats(hp,mp,strength,intel)
-        self.__battle_stats=self._Stats(hp,mp,strength,intel)
-        self.__condition=self._Condition()
+        self.__base_stats=Stats(hp,mp,strength,intel)
+        self.__battle_stats=Stats(hp,mp,strength,intel)
+        self.__condition=Condition()
         self.__target=self
         self.__messenger=None
-        self.__attack_move=self._Skill("Punch","physical",self.__base_stats.strength,0,"none")
+        self.__attack_move=Skill("Punch","physical",self.__base_stats.strength,0,"none")
         self.__move_dict={
-            "Attack":self.attack,
-            "Defend":self.defend,
+            "Attack": {"target": "enemies", "function":self.attack},
+            "Defend":{"target":"self","function":self.defend},
         }
-
 
 
     #Getters:
@@ -120,9 +119,19 @@ class Entity:
     #     return self.__move_dict
 
     def attack(self,target=None):
+
+        if target is None:
+            target=self
+
+        if "confusion" in self.__battle_stats.effect:
+            self.deliver_message(self.__messenger,f"{self.__name} is confused...\n ")
+            target=self
+
+        #MATH TO CALCULATE ATTACK:
         self.__attack_move.dmg= self.__battle_stats.strength * roll_die(ATTACK_DICE)
+
         self.deliver_message(self.__messenger,f"{self.__name} attacks with {self.__attack_move.name} for {self.__attack_move.dmg}!\n ")
-        self.__target.receive_attack(self.__attack_move)
+        target.receive_attack(self.__attack_move)
 
     def defend(self,args=None):
         self.deliver_message(self.__messenger,f"{self.__name} guards themself.\n ")
@@ -190,32 +199,3 @@ class Entity:
     def deliver_message(self, messenger:Messenger, message):
         messenger.process_message(message)
         print(message)
-
-    #----------------------Skill-------------------------------
-    class _Skill:
-        """
-        This is a class to hold skill properties
-        """
-        def __init__(self, name,s_type,dmg,cost,effect):
-            self.name = name
-            self.s_type=s_type
-            self.dmg=dmg
-            self.cost=cost
-            self.effect=effect
-    #-----------------------Base Stats---------------------------
-    class _Stats:
-        def __init__(self,hp,mp,strength, intel):
-            self.hp = hp  #health
-            self.mp = mp  # magic points
-            self.strength = strength  # determines physical attributes
-            self.intel=intel    #determines ability aptitude
-            self.effect="" #status effects
-
-    #----------------------Condition-------------------------------
-    class _Condition:
-        def __init__(self):
-            self.shield_up=False
-            self.affinities= {"physical":False}
-            self.aversions={"magic":False}
-            self.heal_affinity={"life":True}
-

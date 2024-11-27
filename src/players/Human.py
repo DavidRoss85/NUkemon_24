@@ -28,13 +28,13 @@ class Player(Team):
     def set_y(self,y):
         self.__y=y
 
-    def get_menu_list(self):
+    def get_menu_dictionary(self):
         # self.get_current_character().update_move_dictionary(self.get_menu_dictionary())
         self.__move_dict.update(self.get_current_character().get_move_dictionary())
-        self.__move_dict.update(self.get_menu_dictionary())
+        self.__move_dict.update(self.get_team_dictionary())
         # self.move_list= self.current_character.get_move_list() + self.get_menu_dictionary()
         self.move_list=list(self.__move_dict.keys())
-        return self.move_list
+        return self.__move_dict
 
     def set_visible(self,value:bool=True):
         self.__visible=value
@@ -43,8 +43,10 @@ class Player(Team):
         return self.__visible
 
 ##This function needs an additional part to choose the player target or use sub menus:
-    def execute_menu_item(self,item,target=None):
-        self.__move_dict[item](target)
+    def execute_menu_item(self,item,menu_func):
+        print(item)
+        menu_func(item)
+        # self.__move_dict[item](target)
 
     #--TESTING:
     def test_set_target(self,target):

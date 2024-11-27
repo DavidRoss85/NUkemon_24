@@ -6,7 +6,7 @@ from pygame.locals import RLEACCEL
 
 class Sprite(pygame.sprite.Sprite):
     """
-    Contains a pygame sprite
+    Contains a pygame __sprite
     """
     def __init__(self, x, y, width, height, image=None, mask_color=MASK, blend_color:tuple=None):
         super().__init__()
@@ -20,22 +20,22 @@ class Sprite(pygame.sprite.Sprite):
             self.__surface.fill((0,0,0)) #All black surface
 
 
-        self.__surface.set_colorkey(mask_color,RLEACCEL)    #Set transparent color
+        self.__surface.set_colorkey(mask_color,RLEACCEL)    #Set transparent __color
         self.__mask_color=mask_color
 
         #If user specified blend:
         if blend_color is not None:
             self.__surface.fill(blend_color, special_flags=pygame.BLEND_ADD)  # For blending colors
-            #Recalculate MASK color:
+            #Recalculate MASK __color:
             new_mask = self.__blend_mask(blend_color,self.__mask_color)
             #Re apply MASK for transparent sections
             self.__surface.set_colorkey(new_mask,RLEACCEL)
             self.__mask_color=new_mask
 
         self.__original_surface=self.__surface.copy()   #Keep a copy of the original created surface
-        self.__rect=self.__surface.get_rect()   #Rect object for sprite dimensions
-        self.__rect.x=x #Set sprite location x
-        self.__rect.y=y #Set sprite location y
+        self.__rect=self.__surface.get_rect()   #Rect object for __sprite dimensions
+        self.__rect.x=x #Set __sprite location x
+        self.__rect.y=y #Set __sprite location y
 
 
     #Getters:
@@ -79,15 +79,15 @@ class Sprite(pygame.sprite.Sprite):
 
     def set_new_default(self):
         """
-        Copies the current state of the sprite into the original surface
-        Calling restore after this will return the sprite to this form
+        Copies the current state of the __sprite into the original surface
+        Calling restore after this will return the __sprite to this form
         :return:
         """
         self.__original_surface = self.__surface.copy()  # Make whatever the image is the new default
 
     def draw_on_surface(self,surface:pygame.Surface,x=0,y=0):
         """
-        Draw another surface onto the sprite
+        Draw another surface onto the __sprite
         :param surface: pre-rendered surface to overlay
         :param x: relative x location
         :param y: relative y location
@@ -100,14 +100,14 @@ class Sprite(pygame.sprite.Sprite):
 
     def restore(self):
         """
-        Returns the sprite to its original construction
+        Returns the __sprite to its original construction
         :return:
         """
         self.__surface=self.__original_surface.copy()
 
     def blend_color(self,blend_color:tuple=(0,0,0)):
         """
-        Changes the tint/color of the object
+        Changes the tint/__color of the object
         :param blend_color: tuple(R,G,B)
         :return:
         """
@@ -119,7 +119,7 @@ class Sprite(pygame.sprite.Sprite):
 
     def __blend_mask(self,blend_color:tuple,mask_color:tuple)->tuple:
         """
-        Returns new MASK color for maintaining transparency features
+        Returns new MASK __color for maintaining transparency features
         :param blend_color: tuple(R,G,B)
         :param mask_color: tuple(R,G,B)
         :return: tuple - new MASK (R,G,B)

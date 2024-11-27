@@ -6,7 +6,7 @@ from src.systems.Messenger import Messenger
 class Character(Entity):
     def __init__(self,name,level,hp,mp,strength,intel,sprite,x=0,y=0):
         super().__init__(name,level,hp,mp,strength,intel)
-        self.sprite:Sprite=sprite
+        self.__sprite:Sprite=sprite
         self.__x=x
         self.__y=y
 
@@ -19,7 +19,7 @@ class Character(Entity):
         return self.__y
 
     def get_sprite(self):
-        return self.sprite
+        return self.__sprite
 
     #Setters
     def set_x(self,x):

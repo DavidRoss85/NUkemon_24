@@ -12,4 +12,5 @@ class UC:
     default_font_size=24
     default_font_color="black"
     default_menu_item_selected_color = "blue"
+    default_font_pixel_height=40
 

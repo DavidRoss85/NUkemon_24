@@ -58,20 +58,23 @@ enemy_stat_box= StatBox(enemy1, 624, 350, 400, 125)
 
 
 text_box= InfoBox(0, 568, 680, 200, "Temporary text", 5,(1, 1, 1))
-user_menu=BattleMenu(681, 568, 347, 200, player1.get_menu_list())
+battle_menu=BattleMenu(681, 568, 347, 200, player1.get_menu_dictionary())
 messenger=Messenger(text_box)
 player1.set_messenger(messenger)
 enemy1.set_messenger(messenger)
 
-battle_screen=BattleScreen(player1,enemy1,text_box,user_menu,player_stat_box,enemy_stat_box,background,0)
+battle_screen=BattleScreen(player1, enemy1, text_box, battle_menu, player_stat_box, enemy_stat_box, background, 0)
 battle_screen.create_layers(renderer)
 
 player1.get_current_character().set_max_hp(1500)
+player1.get_current_character().set_curr_hp(1500)
 
 x=0
 px=1024
 my_text=""
 while running:
+
+    battle_screen.perform_updates()
     for event in pygame.event.get():
         battle_screen.listen_for_input(event)
         # Did the user click the window close button? If so, stop the loop.
@@ -83,7 +86,7 @@ while running:
 
     x = x+1 if x<255 else 0
 
-    player1.set_curr_hp(px)
+    # player1.set_curr_hp(px)
     messenger.stream_text()
     # my_text=f"Your health: {player1.get_curr_hp()}\n \n \n \n"
     # text_box.write_text(my_text)
