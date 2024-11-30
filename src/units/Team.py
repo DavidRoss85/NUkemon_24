@@ -1,6 +1,6 @@
 from src.globals.UC import UC
 
-from src.Units.Character import Character
+from src.units.Character import Character
 
 class Team:
     def __init__(self):
@@ -21,6 +21,11 @@ class Team:
 
     def get_team(self):
         return self.__team
+
+    def set_team(self,team_list:list):
+        for teammate in team_list:
+            self.add_team_member(teammate)
+
     def add_team_member(self, team_member):
         self.__team[team_member.get_name()] = team_member
 

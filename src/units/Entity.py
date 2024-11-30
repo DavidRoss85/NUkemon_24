@@ -1,7 +1,7 @@
 import random
 
 from src.systems.Messenger import Messenger
-from src.Units.SkillClasses import *
+from src.units.SkillClasses import *
 
 #Declare constants for game tuning
 ATTACK_DICE = 6

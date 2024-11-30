@@ -5,12 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="16e25840-4465-4280-8191-9037ec0ad863" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Units/SkillClasses.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/globals/personas.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/globals/sprites.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/systems/TurnSystem.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Units/Character.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Units/Character.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Units/Entity.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Units/Entity.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Units/Character.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/units/Character.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Units/Entity.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/units/Entity.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Units/SkillClasses.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/units/SkillClasses.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Units/Team.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/units/Team.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/game_objects/StatBox.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/game_objects/StatBox.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/graphics/Sprite.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphics/Sprite.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/players/Human.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/players/Human.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sandbox/playground.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/sandbox/playground.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/systems/BattleScreen.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/BattleScreen.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,11 +63,11 @@
       <recent name="C:\Users\David\Desktop\MySDE\Python\NUkemon\src\players" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\David\Desktop\MySDE\Python\NUkemon\src\globals" />
       <recent name="C:\Users\David\Desktop\MySDE\Python\NUkemon\src\assets\images\backgrounds" />
       <recent name="C:\Users\David\Desktop\MySDE\Python\NUkemon\src\systems" />
       <recent name="C:\Users\David\Desktop\MySDE\Python\NUkemon\src\players" />
       <recent name="C:\Users\David\Desktop\MySDE\Python\NUkemon\src\assets\fonts" />
-      <recent name="C:\Users\David\Desktop\MySDE\Python\NUkemon\src\assets\images\test_images" />
     </key>
   </component>
   <component name="RunManager">

@@ -60,6 +60,10 @@ class StatBox:
         return self.__sprite
 
     def display_name(self):
+        """
+        Shows the character name in the upper left corner of the box
+        :return:
+        """
         font_surface=self.write_text(self.__linked_object.get_current_character().get_name())
         rect=font_surface.get_rect()
         fitted_surface = Sprite(0, 0, self.__width/2, rect.height, None, (0, 0, 0), (64, 177, 64))
@@ -68,6 +72,10 @@ class StatBox:
         self.__sprite.draw_on_surface(fitted_surface.get_surface(),self.__text_start_percent_x,5)
 
     def display_level(self):
+        """
+        Displays the level of the character in the upper right corner of the box
+        :return:
+        """
         label_surface = self.write_text("Lv : ",None,self.__font_size//2)
         number_surface=self.write_text(str(self.__linked_object.get_current_character().get_level()))
         rect=number_surface.get_rect()
@@ -78,10 +86,14 @@ class StatBox:
         self.__sprite.draw_on_surface(fitted_surface.get_surface(),self.__width//1.5+1,5)
 
     def display_health(self):
+        """
+        Displays the green health bar and text with max hp
+        :return:
+        """
         curr_char=self.__linked_object.get_current_character()
         max_hp=curr_char.get_max_hp()
         curr_hp=curr_char.get_curr_hp()
-        self.__displayed_health= self.__displayed_health-1 if curr_hp < self.__displayed_health < max_hp else curr_hp
+        self.__displayed_health= self.__displayed_health-1 if curr_hp < self.__displayed_health <= max_hp else curr_hp
         health_fraction= self.__displayed_health/max_hp
 
         health_bar_red=Sprite(self.__width//10,self.__height//2.5,self.__width//1.25,self.__height//10,None,(1,1,1),(255,0,0))
@@ -96,6 +108,10 @@ class StatBox:
         self.__sprite.draw_on_surface(health_text, rect_red.x, rect_red.y+self.__height//10)
 
     def display_mana(self):
+        """
+        Displays the blue mana bar with text below the health bar
+        :return:
+        """
         curr_char = self.__linked_object.get_current_character()
         max_mp=curr_char.get_max_mp()
         curr_mp=curr_char.get_curr_mp()
@@ -117,6 +133,10 @@ class StatBox:
         self.__sprite.draw_on_surface(mana_text, rect_red.x, rect_red.y + self.__height // 20)
 
     def display_stats(self):
+        """
+        Refreshes all the displays in the box
+        :return:
+        """
         self.clear_self()
         self.display_name()
         self.display_level()

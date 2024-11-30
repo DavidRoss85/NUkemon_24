@@ -10,28 +10,42 @@ from pygame.locals import (
     QUIT,
 )
 
+from src.game_objects.Background import Background
 from src.game_objects.BattleMenu import BattleMenu
+from src.game_objects.StatBox import StatBox
+from src.game_objects.InfoBox import InfoBox
+from src.systems.Messenger import Messenger
+
+
 from src.graphics.Renderer import Renderer
 from src.globals.UC import *
 
 class BattleScreen:
     DEFAULT_TARGET_MENU_X=300
     DEFAULT_TARGET_MENU_Y=400
+    PLAYER_X=100
+    PLAYER_Y=300
+    ENEMY_X=800
+    ENEMY_Y=200
     FONT_HEIGHT=UC.default_font_pixel_height
 
-    def __init__(self,player,enemy,message_box,player_menu,player_stat_box,enemy_stat_box,background,animation_layer):
+    def __init__(self,player,enemy, animation_layer):
         self.player=player
         self.enemy=enemy
-        self.message_box=message_box
-        self.player_menu=player_menu
-        self.enemy_stat_box=enemy_stat_box
-        self.player_stat_box=player_stat_box
-        self.background=background
+        self.background=Background(0,0,UC.screen_width,UC.screen_height)
         self.animation_layer=animation_layer
+
+        self.player_menu=None
+        self.message_box=None
+        self.messenger=None
+        self.enemy_stat_box=None
+        self.player_stat_box=None
+
+        self.menu_list=[]   #this is set in set_up_interface
 
         self.target_menu=BattleMenu(self.DEFAULT_TARGET_MENU_X,self.DEFAULT_TARGET_MENU_Y,100,100)
         self.target_menu.set_visible(False)
-        self.menu_list=[self.player_menu,self.target_menu] #Maybe keep this...
+
         self.menu_tree=[]
         self.__queued_action = None
 
@@ -46,7 +60,35 @@ class BattleScreen:
             "active": self.active_dict,
             "self": self.self_dict
         }
+        self.set_background()
+        self.set_positions()
+        self.set_up_interface()
         self.update_dictionaries()
+
+
+
+    def set_up_interface(self):
+        self.player_stat_box = StatBox(self.player, 0, 175, 400, 125)
+        self.enemy_stat_box = StatBox(self.enemy, 624, 350, 400, 125)
+
+        self.message_box = InfoBox(0, 568, 680, 200, "", 5, (1, 1, 1))
+        self.player_menu = BattleMenu(681, 568, 347, 200, self.player.get_menu_dictionary())
+
+        self.menu_list = [self.player_menu, self.target_menu]  # Maybe keep this...
+
+        self.messenger = Messenger(self.message_box)
+        self.player.set_messenger(self.messenger)
+        self.enemy.set_messenger(self.messenger)
+
+    def set_background(self):
+        self.background = Background(0, 0, UC.screen_width, UC.screen_height)
+
+    def set_positions(self):
+        self.player.set_x(self.PLAYER_X)
+        self.player.set_y(self.PLAYER_Y)
+
+        self.enemy.set_x(self.ENEMY_X)
+        self.enemy.set_y(self.ENEMY_Y)
 
     def update_dictionaries(self):
         self.enemy_dict=self.list_enemies()
@@ -168,3 +210,4 @@ class BattleScreen:
 
     def perform_updates(self):
         self.update_dictionaries()
+        self.messenger.stream_text()

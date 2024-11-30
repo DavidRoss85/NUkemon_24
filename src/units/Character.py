@@ -1,5 +1,5 @@
 from src.graphics.Sprite import Sprite
-from src.Units.Entity import Entity
+from src.units.Entity import Entity
 from src.systems.Messenger import Messenger
 
 

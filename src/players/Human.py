@@ -1,7 +1,7 @@
 from src.globals.UC import UC
 
-from src.Units.Character import Character
-from src.Units.Team import Team
+from src.units.Character import Character
+from src.units.Team import Team
 
 class Player(Team):
     def __init__(self):
