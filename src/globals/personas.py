@@ -3,6 +3,9 @@ from src.globals.sprites import Sprites
 
 
 class Personas:
+    """
+    Characters in the game that have different attributes.
+    """
     rory=Character("Rory", 1, 150, 150, 10, 10,Sprites.rory_battle1)
 
     mina=Character("Mina",1,100,200,10,10,Sprites.emoji_chill)
@@ -18,6 +21,9 @@ class Personas:
     professor_b = Character("Professor B", 1, 200, 100, 10, 10, Sprites.professor_b)
 
 class Crews:
+    """
+    Teams comprised of personas
+    """
     default_player=[Personas.rory,Personas.mina,Personas.chris]
 
     default_enemy=[Personas.professor_a, Personas.professor_b]

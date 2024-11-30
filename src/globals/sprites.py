@@ -1,6 +1,9 @@
 from src.graphics.Sprite import Sprite
 
 class Sprites:
+    """
+    Holds sprites for use in game
+    """
     rory_battle1 = Sprite(
         200, 400, 300, 300,
         "../assets/images/test_images/Boy_backpack1_hmmm_bk.png",
