@@ -7,6 +7,9 @@ from src.graphics.Sprite import Sprite
 MASK = UC.image_mask_color
 
 class InfoBox:
+    """
+    Scrolling text box
+    """
     #Static constants
     DEFAULT_PIC = UC.info_box_image
     DEFAULT_FONT = UC.default_font

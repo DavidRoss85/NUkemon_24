@@ -236,7 +236,7 @@ class BattleMenu:
         """
         #Completely restores the box to its original form
         self.__sprite.restore()
-        
+
     def write_line(self,text,color):
         """
         Takes a string of text and creates a pygame compatible surface to render
