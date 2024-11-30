@@ -5,8 +5,12 @@ MASK = UC.image_mask_color
 
 
 class Background:
+    """
+    This object handles loading the background. Default background is a global constant
+    """
+    #Static
+    DEFAULT_BACKGROUND=UC.background_image  #Default background image
 
-    DEFAULT_BACKGROUND=UC.background_image
     def __init__(self,x,y,width,height,image=None,mask:tuple=MASK,tint:tuple=(0,0,0)):
         self.__x=x
         self.__y=y

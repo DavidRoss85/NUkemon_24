@@ -11,7 +11,7 @@ from src.players.Computer import Computer
 SCREEN_WIDTH = UC.screen_width
 SCREEN_HEIGHT = UC.screen_height
 
-renderer = Renderer(SCREEN_WIDTH,SCREEN_HEIGHT,(0,0,0))
+renderer = Renderer(SCREEN_WIDTH,SCREEN_HEIGHT,UC.game_back_color)
 animator=Animator()
 
 player1=Player()
