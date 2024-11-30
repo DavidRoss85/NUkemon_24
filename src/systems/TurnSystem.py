@@ -1,39 +1,21 @@
-import pygame
-
-from src.game_objects.Background import Background
-from src.game_objects.BattleMenu import BattleMenu
-from src.game_objects.StatBox import StatBox
-from src.systems.BattleScreen import BattleScreen
-from src.game_objects.InfoBox import InfoBox
-from src.graphics.Sprite import Sprite
-from src.graphics.Renderer import Renderer
-from src.globals.UC import UC
-
-from pygame.locals import (
-    QUIT,
-)
-
-from src.Units.Character import Character
-from src.players.Human import Player
-from src.systems.Messenger import Messenger
-
-
+from src.players.Computer import Computer
 
 class TurnSystem:
-    def __init__(self):
-        self.__player_turn=False
+    def __init__(self,player,enemy):
+        self.__player_turn=True
         self.__battle_running=False
-        self.__player=None
-        self.__enemy=None
-        self.__enemy_x=800
-        self.__enemy_y=200
-        self.__player_x=100
-        self.__player_y=300
+        self.__player=player
+        self.__enemy:Computer=enemy
 
 
+    def get_player_turn(self):
+        return self.__player_turn
 
-    def start_battle(self,value=False):
-        self.__battle_running=value
+    def set_player_turn(self,value):
+        self.__player_turn=value
 
-        while self.__battle_running:
-            pass
+    def switch_player_turn(self):
+        self.__player_turn=not self.__player_turn
+
+    def cpu_perform_action(self):
+        self.__player_turn=self.__enemy.execute_move(self.__player)

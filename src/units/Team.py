@@ -5,9 +5,9 @@ from src.units.Character import Character
 class Team:
     def __init__(self):
         self.__team = dict()
-        self.current_character:Character = None
+        self.__current_character:Character = None
         self.__menu_options={
-            "Switch": {"target": "team", "function":self.change_character},
+            "Switch": {"name": "Switch","target": "team", "function":self.change_character},
         }
 
         # "Do Magic": {"menu": {
@@ -28,33 +28,32 @@ class Team:
 
     def add_team_member(self, team_member):
         self.__team[team_member.get_name()] = team_member
-
-        if self.current_character is None:
+        if self.__current_character is None:
             self.change_character(team_member)
 
 
     def change_character(self,target):
         if target.get_name() in self.__team:
-            if self.current_character is not None:
-                self.__deliver_message(f"{self.current_character.get_name()} "
+            if self.__current_character is not None:
+                self.__deliver_message(f"{self.__current_character.get_name()} "
                                    f"switches to {target.get_name()}\n ")
 
-            self.current_character = self.__team[target.get_name()]
+            self.__current_character = self.__team[target.get_name()]
 
     def get_current_character(self):
-        return self.current_character
+        return self.__current_character
 
     def get_sprite(self):
-        return self.current_character.get_sprite()
+        return self.__current_character.get_sprite()
 
     def get_curr_hp(self):
-        return self.current_character.get_curr_hp()
+        return self.__current_character.get_curr_hp()
 
     def get_team_dictionary(self):
         return self.__menu_options
 
     def set_curr_hp(self, value):
-        self.current_character.set_curr_hp(value)
+        self.__current_character.set_curr_hp(value)
 
     def set_messenger(self,messenger):
         self.__messanger=messenger

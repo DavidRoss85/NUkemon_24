@@ -11,9 +11,10 @@ class Personas:
 
     enemy1=Character("Wendie",1,200,200,5,5,Sprites.emoji_on_fire,600,200)
 
+    enemy2=Character("Evil",1,145,100,10,10,Sprites.emoji_chill)
 
 
 class Crews:
     default_player=[Personas.rory,Personas.mina,Personas.chris]
 
-    default_enemy=[Personas.enemy1]
+    default_enemy=[Personas.enemy1, Personas.enemy2]
