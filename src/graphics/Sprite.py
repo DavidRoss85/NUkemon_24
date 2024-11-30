@@ -25,6 +25,7 @@ class Sprite(pygame.sprite.Sprite):
 
         #If user specified blend:
         if blend_color is not None:
+
             self.__surface.fill(blend_color, special_flags=pygame.BLEND_ADD)  # For blending colors
             #Recalculate MASK __color:
             new_mask = self.__blend_mask(blend_color,self.__mask_color)

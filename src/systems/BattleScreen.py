@@ -28,8 +28,8 @@ class BattleScreen:
     DEFAULT_TARGET_MENU_Y=400
     PLAYER_X=100
     PLAYER_Y=300
-    ENEMY_X=800
-    ENEMY_Y=200
+    ENEMY_X=600
+    ENEMY_Y=50
     FONT_HEIGHT=UC.default_font_pixel_height
 
     def __init__(self,player,enemy,renderer, animator, animation_layer):

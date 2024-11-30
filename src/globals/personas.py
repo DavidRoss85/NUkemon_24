@@ -13,8 +13,11 @@ class Personas:
 
     enemy2=Character("Evil",1,145,100,10,10,Sprites.emoji_chill)
 
+    professor_a=Character("Professor A",1,200,100,10,10,Sprites.professor_a)
+
+    professor_b = Character("Professor B", 1, 200, 100, 10, 10, Sprites.professor_b)
 
 class Crews:
     default_player=[Personas.rory,Personas.mina,Personas.chris]
 
-    default_enemy=[Personas.enemy1, Personas.enemy2]
+    default_enemy=[Personas.professor_a, Personas.professor_b]
