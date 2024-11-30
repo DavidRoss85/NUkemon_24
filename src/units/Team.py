@@ -52,6 +52,7 @@ class Team:
         return self.__current_character
 
     def get_sprite(self):
+        #Allows the program to freeze the current frame
         if not self.__frozen_frame:
             self.sprite_frame= self.__current_character.get_sprite()
 
@@ -73,3 +74,4 @@ class Team:
 
     def __deliver_message(self,message):
         self.__messanger.process_message(message)
+

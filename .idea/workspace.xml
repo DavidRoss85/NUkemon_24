@@ -8,7 +8,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/systems/Animator.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/Animator.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/systems/BattleScreen.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/BattleScreen.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/units/Character.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/units/Character.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/units/Team.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/units/Team.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -40,7 +39,7 @@
     "Python.InfoBox.executor": "Run",
     "Python.Player.executor": "Run",
     "Python.Sprite.executor": "Run",
-    "Python.playground.executor": "Debug",
+    "Python.playground.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
@@ -109,21 +108,5 @@
       <updated>1732332494192</updated>
     </task>
     <servers />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/src/systems/BattleScreen.py</url>
-          <line>207</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/src/units/Team.py</url>
-          <line>24</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

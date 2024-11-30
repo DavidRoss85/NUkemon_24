@@ -90,7 +90,7 @@ class Animator:
 
     def animate_switch_out(self,subject):
         self.animating = True
-        subject.freeze_frame=True
+        subject.freeze_the_frame=True
         self.tick += 1
         if self.tick<=20:
             subject.set_x(subject.get_x() - self.EXIT_AMT)

@@ -207,6 +207,7 @@ class BattleScreen:
                 #Pause the current sprite frame for the player while setting up animations
                 name["owner"].freeze_frame()
 
+
                 #Execute the stored function on the target (current_character)
                 self.__queued_action["function"](name["receiver"])
 
