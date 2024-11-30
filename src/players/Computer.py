@@ -3,7 +3,7 @@ from random import randint
 from src.globals.UC import UC
 from src.systems.Animator import Animator
 from src.units.Team import Team
-
+from src.systems.ComputerLogic import careful_AI
 class Computer(Team):
     def __init__(self):
         super().__init__()
@@ -48,13 +48,6 @@ class Computer(Team):
         self.get_menu_dictionary()
 
         #<<CPU AI LOGIC GOES HERE>>
-        num=randint(1,10)
-        # print(player)
-        if num>5:
-            self.__move_dict["Attack"]["function"](player.get_current_character())
-            self.animator.pause_and_animate({"subject":self,"action":"Attack"})
-            self.animator.pause_and_animate({"object": player, "action": "Attack"})
-        else:
-            self.__move_dict["Defend"]["function"](self.get_current_character())
+        return careful_AI(player,self,self.animator,self.__move_dict)
 
-        return True
+
