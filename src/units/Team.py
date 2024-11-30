@@ -6,6 +6,8 @@ class Team:
     def __init__(self):
         self.__team = dict()
         self.__current_character:Character = None
+        self.__frozen_frame=False
+        self.sprite_frame=None
         self.__menu_options={
             "Switch": {"name": "Switch","target": "team", "function":self.change_character},
         }
@@ -18,6 +20,12 @@ class Team:
         # },
         self.__messanger=None
 
+
+    def freeze_frame(self):
+        self.__frozen_frame=True
+
+    def unfreeze_frame(self):
+        self.__frozen_frame=False
 
     def get_team(self):
         return self.__team
@@ -44,7 +52,10 @@ class Team:
         return self.__current_character
 
     def get_sprite(self):
-        return self.__current_character.get_sprite()
+        if not self.__frozen_frame:
+            self.sprite_frame= self.__current_character.get_sprite()
+
+        return self.sprite_frame
 
     def get_curr_hp(self):
         return self.__current_character.get_curr_hp()

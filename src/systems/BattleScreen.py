@@ -139,8 +139,8 @@ class BattleScreen:
         :return:
         """
         td=dict()
-        enemy=self.enemy.get_current_character()
-        td[enemy.get_name()]= enemy
+        enemy={"owner":self.enemy, "receiver":self.enemy.get_current_character()}
+        td[enemy["receiver"].get_name()]= enemy
         return td
 
     def list_player_team(self):
@@ -149,7 +149,8 @@ class BattleScreen:
         :return:
         """
         td=dict()
-        td=self.player.get_team().copy()
+        for teammate in self.player.get_team().values():
+            td[teammate.get_name()]={"owner":self.player, "receiver":teammate}
         del td[self.player.get_current_character().get_name()]
         return td
 
@@ -161,8 +162,8 @@ class BattleScreen:
         td=dict()
         player=self.player.get_current_character()
         enemy=self.enemy.get_current_character()
-        td[player.get_name()]=player
-        td[enemy.get_name()]=enemy
+        td[player.get_name()]={"owner":self.player, "receiver":player}
+        td[enemy.get_name()]={"owner":self.enemy, "receiver":enemy}
         return td
 
     def list_self(self):
@@ -171,8 +172,8 @@ class BattleScreen:
         :return:
         """
         td=dict()
-        player=self.player.get_current_character()
-        td[player.get_name()] = player
+        player={"owner":self.player, "receiver":self.player.get_current_character()}
+        td[player["receiver"].get_name()] = player
         return td
 
     def execute_menu(self,name):
@@ -189,28 +190,38 @@ class BattleScreen:
                 items=self.target_dictionary[name["target"]]
                 self.__queued_action={"name": name["name"], "function": name["function"]}
                 self.target_menu.set_position(500,500)
+                self.target_menu.update_menu(items, 300, len(items) * self.FONT_HEIGHT + 10)
+                self.target_menu.set_visible(True)
             elif "menu" in name:
                 items=name["menu"]
 
-            self.target_menu.update_menu(items, 300,len(items)*self.FONT_HEIGHT +10 )
-            self.target_menu.set_visible(True)
+                self.target_menu.update_menu(items, 300,len(items)*self.FONT_HEIGHT +10 )
+                self.target_menu.set_visible(True)
 
-        else:
-            print("EXECUTE")
-            print(f"Battle Screen: {name.get_name()}")
-            self.menu_tree.clear()
-            self.target_menu.set_visible(False) #Hide menu
-            self.animator.pause_and_animate({
-                "subject": self.player,
-                "action": self.__queued_action["name"]
-            })
+            else:
+                print("EXECUTE")
+                print(f"Battle Screen: {name["receiver"].get_name()}")
+                self.menu_tree.clear()
+                self.target_menu.set_visible(False) #Hide menu
 
-            self.__queued_action["function"](name)
-            self.animator.pause_and_animate({
-                "object": name,
-                "action": self.__queued_action["name"]
-            })
-            self.turn_system.set_player_turn(False) #Switch to enemy turn
+                #Pause the current sprite frame for the player while setting up animations
+                name["owner"].freeze_frame()
+
+                #Execute the stored function on the target (current_character)
+                self.__queued_action["function"](name["receiver"])
+
+                #Add and animation the paused animation queue
+                #Game events will wait for these animations to complete
+                self.animator.pause_and_animate({
+                    "subject": self.player,
+                    "action": self.__queued_action["name"]
+                })
+
+                self.animator.pause_and_animate({
+                    "object": name["owner"],
+                    "action": self.__queued_action["name"]
+                })
+                self.turn_system.set_player_turn(False) #Switch to enemy turn
 
 
     def create_layers(self,renderer:Renderer):

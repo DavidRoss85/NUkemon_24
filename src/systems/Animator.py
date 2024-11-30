@@ -1,6 +1,6 @@
 class Animator:
     SHAKE_AMT=10
-    EXIT_AMT=10
+    EXIT_AMT=30
     def __init__(self):
         self.queue=[]
         self.animating=False
@@ -76,12 +76,13 @@ class Animator:
     def animate_receive_damage(self, subject):
         self.animating = True
         self.tick += 1
-        if self.tick % 2 == 0:
-            subject.set_x(subject.get_x() - self.SHAKE_AMT)
-        else:
-            subject.set_x(subject.get_x() + self.SHAKE_AMT)
+        if self.tick<=20:   #Do animation for designated ticks
+            if self.tick % 2 == 0:
+                subject.set_x(subject.get_x() - self.SHAKE_AMT)
+            else:
+                subject.set_x(subject.get_x() + self.SHAKE_AMT)
 
-        if self.tick > 20:
+        if self.tick > 50: #Pause a bit before releasing animation
             self.tick = 0
             return True
         else:
@@ -89,11 +90,14 @@ class Animator:
 
     def animate_switch_out(self,subject):
         self.animating = True
+        subject.freeze_frame=True
         self.tick += 1
-        subject.set_x(subject.get_x() - self.EXIT_AMT)
+        if self.tick<=20:
+            subject.set_x(subject.get_x() - self.EXIT_AMT)
 
-        if self.tick > 40:
+        if self.tick > 20: #Pause a bit before releasing animation
             self.tick = 0
+            subject.unfreeze_frame()
             return True
         else:
             return False
@@ -101,10 +105,10 @@ class Animator:
     def animate_switch_in(self,subject):
         self.animating = True
         self.tick += 1
+        if self.tick <= 20:
+            subject.set_x(subject.get_x() + self.EXIT_AMT)
 
-        subject.set_x(subject.get_x() + self.EXIT_AMT)
-
-        if self.tick > 40:
+        if self.tick > 50:
             self.tick = 0
             return True
         else:

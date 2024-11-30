@@ -4,6 +4,9 @@ from src.systems.Messenger import Messenger
 
 
 class Character(Entity):
+    """
+    Inherits from Entity. Characters are entities with a sprite
+    """
     def __init__(self,name,level,hp,mp,strength,intel,sprite,x=0,y=0):
         super().__init__(name,level,hp,mp,strength,intel)
         self.__sprite:Sprite=sprite
