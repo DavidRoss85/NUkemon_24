@@ -12,6 +12,16 @@ class Background:
     DEFAULT_BACKGROUND=UC.background_image  #Default background image
 
     def __init__(self,x,y,width,height,image=None,mask:tuple=MASK,tint:tuple=(0,0,0)):
+        """
+        Draws a background image
+        :param x: x coord
+        :param y: y coord
+        :param width: width
+        :param height: height
+        :param image: image path (String)
+        :param mask: invisible color
+        :param tint: hue
+        """
         self.__x=x  #x coordinate
         self.__y=y  #y coordinate
         self.__width=width  #width
