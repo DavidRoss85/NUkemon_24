@@ -5,10 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="16e25840-4465-4280-8191-9037ec0ad863" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/assets/images/characters/Female_TA1_transparent.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/images/characters/Male_Professor_1_transparent.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/globals/personas.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/globals/personas.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/globals/sprites.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/globals/sprites.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/systems/Animator.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/Animator.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/systems/BattleScreen.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/BattleScreen.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/systems/ComputerLogic.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/ComputerLogic.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/systems/TurnSystem.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/TurnSystem.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -35,18 +38,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.InfoBox.executor": "Run",
-    "Python.Player.executor": "Run",
-    "Python.Sprite.executor": "Run",
-    "Python.playground.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/David/Desktop/MySDE/Python/NUkemon/src/assets/images/characters"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.InfoBox.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Player.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Sprite.executor&quot;: &quot;Run&quot;,
+    &quot;Python.playground.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/David/Desktop/MySDE/Python/NUkemon/src/assets/images/characters&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\David\Desktop\MySDE\Python\NUkemon\src\assets\images\characters" />

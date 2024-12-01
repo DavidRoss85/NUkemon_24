@@ -3,6 +3,7 @@ class Animator:
     EXIT_AMT=30
     ATK_AMT=10
     DFND_AMT=20
+    DTH_AMT=10
     def __init__(self):
         self.queue=[]
         self.animating=False
@@ -13,8 +14,9 @@ class Animator:
             "Defend": self.animate_defend,
             "Switch": self.animate_switch_out,
             "eSwitch": self.animate_switch_in,
-            "Die": self.animate_switch_out,
-            "eDie": self.animate_switch_in
+            "KO": self.animate_ko,
+            "eKO": self.animate_eko,
+            "Die": self.animate_death_1
         }
 
         self.object_animation_dictionary = {
@@ -22,8 +24,9 @@ class Animator:
             "Defend": self.animate_defend,
             "Switch": self.animate_switch_in,
             "eSwitch": self.animate_switch_out,
-            "Die": self.animate_switch_in,
-            "eDie": self.animate_switch_out
+            "KO": self.animate_switch_in,
+            "eKO": self.animate_switch_out,
+            "Die": self.animate_death_1
         }
 
 
@@ -98,7 +101,8 @@ class Animator:
 
     def animate_switch_out(self,subject):
         self.animating = True
-        subject.freeze_the_frame=True
+        subject.set_visible(True)
+
         self.tick += 1
         if self.tick<=20:
             subject.set_x(subject.get_x() - self.EXIT_AMT)
@@ -112,12 +116,67 @@ class Animator:
 
     def animate_switch_in(self,subject):
         self.animating = True
+        subject.set_visible(True)
         self.tick += 1
         if self.tick <= 20:
             subject.set_x(subject.get_x() + self.EXIT_AMT)
 
         if self.tick > 35:
             self.tick = 0
+            subject.unfreeze_frame()
+            return True
+        else:
+            return False
+
+    def animate_death_1(self,subject):
+        self.animating = True
+        self.tick += 1
+        if self.tick < 20:
+            subject.get_sprite().blend_color(
+                (self.tick * self.DTH_AMT, 0, 0)
+            )
+        else:
+            subject.set_visible(False)
+
+        if self.tick > 26:
+            self.tick = 0
+            subject.unfreeze_frame()
+            return True
+        else:
+            return False
+
+    def animate_eko(self,subject):
+        self.animating = True
+        self.tick += 1
+        if self.tick < 20:
+            subject.get_sprite().blend_color(
+                (self.tick * self.DTH_AMT, 0, 0)
+            )
+        elif self.tick < 40:
+            subject.set_visible(False)
+            subject.set_x(subject.get_x() + self.EXIT_AMT)
+
+        if self.tick > 45:
+            self.tick = 0
+            subject.unfreeze_frame()
+            return True
+        else:
+            return False
+
+    def animate_ko(self, subject):
+        self.animating = True
+        self.tick += 1
+        if self.tick < 20:
+            subject.get_sprite().blend_color(
+                (self.tick * self.DTH_AMT, 0, 0)
+            )
+        elif self.tick < 40:
+            subject.set_visible(False)
+            subject.set_x(subject.get_x() - self.EXIT_AMT)
+
+        if self.tick > 45:
+            self.tick = 0
+            subject.unfreeze_frame()
             return True
         else:
             return False

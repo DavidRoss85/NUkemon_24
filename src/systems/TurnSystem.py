@@ -7,6 +7,7 @@ class TurnSystem:
         self.__player=player
         self.__enemy:Computer=enemy
         self.__messenger=messenger
+        self.__battle_over=False
 
 
     def set_messenger(self,messenger):
@@ -21,7 +22,7 @@ class TurnSystem:
     def switch_player_turn(self):
         self.__player_turn=not self.__player_turn
 
-    def cpu_perform_action(self):
+    def cpu_perform_action(self,perform_action):
         self.__player_turn=self.__enemy.execute_move(self.__player)
 
     def check_loss_conditions(self,perform_action):
@@ -31,7 +32,7 @@ class TurnSystem:
                perform_action(
                    self.__player,
                    {
-                       "name":"Die",
+                       "name":"KO",
                        "function": self.__player.send_to_graveyard
                    },
                    {
@@ -50,7 +51,7 @@ class TurnSystem:
                 perform_action(
                     self.__enemy,
                     {
-                        "name": "eDie",
+                        "name": "eKO",
                         "function": self.__enemy.send_to_graveyard
                     },
                     {
@@ -59,12 +60,28 @@ class TurnSystem:
                     }
                 )
             else:
+                if not self.__battle_over:
+                    perform_action(
+                        self.__enemy,
+                        {
+                            "name": "Die",
+                            "function": self.__nothing_func
+                        },
+                        {
+                            "owner":self.__enemy,
+                            "receiver": enemy_cur_char
+                        }
+                    )
+                    self.__deliver_message(f"Congratulations!\n You have defeated the enemy!!\n "
+                                           f"You earn some random amount of experience.")
+                    self.__player_turn=True
+                    self.__battle_over=True
+                    return True
 
-                self.__deliver_message(f"Congratulations!\n You have defeated the enemy!!\n "
-                                       f"You earn some random amount of experience.")
-                self.__player_turn=True
-                return True
         return False
 
     def __deliver_message(self, message):
         self.__messenger.process_message(message)
+
+    def __nothing_func(self,args):
+        pass

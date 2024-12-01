@@ -20,10 +20,11 @@ class Personas:
 
     professor_b = Character("Professor B", 1, 200, 100, 10, 10, Sprites.professor_b)
 
+    teaching_assistant_a = Character("Teach Assist A",1,150,150,5,8,Sprites.teaching_assistant_a)
 class Crews:
     """
     Teams comprised of personas
     """
     default_player=[Personas.rory,Personas.mina,Personas.chris]
 
-    default_enemy=[Personas.professor_a, Personas.professor_b]
+    default_enemy=[Personas.professor_a, Personas.professor_b, Personas.teaching_assistant_a]

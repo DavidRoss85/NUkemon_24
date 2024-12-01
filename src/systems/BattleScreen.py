@@ -327,7 +327,7 @@ class BattleScreen:
             game_events=pygame.event.get()
             self.listen_for_input(game_events)
             if not player_turn and not animating:
-                self.turn_system.cpu_perform_action()
+                self.turn_system.cpu_perform_action(self.perform_action)
 
             self.renderer.render_all()
             self.renderer.flip_screen()

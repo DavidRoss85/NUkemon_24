@@ -22,8 +22,8 @@ class Sprites:
     )
 
     professor_a= Sprite(
-        200,400,350,350,
-        "../assets/images/characters/Male_Professor_2_transparent.png",
+        200,400,275,275,
+        "../assets/images/characters/Male_Professor_1_transparent.png",
         (64,177,64),
     )
 
@@ -31,4 +31,10 @@ class Sprites:
         200,400,350,350,
         "../assets/images/characters/Male_Professor_2_transparent.png",
         (64, 177, 64),
+    )
+
+    teaching_assistant_a = Sprite(
+        200,400,350,350,
+        "../assets/images/characters/Female_TA1_transparent.png",
+        (64,177,64)
     )
