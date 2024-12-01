@@ -6,15 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="16e25840-4465-4280-8191-9037ec0ad863" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/globals/personas.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/globals/personas.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/globals/sprites.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/globals/sprites.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/players/Computer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/players/Computer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sandbox/playground.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/sandbox/playground.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/systems/Animator.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/Animator.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/systems/BattleScreen.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/BattleScreen.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/systems/ComputerLogic.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/ComputerLogic.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/systems/TurnSystem.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/systems/TurnSystem.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/units/Team.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/units/Team.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

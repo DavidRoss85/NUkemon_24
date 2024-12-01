@@ -1,12 +1,16 @@
 from src.players.Computer import Computer
 
 class TurnSystem:
-    def __init__(self,player,enemy):
+    def __init__(self,player,enemy,messenger):
         self.__player_turn=True
         self.__battle_running=False
         self.__player=player
         self.__enemy:Computer=enemy
+        self.__messenger=messenger
 
+
+    def set_messenger(self,messenger):
+        self.__messenger=messenger
 
     def get_player_turn(self):
         return self.__player_turn
@@ -38,11 +42,29 @@ class TurnSystem:
             else:
                 print("GAME OVER")
 
-    def check_win_conditions(self):
+    def check_win_conditions(self,perform_action):
         enemy_cur_char=self.__enemy.get_current_character()
         if enemy_cur_char.get_curr_hp()==0:
             if len(self.__enemy.get_team())>1:
                 my_moves=self.__enemy.get_menu_dictionary()
-                # print("OUCH!")
+                perform_action(
+                    self.__enemy,
+                    {
+                        "name": "eDie",
+                        "function": self.__enemy.send_to_graveyard
+                    },
+                    {
+                        "owner": self.__enemy,
+                        "receiver": enemy_cur_char
+                    }
+                )
             else:
-                print("YOU WIN!!")
+
+                self.__deliver_message(f"Congratulations!\n You have defeated the enemy!!\n "
+                                       f"You earn some random amount of experience.")
+                self.__player_turn=True
+                return True
+        return False
+
+    def __deliver_message(self, message):
+        self.__messenger.process_message(message)

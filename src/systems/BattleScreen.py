@@ -42,16 +42,17 @@ class BattleScreen:
         self.animator=animator
 
 
-        self.fps=30
+        self.fps=60
 
         self.running=False
 
-        self.turn_system= TurnSystem(player,enemy)
         self.player_menu=None
         self.message_box=None
         self.messenger=None
         self.enemy_stat_box=None
         self.player_stat_box=None
+        
+        self.turn_system= TurnSystem(player,enemy,self.messenger)
 
         self.menu_list=[]   #this is set in set_up_interface
         self.target_menu=BattleMenu(self.DEFAULT_TARGET_MENU_X,self.DEFAULT_TARGET_MENU_Y,100,100)
@@ -96,6 +97,7 @@ class BattleScreen:
         self.messenger = Messenger(self.message_box)
         self.player.set_messenger(self.messenger)
         self.enemy.set_messenger(self.messenger)
+        self.turn_system.set_messenger(self.messenger)
 
     def set_background(self):
         """
@@ -257,7 +259,7 @@ class BattleScreen:
         """
         player_turn = self.turn_system.get_player_turn()
         for event in event_list:
-            if player_turn and event.type == KEYDOWN:
+            if player_turn and event.type == KEYDOWN and not self.animator.animating:
                 match event.key:
                     case btn.K_ESCAPE:
                         self.running=False
@@ -307,6 +309,8 @@ class BattleScreen:
         self.messenger.stream_text()
         self.animator.animate_list()
         self.turn_system.check_loss_conditions(self.perform_action)
+        if self.turn_system.check_win_conditions(self.perform_action):
+            pass
 
     def start(self):
         """
@@ -321,7 +325,7 @@ class BattleScreen:
 
             self.perform_updates()
             game_events=pygame.event.get()
-            if not animating: self.listen_for_input(game_events)
+            self.listen_for_input(game_events)
             if not player_turn and not animating:
                 self.turn_system.cpu_perform_action()
 

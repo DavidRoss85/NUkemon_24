@@ -1,6 +1,8 @@
 class Animator:
     SHAKE_AMT=10
     EXIT_AMT=30
+    ATK_AMT=10
+    DFND_AMT=20
     def __init__(self):
         self.queue=[]
         self.animating=False
@@ -11,7 +13,8 @@ class Animator:
             "Defend": self.animate_defend,
             "Switch": self.animate_switch_out,
             "eSwitch": self.animate_switch_in,
-            "Die": self.animate_switch_out
+            "Die": self.animate_switch_out,
+            "eDie": self.animate_switch_in
         }
 
         self.object_animation_dictionary = {
@@ -19,7 +22,8 @@ class Animator:
             "Defend": self.animate_defend,
             "Switch": self.animate_switch_in,
             "eSwitch": self.animate_switch_out,
-            "Die": self.animate_switch_in
+            "Die": self.animate_switch_in,
+            "eDie": self.animate_switch_out
         }
 
 
@@ -66,12 +70,12 @@ class Animator:
     def animate_defend(self, subject):
         self.animating = True
         self.tick += 1
-        if self.tick % 2 == 0:
-            subject.set_x(subject.get_x() - self.SHAKE_AMT)
+        if self.tick<6:
+            subject.get_sprite().blend_color((self.tick*self.DFND_AMT,self.tick*self.DFND_AMT,self.tick*self.DFND_AMT))
         else:
-            subject.set_x(subject.get_x() + self.SHAKE_AMT)
+            subject.get_sprite().restore()
 
-        if self.tick > 20:
+        if self.tick > 10:
             self.tick = 0
             return True
         else:
