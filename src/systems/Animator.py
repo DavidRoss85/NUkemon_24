@@ -1,3 +1,6 @@
+import math
+
+
 class Animator:
     SHAKE_AMT=10
     EXIT_AMT=30
@@ -59,10 +62,12 @@ class Animator:
     def animate_attack(self,subject):
         self.animating=True
         self.tick+=1
-        if self.tick%2==0:
-            subject.set_x(subject.get_x()-self.SHAKE_AMT)
-        else:
-            subject.set_x(subject.get_x() + self.SHAKE_AMT)
+
+        subject.set_y(subject.get_y()+(math.sin(self.tick))*self.ATK_AMT)
+        # if self.tick%2==0:
+        #     subject.set_x(subject.get_x()-self.SHAKE_AMT)
+        # else:
+        #     subject.set_x(subject.get_x() + self.SHAKE_AMT)
 
         if self.tick>20:
             self.tick=0
