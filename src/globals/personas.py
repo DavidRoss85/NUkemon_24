@@ -10,7 +10,7 @@ class Personas:
 
     mina=Character("Mina",1,100,200,10,10,Sprites.emoji_chill)
 
-    chris=Character("Chris", 1, 200, 100, 15, 5,Sprites.rory_battle1)
+    chris=Character("Chris", 1, 200, 100, 25, 5,Sprites.rory_battle1)
 
     enemy1=Character("Wendie",1,200,200,5,5,Sprites.emoji_on_fire,600,200)
 

@@ -9,13 +9,17 @@ class Animator:
         self.subject_animation_dictionary={
             "Attack": self.animate_attack,
             "Defend": self.animate_defend,
-            "Switch": self.animate_switch_out
+            "Switch": self.animate_switch_out,
+            "eSwitch": self.animate_switch_in,
+            "Die": self.animate_switch_out
         }
 
         self.object_animation_dictionary = {
             "Attack": self.animate_receive_damage,
             "Defend": self.animate_defend,
             "Switch": self.animate_switch_in,
+            "eSwitch": self.animate_switch_out,
+            "Die": self.animate_switch_in
         }
 
 
@@ -37,7 +41,7 @@ class Animator:
                 subject=self.queue[0]["subject"]
                 if self.subject_animation_dictionary[action](subject):
                     self.queue.pop(0)
-                    self.animating=False
+                    # self.animating=False
 
             elif "object" in self.queue[0]:
                 subject=self.queue[0]["object"]
@@ -108,7 +112,7 @@ class Animator:
         if self.tick <= 20:
             subject.set_x(subject.get_x() + self.EXIT_AMT)
 
-        if self.tick > 50:
+        if self.tick > 35:
             self.tick = 0
             return True
         else:

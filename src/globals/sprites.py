@@ -16,7 +16,7 @@ class Sprites:
     )
 
     emoji_on_fire = Sprite(
-        200, 400, 100, 100,
+        200, 400, 200, 200,
         "../assets/images/test_images/Emoji-On-Fire.png",
         (64, 177, 64),
     )
@@ -28,7 +28,7 @@ class Sprites:
     )
 
     professor_b= Sprite(
-        200,400,100,100,
+        200,400,350,350,
         "../assets/images/characters/Male_Professor_2_transparent.png",
         (64, 177, 64),
     )

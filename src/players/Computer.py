@@ -48,6 +48,6 @@ class Computer(Team):
         self.get_menu_dictionary()
 
         #<<CPU AI LOGIC GOES HERE>>
-        return careful_AI(player,self,self.animator,self.__move_dict)
+        return careful_AI(self,player,self.animator,self.__move_dict)
 
 

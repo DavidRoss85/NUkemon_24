@@ -2,7 +2,7 @@ from random import randint
 
 
 
-def careful_AI(player,computer,animator,move_dictionary):
+def careful_AI(computer,player,animator,move_dictionary):
 
     me=computer.get_current_character()
     health_percent=(me.get_curr_hp()/me.get_max_hp())*100
@@ -14,11 +14,21 @@ def careful_AI(player,computer,animator,move_dictionary):
         animator.pause_and_animate({"subject":computer,"action":"Attack"})
         animator.pause_and_animate({"object": player, "action": "Attack"})
     else:
-        move_dictionary["Defend"]["function"](computer.get_current_character())
+        decision=randint(1,10)
+        if len(computer.get_team())>1 and decision>=1:
+            for name in computer.get_team():
+                if name!=computer.get_current_character().get_name():
+                    computer.freeze_frame()
+                    move_dictionary["Switch"]["function"](computer.get_team()[name])
+                    animator.pause_and_animate({"subject": computer, "action": "eSwitch"})
+                    animator.pause_and_animate({"object": computer, "action": "eSwitch"})
+                    break
+        else:
+            move_dictionary["Defend"]["function"](computer.get_current_character())
 
     return True
 
-def berserk_AI(player,computer,animator,move_dictionary):
+def berserk_AI(computer,player,animator,move_dictionary):
     move_dictionary["Attack"]["function"](player.get_current_character())
     animator.pause_and_animate({"subject": computer, "action": "Attack"})
     animator.pause_and_animate({"object": player, "action": "Attack"})

@@ -113,6 +113,10 @@ class BattleScreen:
         self.player.set_x(self.PLAYER_X)
         self.player.set_y(self.PLAYER_Y)
 
+        for teammate in self.enemy.get_team().values():
+            teammate.set_x(self.ENEMY_X)
+            teammate.set_y(self.ENEMY_Y)
+
         self.enemy.set_x(self.ENEMY_X)
         self.enemy.set_y(self.ENEMY_Y)
 
@@ -204,25 +208,28 @@ class BattleScreen:
                 self.menu_tree.clear()
                 self.target_menu.set_visible(False) #Hide menu
 
-                #Pause the current sprite frame for the player while setting up animations
-                name["owner"].freeze_frame()
+                self.perform_action(self.player,self.__queued_action,name)
 
-
-                #Execute the stored function on the target (current_character)
-                self.__queued_action["function"](name["receiver"])
-
-                #Add and animation the paused animation queue
-                #Game events will wait for these animations to complete
-                self.animator.pause_and_animate({
-                    "subject": self.player,
-                    "action": self.__queued_action["name"]
-                })
-
-                self.animator.pause_and_animate({
-                    "object": name["owner"],
-                    "action": self.__queued_action["name"]
-                })
                 self.turn_system.set_player_turn(False) #Switch to enemy turn
+
+    def perform_action(self, subject, verb, o_ject):
+        o_ject["owner"].freeze_frame()
+
+        # Execute the stored function on the target (current_character)
+        verb["function"](o_ject["receiver"])
+        print(verb)
+
+        # Add and animation the paused animation queue
+        # Game events will wait for these animations to complete
+        self.animator.pause_and_animate({
+            "subject": subject,
+            "action": verb["name"]
+        })
+
+        self.animator.pause_and_animate({
+            "object": o_ject["owner"],
+            "action": verb["name"]
+        })
 
 
     def create_layers(self,renderer:Renderer):
@@ -259,7 +266,7 @@ class BattleScreen:
                         # self.player.change_character()
                     case btn.K_RIGHT:
                         pass
-                        # self.player.change_character()
+                        self.player.change_character(self.player.get_team()["Mina"])
                     case btn.K_UP:
                         self.menu_list[self.target_menu.get_visible()].prev_menu_item()
                     case btn.K_DOWN:
@@ -299,6 +306,7 @@ class BattleScreen:
         self.update_dictionaries()
         self.messenger.stream_text()
         self.animator.animate_list()
+        self.turn_system.check_loss_conditions(self.perform_action)
 
     def start(self):
         """
