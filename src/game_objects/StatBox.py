@@ -8,7 +8,7 @@ MASK = UC.image_mask_color
 
 class StatBox:
     """
-    Displays the player or enemy Name/Level/HP/MP etc
+    Displays the __player or __enemy Name/Level/HP/MP etc
     """
     #Static constants
     DEFAULT_PIC = UC.stat_box_image

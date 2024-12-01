@@ -6,14 +6,14 @@ MASK = UC.image_mask_color
 
 class Background:
     """
-    This object handles loading the background. Default background is a global constant
+    This object handles loading the __background. Default __background is a global constant
     """
     #Static
-    DEFAULT_BACKGROUND=UC.background_image  #Default background image
+    DEFAULT_BACKGROUND=UC.background_image  #Default __background image
 
     def __init__(self,x,y,width,height,image=None,mask:tuple=MASK,tint:tuple=(0,0,0)):
         """
-        Draws a background image
+        Draws a __background image
         :param x: x coord
         :param y: y coord
         :param width: width
@@ -35,12 +35,12 @@ class Background:
             self.__background_pic=image
 
         self.__mask=mask    #Transparent color
-        self.__tint=tint    #Change hue of background (Additive blending)
+        self.__tint=tint    #Change hue of __background (Additive blending)
 
-        #Generate the background sprite:
+        #Generate the __background sprite:
         self.__sprite = Sprite(x, y, self.__width, self.__height, self.__background_pic, mask, tint)
 
-        #Refresh the  background after generating
+        #Refresh the  __background after generating
         self.clear_self()
 
 
@@ -56,6 +56,22 @@ class Background:
         """
         return self.__y
 
+    def set_x(self,x):
+        """
+        set x coord
+        :param x: x value
+        :return:
+        """
+        self.__x=x
+
+    def set_y(self,y):
+        """
+        set y coord
+        :param y: y value
+        :return:
+        """
+        self.__y=y
+
     def get_visible(self):
         """
         :return: visibility status
@@ -64,14 +80,14 @@ class Background:
 
     def get_sprite(self):
         """
-        Returns the sprite object of the background (Used for rendering)
+        Returns the sprite object of the __background (Used for rendering)
         :return: Sprite
         """
         return self.__sprite
 
     def clear_self(self):
         """
-        Restores background to the way it was when it was first loaded
+        Restores __background to the way it was when it was first loaded
         :return:
         """
         self.__sprite.restore()
@@ -86,7 +102,7 @@ class Background:
 
     def set_background(self,image):
         """
-        Change background image
+        Change __background image
         :param image: (String) Image file path
         :return:
         """
@@ -95,7 +111,7 @@ class Background:
 
     def set_tint(self,tint:tuple=(0,0,0)):
         """
-        Change hue/color of background (Additive blend)
+        Change hue/color of __background (Additive blend)
         :param tint: (R,G,B) tuple
         :return:
         """
