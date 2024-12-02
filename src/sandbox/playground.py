@@ -22,7 +22,7 @@ player1.set_team(Crews.default_player)
 enemy1.set_team(Crews.default_enemy)
 
 
-battle_screen= BattleScreen(player1, enemy1, renderer, animator, 0)
+battle_screen= BattleScreen(player1, enemy1, renderer, animator)
 battle_screen.create_layers(renderer)
 
 # player1.get_current_character().set_max_hp(1500)

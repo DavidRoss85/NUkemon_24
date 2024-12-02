@@ -12,8 +12,10 @@ from pygame.locals import (
 
 from src.game_objects.Background import Background
 from src.game_objects.BattleMenu import BattleMenu
+from src.game_objects.Overlay import Overlay
 from src.game_objects.StatBox import StatBox
 from src.game_objects.InfoBox import InfoBox
+from src.graphics.Sprite import Sprite
 from src.players.Computer import Computer
 from src.systems.Messenger import Messenger
 
@@ -32,12 +34,12 @@ class BattleScreen:
     ENEMY_Y=50
     FONT_HEIGHT=UC.default_font_pixel_height
 
-    def __init__(self,player,enemy,renderer, animator, animation_layer):
+    def __init__(self,player,enemy,renderer, animator):
         self.__renderer=renderer
         self.__player=player
         self.__enemy:Computer=enemy
         self.__background=Background(0, 0, UC.screen_width, UC.screen_height)
-        self.__animation_layer=animation_layer
+        self.__animation_layer=Overlay(0,0,UC.screen_width,UC.screen_height)
         self.__clock=pygame.time.Clock()
         self.__animator=animator
 
@@ -266,7 +268,7 @@ class BattleScreen:
         renderer.add_to_layer(self.__message_box, 2)
         renderer.add_to_layer(self.__player_menu, 3)
         renderer.add_to_layer(self.__target_menu, 3)
-        # __renderer.add_to_layer(effectslayer,4)
+        renderer.add_to_layer(self.__animation_layer,4)
 
     def listen_for_input(self,event_list):
         """

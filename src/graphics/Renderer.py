@@ -8,7 +8,7 @@ import pygame
 
 class Renderer:
     def __init__(self, screen_width=WIDTH, screen_height=HEIGHT, back_color=BACKCOLOR):
-        self.__layers=[[], [], [],[]]
+        self.__layers=[[], [], [],[],[]]
         self.__main_surface=pygame.Surface((screen_width,screen_height))
         self.__back_color=back_color
         self.__main_surface.fill(self.__back_color)
