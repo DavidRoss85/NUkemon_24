@@ -44,7 +44,7 @@ class BattleScreen:
         self.__animator=animator
 
 
-        self.__fps=60
+        self.__fps=120
         self.__intro_started=False
 
         self.__running=False
@@ -240,7 +240,7 @@ class BattleScreen:
         o_ject["owner"].freeze_frame()
 
         # Execute the stored function on the target (current_character)
-        verb["function"](o_ject["receiver"])
+        owner=verb["function"](o_ject["receiver"])
         print(verb)
 
         # Add and animation the paused animation __queue
@@ -251,7 +251,7 @@ class BattleScreen:
         })
 
         self.__animator.pause_and_animate({
-            "object": o_ject["owner"],
+            "object": owner,
             "action": verb["name"]
         })
 
@@ -290,7 +290,7 @@ class BattleScreen:
                         # self.__player.change_character()
                     case btn.K_RIGHT:
                         pass
-                        self.__player.change_character(self.__player.get_team()["Mina"])
+                        # self.__player.change_character(self.__player.get_team()["Mina"])
                     case btn.K_UP:
                         self.__menu_list[self.__target_menu.get_visible()].prev_menu_item()
                     case btn.K_DOWN:
@@ -328,6 +328,7 @@ class BattleScreen:
         :return:
         """
         self.update_dictionaries()
+        self.__player_menu.update_menu(self.__player.get_menu_dictionary())
         self.__messenger.stream_text()
         self.__animator.animate_list()
         self.__turn_system.check_loss_conditions(self.perform_action)

@@ -84,4 +84,4 @@ class TurnSystem:
         self.__messenger.process_message(message)
 
     def __nothing_func(self,args):
-        pass
+        return self.__enemy

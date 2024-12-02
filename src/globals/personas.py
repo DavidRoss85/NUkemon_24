@@ -1,22 +1,23 @@
 from src.units.Character import Character
 from src.globals.sprites import Sprites
+from src.units.MathProfessor import MathProfessor
 
 
 class Personas:
     """
     Characters in the game that have different attributes.
     """
-    rory=Character("Rory", 1, 150, 150, 10, 10,Sprites.rory_battle1)
+    rory=MathProfessor("Rory", 1, 150, 150, 10, 10,Sprites.rory_battle1)
 
-    mina=Character("Mina",1,100,200,10,10,Sprites.emoji_chill)
+    mina=Character("Mina",1,100,200,5,15,Sprites.emoji_chill)
 
-    chris=Character("Chris", 1, 200, 100, 25, 5,Sprites.rory_battle1)
+    chris=Character("Chris", 1, 200, 100, 15, 5,Sprites.rory_battle1)
 
     enemy1=Character("Wendie",1,200,200,5,5,Sprites.emoji_on_fire,600,200)
 
     enemy2=Character("Evil",1,145,100,10,10,Sprites.emoji_chill)
 
-    professor_a=Character("Professor A",1,200,100,10,10,Sprites.professor_a)
+    professor_a=MathProfessor("Professor A",1,200,100,10,10,Sprites.professor_a)
 
     professor_b = Character("Professor B", 1, 200, 100, 10, 10, Sprites.professor_b)
 

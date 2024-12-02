@@ -220,6 +220,8 @@ class BattleMenu:
         """
         #update dictionaries:
         self.__menu_dictionary=new_menu
+        if self.__current_selection_number> len(self.__menu_dictionary)-1:
+            self.__current_selection_number=0
 
         #Verify width and height are specified before updating
         if width is not None:

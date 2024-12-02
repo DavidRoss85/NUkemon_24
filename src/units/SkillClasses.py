@@ -4,12 +4,13 @@ class Skill:
     """
     This is a class to hold skill properties
     """
-    def __init__(self, name,s_type,dmg,cost,effect):
+    def __init__(self, name,s_type,dmg,cost,effect=None,potency=0):
         self.name = name
         self.s_type=s_type
         self.dmg=dmg
         self.cost=cost
         self.effect=effect
+        self.potency=potency
 #-----------------------Base Stats---------------------------
 class Stats:
     def __init__(self,hp,mp,strength, intel):

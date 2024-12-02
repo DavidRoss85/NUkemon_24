@@ -3,6 +3,7 @@ from random import randint
 
 from src.globals.special_effects import SpecialEffects
 from src.graphics.Sprite import Sprite
+from src.globals.UC import UC
 
 
 class Animator:
@@ -20,6 +21,9 @@ class Animator:
         self.__animating=False
         self.__tick=0
 
+        self.__middle_x=UC.screen_width/2
+        self.__middle_y=UC.screen_height/2
+
         #Stores the original coords of objects that were moved around:
         self.__org_x=0
         self.__org_x2=0
@@ -33,6 +37,7 @@ class Animator:
             "Defend": self.animate_defend,
             "Switch": self.animate_switch_out,
             "eSwitch": self.animate_switch_in,
+            "Discreet Math": self.animate_discreet_math,
             "KO": self.animate_ko,
             "eKO": self.animate_eko,
             "Die": self.animate_death_1,
@@ -44,6 +49,7 @@ class Animator:
             "Defend": self.animate_defend,
             "Switch": self.animate_switch_in,
             "eSwitch": self.animate_switch_out,
+            "Discreet Math": self.animate_confusion,
             "KO": self.animate_switch_in,
             "eKO": self.animate_switch_out,
             "Die": self.animate_death_1
@@ -246,8 +252,6 @@ class Animator:
         stats2=self.__object_dictionary["enemy_stat_box"]
         m_box=self.__object_dictionary["messenger"]
 
-
-
         if self.__tick<1:
             self.__org_x=player.get_x()
             self.__org_x2=enemy.get_x()
@@ -258,10 +262,7 @@ class Animator:
             stats1.set_visible(False)
             stats2.set_visible(False)
 
-
-
         self.__tick+=1
-
 
         if self.__tick<125 and player.get_x()>self.__org_x:
             player.set_x(player.get_x()-self.INTRO_MOVE_AMT)
@@ -271,7 +272,6 @@ class Animator:
             if not self.__done_bool:
                 m_box.process_message("A wild professor appears!\n ")
                 self.__done_bool = True
-
 
         if self.__tick>175:
             self.__tick=0
@@ -285,3 +285,31 @@ class Animator:
             return True
         else:
             return False
+
+    def animate_discreet_math(self,subject):
+        self.__animating=True
+
+        a_layer = self.__object_dictionary["animation_layer"]
+        effect = SpecialEffects.discreet_math
+        ani_ref = f"{subject.get_name()}discreet_math"
+
+        if self.__tick < 1:
+            self.__org_x = self.__middle_x-300
+            self.__org_y = self.__middle_y-300
+            a_layer.add_to_queue(ani_ref, effect, self.__org_x, self.__org_y)
+
+        self.__tick += 1
+
+        effect.set_frame_index(((self.__tick // 5) % effect.get_max_frames()))
+
+        if self.__tick>40:
+            a_layer.remove_from_queue(ani_ref)
+
+        if self.__tick>50:
+            self.__tick=0
+            return True
+        else:
+            return False
+
+    def animate_confusion(self,subject):
+        return True

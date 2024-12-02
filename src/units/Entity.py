@@ -1,4 +1,5 @@
 import random
+from random import randint
 
 from src.systems.Messenger import Messenger
 from src.units.SkillClasses import *
@@ -21,8 +22,10 @@ class Entity:
         self.__battle_stats=Stats(hp,mp,strength,intel)
         self.__condition=Condition()
         self.__target=self
+        self.__owner=self
+        self.__profession=None
         self.__messenger=None
-        self.__attack_move=Skill("Punch","physical",self.__base_stats.strength,0,"none")
+        self.__attack_move=Skill("Punch","physical",self.__base_stats.strength,0,None)
         self.__move_dict={
             "Attack": {"name": "Attack", "target": "active", "function":self.attack},
             "Defend":{"name": "Defend", "target":"self","function":self.defend},
@@ -72,6 +75,11 @@ class Entity:
     def get_battle_effect(self):
         return self.__battle_stats.effect
 
+    def get_owner(self):
+        return self.__owner
+
+    def get_profession(self):
+        return self.__profession
 
     #Setters
     def set_name(self,name):
@@ -110,6 +118,12 @@ class Entity:
     def set_level(self,level):
         self.__level=level
 
+    def set_owner(self,owner):
+        self.__owner=owner
+
+    def set_profession(self,profession):
+        self.__profession=profession
+
     def set_target(self,target):
         self.__target=target
 
@@ -123,19 +137,21 @@ class Entity:
         if target is None:
             target=self
 
-        if "confusion" in self.__battle_stats.effect:
-            self.deliver_message(self.__messenger,f"{self.__name} is confused...\n ")
+        if "confused" in self.__battle_stats.effect:
+            self.deliver_message(f"{self.__name} is confused...\n ")
             target=self
 
         #MATH TO CALCULATE ATTACK:
         self.__attack_move.dmg= self.__battle_stats.strength * roll_die(ATTACK_DICE)
 
-        self.deliver_message(self.__messenger,f"{self.__name} attacks with {self.__attack_move.name} for {self.__attack_move.dmg}!\n ")
+        self.deliver_message(f"{self.__name} attacks with {self.__attack_move.name} for {self.__attack_move.dmg}!\n ")
         target.receive_attack(self.__attack_move)
+        return target.get_owner()
 
     def defend(self,args=None):
-        self.deliver_message(self.__messenger,f"{self.__name} guards themself.\n ")
+        self.deliver_message(f"{self.__name} guards themself.\n ")
         self.__condition.shield_up=True
+        return self.get_owner()
 
     def receive_attack(self,attack):
         is_heal=False   #Check if "Attack heals"
@@ -154,7 +170,7 @@ class Entity:
             self.__condition.affinities.get(attack.s_type) is True):
 
             #Update message
-            self.deliver_message(self.__messenger,f"{self.__name} is resistant to {attack.name} attack.\n")
+            self.deliver_message(f"{self.__name} is resistant to {attack.name} attack.\n")
             #Affinities only deliver half damage
             final_dmg=int(final_dmg/AFFINITY_REDUCTION)
 
@@ -162,7 +178,7 @@ class Entity:
         if (self.__condition.aversions.get(attack.s_type) is not None and
                 self.__condition.affinities.get(attack.s_type) is True):
             # Update message
-            self.deliver_message(self.__messenger, f"{attack.name} is very effective!\n")
+            self.deliver_message(f"{attack.name} is very effective!\n")
             # Aversions do double damage:
             final_dmg = int(final_dmg *AVERSION_MULTIPLIER)
 
@@ -170,20 +186,28 @@ class Entity:
         if (self.__condition.heal_affinity.get(attack.s_type) is not None and
                 self.__condition.affinities.get(attack.s_type) is True):
             # Update message
-            self.deliver_message(self.__messenger, f"HP UP\n")
+            self.deliver_message(f"HP UP\n")
             # Healers give health:
             is_heal=True
 
         if is_heal:
             # Update message
-            self.deliver_message(self.__messenger, f"{self.__name} is healed for {final_dmg} points of health.\n ")
+            self.deliver_message(f"{self.__name} is healed for {final_dmg} points of health.\n ")
             # Add to health:
             self.set_curr_hp(self.__battle_stats.hp+final_dmg)
         else:
             #Update message
-            self.deliver_message(self.__messenger,f"{self.__name} receives {final_dmg} points of damage.\n ")
+            self.deliver_message(f"{self.__name} receives {final_dmg} points of damage.\n ")
             #Subtract final damage from health:
             self.set_curr_hp(self.__battle_stats.hp-final_dmg)
+
+        #Status effects. More intel resists status effects based on their potency:
+        if attack.effect is not None:
+            resistance=self.__battle_stats.intel+randint(0,6)
+            if attack.potency>resistance:
+                if attack.effect not in self.__battle_stats.effect:
+                    self.deliver_message(f"{self.get_name()} is {attack.effect}.\n ")
+                    self.__battle_stats.effect.append(attack.effect)
 
 
     def execute_move(self,command):
@@ -196,6 +220,6 @@ class Entity:
     def stub_command(self):
         pass
 
-    def deliver_message(self, messenger:Messenger, message):
-        messenger.process_message(message)
-        print(message)
+    def deliver_message(self, message):
+        self.__messenger.process_message(message)
+        print(f"Entity:{message}")

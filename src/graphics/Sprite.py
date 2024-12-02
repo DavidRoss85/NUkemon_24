@@ -89,15 +89,19 @@ class Sprite(pygame.sprite.Sprite):
         """
         self.__original_surface = self.__surface.copy()  # Make whatever the image is the new default
 
-    def draw_on_surface(self, surface: pygame.Surface, x=0, y=0):
+    def draw_on_surface(self, surface: pygame.Surface, x=0, y=0,scale:bool=False):
         """
         Draw another surface onto the __sprite
+        :param scale: Boolean decides if to scale the surface
         :param surface: pre-rendered surface to overlay
         :param x: relative x location
         :param y: relative y location
         :return:
         """
-        rect = surface.get_rect()
+        new_surf=surface
+        if scale:
+            new_surf=pygame.transform.scale(surface,(self.__rect.width,self.__rect.height))
+        rect = new_surf.get_rect()
         rect.x = x
         rect.y = y
         self.__surface.blit(surface, rect)

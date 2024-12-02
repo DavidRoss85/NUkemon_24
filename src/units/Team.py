@@ -47,7 +47,7 @@ class Team:
         self.get_current_character().set_y(y)
 
     def get_menu_dictionary(self):
-        # self.get_current_character().update_move_dictionary(self.get_menu_dictionary())
+        self.__move_dict=dict()
         self.__move_dict.update(self.get_current_character().get_move_dictionary())
         self.__move_dict.update(self.get_team_dictionary())
         # self.move_list= self.__current_character.get_move_list() + self.get_menu_dictionary()
@@ -82,9 +82,11 @@ class Team:
             del self.__team[team_member.get_name()]
             self.__deliver_message(f"{self.__current_character.get_name()} has lost consciousness!\n ")
             self.change_character(self.__team[next(iter(self.__team))])
+            return self
 
 
     def add_team_member(self, team_member):
+        team_member.set_owner(self)
         self.__team[team_member.get_name()] = team_member
         if self.__current_character is None:
             self.change_character(team_member)
@@ -97,6 +99,8 @@ class Team:
                                        f"{self.__current_character.get_name()}\n ")
 
             self.__current_character = self.__team[target.get_name()]
+            self.get_menu_dictionary()
+            return self
 
     def get_current_character(self):
         return self.__current_character
