@@ -1,3 +1,4 @@
+import pygame
 
 from src.globals.personas import Personas, Crews
 from src.systems.BattleScreen import BattleScreen
@@ -16,7 +17,6 @@ animator=Animator()
 
 player1=Player()
 enemy1=Computer()
-enemy1.animator=animator
 
 player1.set_team(Crews.default_player)
 enemy1.set_team(Crews.default_enemy)

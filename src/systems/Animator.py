@@ -1,6 +1,9 @@
 import math
 from random import randint
 
+from src.globals.special_effects import SpecialEffects
+from src.graphics.Sprite import Sprite
+
 
 class Animator:
     SHAKE_AMT=10
@@ -111,11 +114,19 @@ class Animator:
 
     def animate_receive_damage(self, subject):
         self.__animating = True
+        a_layer = self.__object_dictionary["animation_layer"]
+        punches = SpecialEffects.punches
+        ani_ref=f"{subject.get_name()}punches"
+
         if self.__tick<1:
             self.__org_x=subject.get_x()
             self.__org_y=subject.get_y()
+            a_layer.add_to_queue(ani_ref, punches,subject.get_x(),subject.get_y())
 
         self.__tick += 1
+
+        punches.set_frame_index(((self.__tick // 5) % 5))
+
         if self.__tick<=20:   #Do animation for designated ticks
             y_bool=randint(0,1)
             if y_bool:
@@ -133,6 +144,8 @@ class Animator:
             subject.set_x(self.__org_x)
             subject.set_y(self.__org_y)
             subject.get_sprite().restore()
+            a_layer.remove_from_queue(ani_ref)
+
 
         if self.__tick > 50: #Pause a bit before releasing animation
             self.__tick = 0
@@ -233,6 +246,8 @@ class Animator:
         stats2=self.__object_dictionary["enemy_stat_box"]
         m_box=self.__object_dictionary["messenger"]
 
+
+
         if self.__tick<1:
             self.__org_x=player.get_x()
             self.__org_x2=enemy.get_x()
@@ -244,7 +259,9 @@ class Animator:
             stats2.set_visible(False)
 
 
+
         self.__tick+=1
+
 
         if self.__tick<125 and player.get_x()>self.__org_x:
             player.set_x(player.get_x()-self.INTRO_MOVE_AMT)
@@ -253,7 +270,8 @@ class Animator:
         else:
             if not self.__done_bool:
                 m_box.process_message("A wild professor appears!\n ")
-                self.__done_bool=True
+                self.__done_bool = True
+
 
         if self.__tick>175:
             self.__tick=0

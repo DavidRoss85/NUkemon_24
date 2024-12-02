@@ -102,6 +102,8 @@ class BattleScreen:
         self.__enemy.set_messenger(self.__messenger)
         self.__turn_system.set_messenger(self.__messenger)
 
+        self.__enemy.set_animator(self.__animator)
+
         self.__animator.update_object_dictionary({
             "enemy_stat_box":self.__enemy_stat_box,
             "player_stat_box": self.__player_stat_box,
@@ -110,7 +112,8 @@ class BattleScreen:
             "messenger":self.__messenger,
             "player":self.__player,
             "enemy": self.__enemy,
-            "background":self.__background
+            "background":self.__background,
+            "animation_layer":self.__animation_layer
         })
 
     def set_background(self, image=None):

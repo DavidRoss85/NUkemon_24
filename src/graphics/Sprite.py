@@ -1,43 +1,47 @@
 from src.globals.UC import UC
-MASK=UC.image_mask_color
+
+MASK = UC.image_mask_color
 
 import pygame
 from pygame.locals import RLEACCEL
+
 
 class Sprite(pygame.sprite.Sprite):
     """
     Contains a pygame __sprite
     """
-    def __init__(self, x, y, width, height, image=None, mask_color=MASK, blend_color:tuple=None):
+
+    def __init__(self, x, y, width, height, image=None, mask_color=MASK, blend_color: tuple = None,
+                 stretch: bool = True):
         super().__init__()
-        self.__surface=pygame.Surface((width,height))   #Surface that renders all information
+        self.__surface = pygame.Surface((width, height))  #Surface that renders all information
         if image is not None:
-            self.__image_path=image #Path to image used
-            self.__image=pygame.image.load(self.__image_path)  #Loads image from file
-            self.__image=pygame.transform.scale(self.__image,(width,height))    #Stretches image
-            self.__surface=self.__image #Set image to surface
+            self.__image_path = image  #Path to image used
+            self.__image = pygame.image.load(self.__image_path)  #Loads image from file
+            if stretch:
+                self.__image = pygame.transform.scale(self.__image, (width, height))  #Stretches image
+            else:
+                self.__surface = pygame.Surface((self.__image.get_width(), self.__image.get_height()))
+            self.__surface = self.__image  #Set image to surface
         else:
-            self.__surface.fill((0,0,0)) #All black surface
+            self.__surface.fill((0, 0, 0))  #All black surface
 
-
-        self.__surface.set_colorkey(mask_color,RLEACCEL)    #Set transparent __color
-        self.__mask_color=mask_color
+        self.__surface.set_colorkey(mask_color, RLEACCEL)  #Set transparent __color
+        self.__mask_color = mask_color
 
         #If user specified blend:
         if blend_color is not None:
-
             self.__surface.fill(blend_color, special_flags=pygame.BLEND_ADD)  # For blending colors
             #Recalculate MASK __color:
-            new_mask = self.__blend_mask(blend_color,self.__mask_color)
+            new_mask = self.__blend_mask(blend_color, self.__mask_color)
             #Re apply MASK for transparent sections
-            self.__surface.set_colorkey(new_mask,RLEACCEL)
-            self.__mask_color=new_mask
+            self.__surface.set_colorkey(new_mask, RLEACCEL)
+            self.__mask_color = new_mask
 
-        self.__original_surface=self.__surface.copy()   #Keep a copy of the original created surface
-        self.__rect=self.__surface.get_rect()   #Rect object for __sprite dimensions
-        self.__rect.x=x #Set __sprite location x
-        self.__rect.y=y #Set __sprite location y
-
+        self.__original_surface = self.__surface.copy()  #Keep a copy of the original created surface
+        self.__rect = self.__surface.get_rect()  #Rect object for __sprite dimensions
+        self.__rect.x = x  #Set __sprite location x
+        self.__rect.y = y  #Set __sprite location y
 
     #Getters:
     def get_rect(self):
@@ -64,19 +68,18 @@ class Sprite(pygame.sprite.Sprite):
     def get_mask(self):
         return self.__mask_color
 
-
     #Setters:
-    def set_x(self,x):
-        self.__rect.x=x
+    def set_x(self, x):
+        self.__rect.x = x
 
-    def set_y(self,y):
-        self.__rect.y=y
+    def set_y(self, y):
+        self.__rect.y = y
 
-    def set_width(self,width):
-        self.__rect.width=width
+    def set_width(self, width):
+        self.__rect.width = width
 
-    def set_height(self,height):
-        self.__rect.height=height
+    def set_height(self, height):
+        self.__rect.height = height
 
     def set_new_default(self):
         """
@@ -86,7 +89,7 @@ class Sprite(pygame.sprite.Sprite):
         """
         self.__original_surface = self.__surface.copy()  # Make whatever the image is the new default
 
-    def draw_on_surface(self,surface:pygame.Surface,x=0,y=0):
+    def draw_on_surface(self, surface: pygame.Surface, x=0, y=0):
         """
         Draw another surface onto the __sprite
         :param surface: pre-rendered surface to overlay
@@ -94,31 +97,31 @@ class Sprite(pygame.sprite.Sprite):
         :param y: relative y location
         :return:
         """
-        rect=surface.get_rect()
-        rect.x=x
-        rect.y=y
-        self.__surface.blit(surface,rect)
+        rect = surface.get_rect()
+        rect.x = x
+        rect.y = y
+        self.__surface.blit(surface, rect)
 
     def restore(self):
         """
         Returns the __sprite to its original construction
         :return:
         """
-        self.__surface=self.__original_surface.copy()
+        self.__surface = self.__original_surface.copy()
 
-    def blend_color(self,blend_color:tuple=(0,0,0)):
+    def blend_color(self, blend_color: tuple = (0, 0, 0)):
         """
         Changes the tint/__color of the object
         :param blend_color: tuple(R,G,B)
         :return:
         """
-        self.__surface=self.__original_surface.copy()
+        self.__surface = self.__original_surface.copy()
         self.__surface.fill(blend_color, special_flags=pygame.BLEND_ADD)  # For blending colors
-        new_mask = self.__blend_mask(blend_color,self.__mask_color)
+        new_mask = self.__blend_mask(blend_color, self.__mask_color)
 
         self.__surface.set_colorkey(new_mask, RLEACCEL)
 
-    def __blend_mask(self,blend_color:tuple,mask_color:tuple)->tuple:
+    def __blend_mask(self, blend_color: tuple, mask_color: tuple) -> tuple:
         """
         Returns new MASK __color for maintaining transparency features
         :param blend_color: tuple(R,G,B)
