@@ -3,7 +3,7 @@ from src.graphics.Effect import Effect
 from src.graphics.Sprite import Sprite
 
 
-def generate_effect_array(image, width, height):
+def generate_effect_array(image, width, height,mask=(64,177,64)):
     sprite_list = []
     big_picture = Sprite(0, 0, 0, 0, image, (0, 0, 0), None, False)
     for h in range(0,big_picture.get_height(),height):
@@ -11,7 +11,7 @@ def generate_effect_array(image, width, height):
         for w in range(0,big_picture.get_width(),width):
             if big_picture.get_width()<w+width:break
             new_sprite=Sprite(0,0,width,height,None,(0,0,0),(127,127,127))
-            cropped_image=Sprite(0,0,0,0,image,(64,177,64),(0,0,0),False)
+            cropped_image=Sprite(0,0,0,0,image,mask,(0,0,0),False)
             new_sprite.draw_on_surface(cropped_image.get_surface(),
                                        -w,
                                        -h)
@@ -22,14 +22,15 @@ def generate_effect_array(image, width, height):
 
 class SpecialEffects:
 
-    punches=Effect(0,0,400,400,
-                 generate_effect_array(
-                     "../assets/images/effects/punches_effect.bmp",
-                     250,250
-                 ),
-                 "slash")
+    punches= Effect(0, 0, 400, 400, generate_effect_array(
+        "../assets/images/effects/punches_effect.bmp",
+        250, 250
+    ))
 
-
+    discreet_math= Effect(0, 0, 400, 400, generate_effect_array(
+        "../assets/images/effects/discreet_math_effect.bmp",
+        250, 250,(255,255,255)
+    ))
 
 
 

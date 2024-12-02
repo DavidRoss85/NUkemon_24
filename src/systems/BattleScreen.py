@@ -44,7 +44,7 @@ class BattleScreen:
         self.__animator=animator
 
 
-        self.__fps=30
+        self.__fps=60
         self.__intro_started=False
 
         self.__running=False

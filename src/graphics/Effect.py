@@ -2,7 +2,7 @@ from src.graphics.Sprite import Sprite
 
 
 class Effect:
-    def __init__(self,x,y,width,height,frames=[],name=""):
+    def __init__(self,x,y,width,height,frames=[]):
         self.__x=x
         self.__y=y
         self.__width=width
@@ -11,7 +11,7 @@ class Effect:
         self.__frames=frames #List of surfaces
         self.__frame_index=0
         self.__max_frames=len(self.__frames)
-        self.name=name
+
 
         self.__sprite=Sprite(self.__x,self.__y,self.__width,self.__height,None,(0,0,0),(127,127,127))
 
@@ -52,8 +52,10 @@ class Effect:
 
     def set_frame_index(self,num):
         self.__frame_index= 0 if num>len(self.__frames)-1 else num
-        # self.__frame_index=4
-        # self.__frame_index=num
+
+    def get_max_frames(self):
+        return self.__max_frames
+
     def get_frame_index(self):
         return self.__frame_index
 

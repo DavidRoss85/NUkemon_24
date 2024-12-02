@@ -125,9 +125,9 @@ class Animator:
 
         self.__tick += 1
 
-        punches.set_frame_index(((self.__tick // 5) % 5))
+        punches.set_frame_index(((self.__tick // 5) % punches.get_max_frames()))
 
-        if self.__tick<=20:   #Do animation for designated ticks
+        if self.__tick<=50:   #Do animation for designated ticks
             y_bool=randint(0,1)
             if y_bool:
                 subject.set_y(subject.get_y() - self.SHAKE_AMT)
