@@ -90,8 +90,11 @@ class StatBox:
         Displays the green health bar and text with max hp
         :return:
         """
+
         curr_char=self.__linked_object.get_current_character()
         max_hp=curr_char.get_max_hp()
+        if max_hp==0: return
+
         curr_hp=curr_char.get_curr_hp()
         self.__displayed_health= self.__displayed_health-1 if curr_hp < self.__displayed_health <= max_hp else curr_hp
         health_fraction= self.__displayed_health/max_hp
@@ -114,6 +117,8 @@ class StatBox:
         """
         curr_char = self.__linked_object.get_current_character()
         max_mp=curr_char.get_max_mp()
+        if max_mp==0: return
+
         curr_mp=curr_char.get_curr_mp()
         self.__displayed_mana=self.__displayed_mana-1 if curr_mp < self.__displayed_mana < max_mp else curr_mp
         mana_fraction = curr_mp / max_mp

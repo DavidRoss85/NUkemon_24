@@ -3,6 +3,7 @@ from random import randint
 
 from src.systems.Messenger import Messenger
 from src.units.SkillClasses import *
+from src.utils.utils import merge_dictionaries
 
 #Declare constants for game tuning
 ATTACK_DICE = 6
@@ -81,6 +82,9 @@ class Entity:
     def get_profession(self):
         return self.__profession
 
+    def get_condition(self):
+        return self.__condition
+
     #Setters
     def set_name(self,name):
         self.__name=name
@@ -131,6 +135,10 @@ class Entity:
         self.__messenger=messenger
     # def set_move_list(self):
     #     return self.__move_dict
+
+    def set_condition(self,condition:Condition):
+        self.__condition=condition
+
 
     def attack(self,target=None):
 
@@ -203,11 +211,17 @@ class Entity:
 
         #Status effects. More intel resists status effects based on their potency:
         if attack.effect is not None:
+            #Check for immunity:
+            if attack.effect in self.__condition.immunities:
+                self.deliver_message(f"{self.get_name()} is immune to {attack.effect}.\n ")
+                return
+
+            #Calculate resistance:
             resistance=self.__battle_stats.intel+randint(0,6)
             if attack.potency>resistance:
                 if attack.effect not in self.__battle_stats.effect:
                     self.deliver_message(f"{self.get_name()} is {attack.effect}.\n ")
-                    self.__battle_stats.effect.append(attack.effect)
+                    self.__battle_stats.effect[attack.effect]=attack.effect_duration
 
 
     def execute_move(self,command):
@@ -215,7 +229,7 @@ class Entity:
         # self.__move_dict[command]()
 
     def update_move_dictionary(self, move):
-        self.__move_dict.update(move)
+        self.__move_dict.update(merge_dictionaries(move,self.__move_dict))
 
     def stub_command(self):
         pass

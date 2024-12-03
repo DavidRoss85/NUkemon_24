@@ -38,6 +38,7 @@ class Animator:
             "Switch": self.animate_switch_out,
             "eSwitch": self.animate_switch_in,
             "Discreet Math": self.animate_discreet_math,
+            "Growl":self.animate_defend,
             "KO": self.animate_ko,
             "eKO": self.animate_eko,
             "Die": self.animate_death_1,
@@ -50,6 +51,7 @@ class Animator:
             "Switch": self.animate_switch_in,
             "eSwitch": self.animate_switch_out,
             "Discreet Math": self.animate_confusion,
+            "Growl": self.animate_nothing,
             "KO": self.animate_switch_in,
             "eKO": self.animate_switch_out,
             "Die": self.animate_death_1
@@ -270,7 +272,7 @@ class Animator:
             background.set_x(background.get_x()+self.INTRO_MOVE_AMT)
         else:
             if not self.__done_bool:
-                m_box.process_message("A wild professor appears!\n ")
+                m_box.process_message(f"A wild {enemy.get_current_character().get_profession()} appears!\n ")
                 self.__done_bool = True
 
         if self.__tick>175:
@@ -312,4 +314,7 @@ class Animator:
             return False
 
     def animate_confusion(self,subject):
+        return True
+
+    def animate_nothing(self,subject):
         return True

@@ -18,6 +18,7 @@ class UC:
     professor_a_image_01= "../assets/images/characters/Male_Professor_1_transparent.png"
     professor_b_image_01= "../assets/images/characters/Male_Professor_2_transparent.png"
     t_a_image_01="../assets/images/characters/Female_TA1_transparent.png"
+    nu_husky_image_01="../assets/images/characters/NU_Husky_transparent.png"
 
  #Default Font settings:
     default_font= "../assets/fonts/Grand9K_Pixel.ttf"

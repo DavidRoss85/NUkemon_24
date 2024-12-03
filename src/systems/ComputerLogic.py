@@ -2,7 +2,7 @@ from random import randint
 
 
 
-def careful_AI(computer,player,animator,move_dictionary):
+def careful_ai(computer,player,animator,move_dictionary):
 
     me=computer.get_current_character()
     target=player.get_current_character()
@@ -40,7 +40,7 @@ def careful_AI(computer,player,animator,move_dictionary):
 
     return True
 
-def berserk_AI(computer,player,animator,move_dictionary):
+def berserk_ai(computer,player,animator,move_dictionary):
 
     me = computer.get_current_character()
     target = player.get_current_character()
@@ -97,3 +97,10 @@ def math_professor_ai(computer,player,animator,move_dictionary):
             animator.pause_and_animate({"object": target_owner, "action": "Attack"})
 
     return True
+
+
+ai_dictionary={
+    "Math professor": math_professor_ai,
+    "Husky": berserk_ai,
+    "generic": careful_ai
+}

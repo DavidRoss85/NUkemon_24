@@ -39,3 +39,8 @@ class Sprites:
         UC.t_a_image_01,
         (64,177,64)
     )
+
+    nu_husky=Sprite(
+        200,400,350,350,
+        UC.nu_husky_image_01,
+    )

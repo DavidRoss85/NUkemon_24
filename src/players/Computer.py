@@ -3,7 +3,7 @@ from random import randint
 from src.globals.UC import UC
 from src.systems.Animator import Animator
 from src.units.Team import Team
-from src.systems.ComputerLogic import careful_AI, math_professor_ai
+from src.systems.ComputerLogic import ai_dictionary #contains a list of the functions that govern cpu behavior
 
 
 class Computer(Team):
@@ -19,9 +19,10 @@ class Computer(Team):
         moves=self.get_menu_dictionary()
 
         #<<CPU AI LOGIC GOES HERE>>
-        if self.get_current_character().get_profession()=="math professor":
-            return math_professor_ai(self,player,self.__animator,moves)
+        profession=self.get_current_character().get_profession()
+        if profession in ai_dictionary:
+            return ai_dictionary[profession](self,player,self.__animator,moves)
         else:
-            return careful_AI(self,player,self.__animator,moves)
+            return ai_dictionary["generic"](self,player,self.__animator,moves)
 
 
