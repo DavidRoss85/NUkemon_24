@@ -1,6 +1,7 @@
 from src.globals.sprites import Sprites
 from src.graphics.Effect import Effect
 from src.graphics.Sprite import Sprite
+from src.globals.UC import *
 
 
 def generate_effect_array(image, width, height,new_width,new_height,mask=(64,177,64)):
@@ -24,12 +25,12 @@ def generate_effect_array(image, width, height,new_width,new_height,mask=(64,177
 class SpecialEffects:
 
     punches= Effect(0, 0, 250, 250, generate_effect_array(
-        "../assets/images/effects/punches_effect.bmp",
+        UC.punch_effect_image,
         250, 250,250,250
     ))
 
     discreet_math= Effect(0, 0, 600, 600, generate_effect_array(
-        "../assets/images/effects/discreet_math_effect.bmp",
+        UC.discreet_math_effect_image,
         250, 250,600,600,(255,255,255)
     ))
 

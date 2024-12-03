@@ -1,10 +1,16 @@
 import pygame
+import sys
+import os
+sys.path.insert(0,os.path.join(os.path.dirname(__file__),'../..'))
+
+# exit(0)
+from src.globals.UC import UC
+print(f"\n\n\nAbsolute path: {UC.absolute_path}\n\n\n\n\n")
 
 from src.globals.personas import Personas, Crews
 from src.systems.BattleScreen import BattleScreen
 from src.systems.Animator import Animator
 from src.graphics.Renderer import Renderer
-from src.globals.UC import UC
 
 from src.players.Human import Player
 from src.players.Computer import Computer

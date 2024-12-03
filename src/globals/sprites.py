@@ -12,13 +12,13 @@ class Sprites:
     )
     emoji_chill = Sprite(
         200, 400, 200, 200,
-        "../assets/images/test_images/Emoji-Chill.png",
+        f"{UC.absolute_path}/assets/images/test_images/Emoji-Chill.png",
         (64, 177, 64),
     )
 
     emoji_on_fire = Sprite(
         200, 400, 200, 200,
-        "../assets/images/test_images/Emoji-On-Fire.png",
+        f"{UC.absolute_path}/assets/images/test_images/Emoji-On-Fire.png",
         (64, 177, 64),
     )
 
