@@ -98,13 +98,14 @@ class Sprite(pygame.sprite.Sprite):
         :param y: relative y location
         :return:
         """
-        new_surf=surface
+        new_surf=surface.copy()
         if scale:
-            new_surf=pygame.transform.scale(surface,(self.__rect.width,self.__rect.height))
+            new_surf=pygame.transform.scale(new_surf,(self.__rect.width,self.__rect.height))
+
         rect = new_surf.get_rect()
         rect.x = x
         rect.y = y
-        self.__surface.blit(surface, rect)
+        self.__surface.blit(new_surf, rect)
 
     def restore(self):
         """

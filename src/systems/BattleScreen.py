@@ -44,7 +44,7 @@ class BattleScreen:
         self.__animator=animator
 
 
-        self.__fps=120
+        self.__fps=30
         self.__intro_started=False
 
         self.__running=False
@@ -346,7 +346,7 @@ class BattleScreen:
         :return:
         """
         self.__running=True
-        self.show_battle_intro()
+        # self.show_battle_intro()
 
         # self.__turn_system.set_player_turn(False)
         while self.__running:

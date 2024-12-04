@@ -296,18 +296,18 @@ class Animator:
         ani_ref = f"{subject.get_name()}discreet_math"
 
         if self.__tick < 1:
-            self.__org_x = self.__middle_x-300
-            self.__org_y = self.__middle_y-300
+            self.__org_x = self.__middle_x-250
+            self.__org_y = self.__middle_y-450
             a_layer.add_to_queue(ani_ref, effect, self.__org_x, self.__org_y)
 
         self.__tick += 1
 
         effect.set_frame_index(((self.__tick // 5) % effect.get_max_frames()))
 
-        if self.__tick>40:
+        if self.__tick>60:
             a_layer.remove_from_queue(ani_ref)
 
-        if self.__tick>50:
+        if self.__tick>70:
             self.__tick=0
             return True
         else:

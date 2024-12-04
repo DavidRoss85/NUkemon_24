@@ -3,10 +3,8 @@ import sys
 import os
 sys.path.insert(0,os.path.join(os.path.dirname(__file__),'../..'))
 
-# exit(0)
-from src.globals.UC import UC
-print(f"\n\n\nAbsolute path: {UC.absolute_path}\n\n\n\n\n")
 
+from src.globals.UC import UC
 from src.globals.personas import Personas, Crews
 from src.systems.BattleScreen import BattleScreen
 from src.systems.Animator import Animator
@@ -14,6 +12,13 @@ from src.graphics.Renderer import Renderer
 
 from src.players.Human import Player
 from src.players.Computer import Computer
+
+# #Uncomment this code to count lines in project:
+# from src.utils.utils import count_lines_in_project
+# x=count_lines_in_project(UC.absolute_path)
+# print(f"Total lines of code in project: {x}")
+# exit(0)
+
 
 SCREEN_WIDTH = UC.screen_width
 SCREEN_HEIGHT = UC.screen_height
