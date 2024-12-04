@@ -73,8 +73,8 @@ class Entity:
     def get_target(self):
         return self.__target
 
-    def get_battle_effect(self):
-        return self.__battle_stats.effect
+    def get_battle_effects(self):
+        return self.__battle_stats.effects
 
     def get_owner(self):
         return self.__owner
@@ -133,8 +133,7 @@ class Entity:
 
     def set_messenger(self,messenger):
         self.__messenger=messenger
-    # def set_move_list(self):
-    #     return self.__move_dict
+
 
     def set_condition(self,condition:Condition):
         self.__condition=condition
@@ -145,7 +144,7 @@ class Entity:
         if target is None:
             target=self
 
-        if "confused" in self.__battle_stats.effect:
+        if "confused" in self.__battle_stats.effects:
             self.deliver_message(f"{self.__name} is confused...\n ")
             target=self
 
@@ -210,18 +209,18 @@ class Entity:
             self.set_curr_hp(self.__battle_stats.hp-final_dmg)
 
         #Status effects. More intel resists status effects based on their potency:
-        if attack.effect is not None:
+        if attack.effects is not None:
             #Check for immunity:
-            if attack.effect in self.__condition.immunities:
-                self.deliver_message(f"{self.get_name()} is immune to {attack.effect}.\n ")
+            if attack.effects in self.__condition.immunities:
+                self.deliver_message(f"{self.get_name()} is immune to {attack.effects}.\n ")
                 return
 
             #Calculate resistance:
             resistance=self.__battle_stats.intel+randint(0,6)
             if attack.potency>resistance:
-                if attack.effect not in self.__battle_stats.effect:
-                    self.deliver_message(f"{self.get_name()} is {attack.effect}.\n ")
-                    self.__battle_stats.effect[attack.effect]=attack.effect_duration
+                if attack.effects not in self.__battle_stats.effects:
+                    self.deliver_message(f"{self.get_name()} is {attack.effects}.\n ")
+                    self.__battle_stats.effects[attack.effects]=attack.effect_duration
 
 
     def execute_move(self,command):

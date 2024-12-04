@@ -9,7 +9,7 @@ class Personas:
     """
     Characters in the game that have different attributes.
     """
-    rory=MathProfessor("Rory", 1, 150, 150, 10, 10,Sprites.rory_battle1)
+    rory=Character("Rory", 1, 150, 150, 10, 10,Sprites.rory_battle1)
 
     mina=Character("Mina",1,100,200,5,15,Sprites.emoji_chill)
 
@@ -19,7 +19,7 @@ class Personas:
 
     enemy2=Character("Evil",1,145,100,10,10,Sprites.emoji_chill)
 
-    professor_a=MathProfessor("Professor A",1,200,100,10,10,Sprites.professor_a)
+    math_professor_a=MathProfessor("Math Professor", 1, 200, 100, 10, 10, Sprites.professor_a)
 
     professor_b = Character("Professor B", 1, 200, 100, 10, 10, Sprites.professor_b)
 
@@ -31,6 +31,15 @@ class Crews:
     """
     Teams comprised of personas
     """
-    default_player=[Personas.rory,Personas.mina,Personas.chris]
+    default_player=[
+        Personas.rory,
+        Personas.mina
+        ,Personas.chris
+    ]
+    default_enemy=[
+        Personas.math_professor_a,
+        Personas.professor_b,
+        Personas.nu_husky_a,
+        Personas.teaching_assistant_a
+    ]
 
-    default_enemy=[Personas.nu_husky_a,Personas.professor_a, Personas.professor_b, Personas.teaching_assistant_a]

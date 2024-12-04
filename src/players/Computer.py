@@ -17,12 +17,12 @@ class Computer(Team):
 
     def execute_move(self,player):
         moves=self.get_menu_dictionary()
-
+        res=0
         #<<CPU AI LOGIC GOES HERE>>
         profession=self.get_current_character().get_profession()
         if profession in ai_dictionary:
-            return ai_dictionary[profession](self,player,self.__animator,moves)
+            res= ai_dictionary[profession](self,player,self.__animator,moves)
         else:
-            return ai_dictionary["generic"](self,player,self.__animator,moves)
+            res= ai_dictionary["generic"](self,player,self.__animator,moves)
 
-
+        return res

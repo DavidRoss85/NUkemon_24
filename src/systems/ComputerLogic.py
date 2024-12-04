@@ -7,7 +7,7 @@ def careful_ai(computer,player,animator,move_dictionary):
     me=computer.get_current_character()
     target=player.get_current_character()
     target_owner=player
-    if "confused" in me.get_battle_effect():
+    if "confused" in me.get_battle_effects():
         target=me
         target_owner=computer
 
@@ -45,7 +45,7 @@ def berserk_ai(computer,player,animator,move_dictionary):
     me = computer.get_current_character()
     target = player.get_current_character()
     target_owner = player
-    if "confused" in me.get_battle_effect():
+    if "confused" in me.get_battle_effects():
         target = me
         target_owner = computer
 
@@ -61,7 +61,7 @@ def math_professor_ai(computer,player,animator,move_dictionary):
     me=computer.get_current_character()
     target=player.get_current_character()
     target_owner=player
-    if "confused" in me.get_battle_effect():
+    if "confused" in me.get_battle_effects():
         target=me
         target_owner=computer
 

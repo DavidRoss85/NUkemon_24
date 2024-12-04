@@ -44,7 +44,7 @@ class BattleScreen:
         self.__animator=animator
 
 
-        self.__fps=30
+        self.__fps=120
         self.__intro_started=False
 
         self.__running=False
@@ -83,7 +83,7 @@ class BattleScreen:
         self.update_dictionaries()
 
 
-
+    #=======================================================================================================
     def __set_up_interface(self):
         """
         Draws and positions menus and graphical items on screen
@@ -116,6 +116,7 @@ class BattleScreen:
             "animation_layer":self.__animation_layer
         })
 
+    # =======================================================================================================
     def set_background(self, image=None):
         """
         Set the __background image
@@ -127,6 +128,7 @@ class BattleScreen:
         y_offset=(back_height-UC.screen_height)/2
         self.__background = Background(-x_offset, -y_offset, back_width, back_height,image)
 
+    # =======================================================================================================
     def __set_positions(self):
         #Update __player and __enemy positions
         for teammate in self.__player.get_team().values():
@@ -143,6 +145,7 @@ class BattleScreen:
         self.__enemy.set_x(self.ENEMY_X)
         self.__enemy.set_y(self.ENEMY_Y)
 
+    # =======================================================================================================
     def update_dictionaries(self):
         """
         Create and update lists for enemies and players on field
@@ -159,7 +162,7 @@ class BattleScreen:
             "self": self.__self_dict
         }
 
-
+    # =======================================================================================================
     def __list_enemies(self):
         """
         Create a list of all enemies on field
@@ -170,6 +173,7 @@ class BattleScreen:
         td[enemy["receiver"].get_name()]= enemy
         return td
 
+    # =======================================================================================================
     def __list_player_team(self):
         """
         Creates a list for all inactive players on __player team
@@ -180,7 +184,17 @@ class BattleScreen:
             td[teammate.get_name()]={"owner":self.__player, "receiver":teammate}
         del td[self.__player.get_current_character().get_name()]
         return td
-
+    # =======================================================================================================
+    def __list_player_graveyard(self):
+        """
+        Creates a list for all inactive players on __player team
+        :return:
+        """
+        td = dict()
+        for teammate in self.__player.get_graveyard().values():
+            td[teammate.get_name()] = {"owner": self.__player, "receiver": teammate}
+        return td
+    # =======================================================================================================
     def __list_active_actors(self):
         """
         List of all players and enemies that can be targeted
@@ -193,6 +207,7 @@ class BattleScreen:
         td[player.get_name()]={"owner":self.__player, "receiver":player}
         return td
 
+    # =======================================================================================================
     def __list_self(self):
         """
         A list for user. Used for actions that can only target the __player
@@ -202,7 +217,25 @@ class BattleScreen:
         player={"owner":self.__player, "receiver":self.__player.get_current_character()}
         td[player["receiver"].get_name()] = player
         return td
+    # =======================================================================================================
+    def create_layers(self,renderer:Renderer):
+        """
+        Adds all the layers to the __renderer in a specific order
+        :param renderer: The Renderer object that draws on the screen
+        :return:
+        """
+        #Add all objects to layers
+        renderer.add_to_layer(self.__background)
+        renderer.add_to_layer(self.__enemy, 1)
+        renderer.add_to_layer(self.__player, 1)
+        renderer.add_to_layer(self.__enemy_stat_box, 2)
+        renderer.add_to_layer(self.__player_stat_box, 2)
+        renderer.add_to_layer(self.__message_box, 2)
+        renderer.add_to_layer(self.__player_menu, 3)
+        renderer.add_to_layer(self.__target_menu, 3)
+        renderer.add_to_layer(self.__animation_layer,4)
 
+    # =======================================================================================================
     def execute_menu(self,name):
         """
         Carries out an action when user selects an item from the battle menu
@@ -213,7 +246,7 @@ class BattleScreen:
         self.__target_menu.set_current_selection_number(0)
         if isinstance(name,dict):
             if "target" in name:
-                print(name)
+
                 items=self.__target_dictionary[name["target"]]
                 self.__queued_action={"name": name["name"], "function": name["function"]}
                 self.__target_menu.set_position(500, 500)
@@ -226,16 +259,18 @@ class BattleScreen:
                 self.__target_menu.set_visible(True)
 
             else:
-                print("EXECUTE")
-                print(f"Battle Screen: {name["receiver"].get_name()}")
+                #Clear the menu tree, returning to main menu:
                 self.__menu_tree.clear()
                 self.__target_menu.set_visible(False) #Hide menu
-
+                #Execute action from in the dictionary:
                 self.perform_action(self.__player, self.__queued_action, name)
-
+                for team_member in self.__player.get_team().values():
+                    TurnSystem.evaluate_status(team_member,team_member==self.__player.get_current_character())
                 self.__turn_system.set_player_turn(False) #Switch to __enemy turn
 
 
+
+    # =======================================================================================================
     def perform_action(self, subject, verb, o_ject):
         o_ject["owner"].freeze_frame()
 
@@ -256,23 +291,7 @@ class BattleScreen:
         })
 
 
-    def create_layers(self,renderer:Renderer):
-        """
-        Adds all the layers to the __renderer in a specific order
-        :param renderer: The Renderer object that draws on the screen
-        :return:
-        """
-        #Add all objects to layers
-        renderer.add_to_layer(self.__background)
-        renderer.add_to_layer(self.__enemy, 1)
-        renderer.add_to_layer(self.__player, 1)
-        renderer.add_to_layer(self.__enemy_stat_box, 2)
-        renderer.add_to_layer(self.__player_stat_box, 2)
-        renderer.add_to_layer(self.__message_box, 2)
-        renderer.add_to_layer(self.__player_menu, 3)
-        renderer.add_to_layer(self.__target_menu, 3)
-        renderer.add_to_layer(self.__animation_layer,4)
-
+    # =======================================================================================================
     def listen_for_input(self,event_list):
         """
         Listens for key presses from the user
@@ -322,6 +341,7 @@ class BattleScreen:
             elif event.type == QUIT:
                 self.__running = False
 
+    # =======================================================================================================
     def perform_updates(self):
         """
         Update every cycle
@@ -335,11 +355,11 @@ class BattleScreen:
         if self.__turn_system.check_win_conditions(self.perform_action):
             pass
 
+    # =======================================================================================================
     def show_battle_intro(self):
         self.__animator.pause_and_animate({"action":"Intro","subject":"errbody"})
 
-
-
+    # =======================================================================================================
     def start(self):
         """
         Main Battle loop

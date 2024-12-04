@@ -26,7 +26,7 @@ class MathProfessor(Character):
         self.update_move_dictionary(self.__math_professor_move_dict)
 
     def use_discreet_math(self,target=None):
-        if "confused" in self.get_battle_effect():
+        if "confused" in self.get_battle_effects():
             self.deliver_message(f"{self.get_name()} tried to use Discreet Math, but {self.get_name()} is confused.\n ")
             return
 

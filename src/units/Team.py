@@ -72,6 +72,9 @@ class Team:
     def get_team(self):
         return self.__team
 
+    def get_graveyard(self):
+        return self.__expired_team
+
     def set_team(self,team_list:list):
         for teammate in team_list:
             self.add_team_member(teammate)
