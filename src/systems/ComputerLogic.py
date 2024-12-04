@@ -73,7 +73,7 @@ def math_professor_ai(computer,player,animator,move_dictionary):
         move_dictionary["Attack"]["function"](target)
         animator.pause_and_animate({"subject":computer,"action":"Attack"})
         animator.pause_and_animate({"object": target_owner, "action": "Attack"})
-    elif num>1 and health_percent>30:
+    elif num>1 and health_percent>30 and me.get_curr_mp()>10:
         move_dictionary["Skill"]["menu"]["Discreet Math"]["function"](player.get_current_character())
         animator.pause_and_animate({"subject":computer,"action":"Discreet Math"})
         animator.pause_and_animate({"object": player, "action": "Discreet Math"})

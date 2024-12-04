@@ -11,10 +11,20 @@ class TurnSystem:
     # =======================================================================================================
     @staticmethod
     def evaluate_status(character,active:bool=True):
+        """
+        Evaluates a players effect status, counts down its timer and returns a list of moves allowed to carry out
+        :param character: character being evaluated
+        :param active: boolean if the user is active or not
+        :return: list of allowed moves Ex: ['Switch','Attack']
+        """
+        allowed_moves=['all']   #Default, all moves allowed
         effects=character.get_battle_effects()
         delete_list=[]
         for key,value in effects.items():
-            print(f"{character.get_name()} status: {key} - {value}")
+            if key=="asleep" or key=="paralyzed":
+                character.deliver_message(f"{character.get_name()} is {key}.\n ")
+                allowed_moves=["Switch"]
+
             value-=1
             effects[key]=value
             if value<=0:
@@ -23,6 +33,8 @@ class TurnSystem:
 
         for effect in delete_list:
             del effects[effect]
+
+        return allowed_moves
     # =======================================================================================================
     def set_messenger(self,messenger):
         self.__messenger=messenger

@@ -257,17 +257,28 @@ class BattleScreen:
                 #Clear the menu tree, returning to main menu:
                 self.__menu_tree.clear()
                 self.__target_menu.set_visible(False) #Hide menu
+
+                #Evaluate statuses of non-active team members:
+                for team_member in self.__team_dict.values():
+                    TurnSystem.evaluate_status(team_member["receiver"],False)
+
                 #Execute action from in the dictionary:
                 self.perform_action(self.__player, self.__queued_action, name)
-                for team_member in self.__player.get_team().values():
-                    TurnSystem.evaluate_status(team_member,team_member==self.__player.get_current_character())
-                self.__turn_system.set_player_turn(False) #Switch to __enemy turn
+
+                # Switch to __enemy turn
+                self.__turn_system.set_player_turn(False)
 
 
 
     # =======================================================================================================
     def perform_action(self, subject, verb, o_ject):
         o_ject["owner"].freeze_frame()
+
+        #Evaluate the current character status and only do move if allowed:
+        allowed_moves=TurnSystem.evaluate_status(self.__player.get_current_character())
+        if (len(allowed_moves)==0 or verb["name"] not in allowed_moves) and "all" not in allowed_moves:
+            o_ject["owner"].unfreeze_frame()
+            return
 
         # Execute the stored function on the target (current_character)
         owner=verb["function"](o_ject["receiver"])

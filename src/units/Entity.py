@@ -2,21 +2,9 @@ import copy
 import random
 from random import randint
 
-from src.globals.balance import ATK_MULTIPLIER, VARIABILITY, DEF_MULTIPLIER, SHIELD_MULTIPLIER, SKL_DEF_MULTIPLIER, \
-    SKL_RESIST_MULTIPLIER, HP_MULTIPLIER, MP_MULTIPLIER
-from src.systems.Messenger import Messenger
+from src.globals.balance import  VARIABILITY, SHIELD_MULTIPLIER
 from src.units.SkillClasses import *
 from src.utils.utils import merge_dictionaries
-
-#Declare constants for game tuning
-ATTACK_DICE = 6
-DEFEND_DICE = 2
-DEFENSE_MULTIPLIER = 2
-AVERSION_MULTIPLIER=2
-AFFINITY_REDUCTION=2
-def roll_die(sides):
-    return random.randint(1,sides)
-
 
 class Entity:
     def __init__(self,name,level,hp,mp,strength,intel):
@@ -158,6 +146,7 @@ class Entity:
     def perform_special_move(user,target,move):
         #Get battle stats
         stats = user.get_battle_stats()
+
         current_move = copy.deepcopy(move)
         if user.get_curr_mp()> current_move.cost:
             user.set_curr_mp(user.get_curr_mp() - current_move.cost)
