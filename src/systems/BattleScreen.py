@@ -354,6 +354,14 @@ class BattleScreen:
         self.__animator.pause_and_animate({"action":"Intro","subject":"errbody"})
 
     # =======================================================================================================
+    def set_enemy_battle_stats(self):
+        for teammate in self.__enemy.get_team().values():
+            teammate.calculate_start_battle_stats()
+    # =======================================================================================================
+    def set_player_battle_stats(self):
+        for teammate in self.__player.get_team().values():
+            teammate.calculate_start_battle_stats()
+    # =======================================================================================================
     def start(self):
         """
         Main Battle loop
@@ -361,7 +369,8 @@ class BattleScreen:
         """
         self.__running=True
         # self.show_battle_intro()
-
+        self.set_player_battle_stats()
+        self.set_enemy_battle_stats()
         # self.__turn_system.set_player_turn(False)
         while self.__running:
             player_turn=self.__turn_system.get_player_turn()

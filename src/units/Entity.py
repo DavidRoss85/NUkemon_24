@@ -3,7 +3,7 @@ import random
 from random import randint
 
 from src.globals.balance import ATK_MULTIPLIER, VARIABILITY, DEF_MULTIPLIER, SHIELD_MULTIPLIER, SKL_DEF_MULTIPLIER, \
-    SKL_RESIST_MULTIPLIER
+    SKL_RESIST_MULTIPLIER, HP_MULTIPLIER, MP_MULTIPLIER
 from src.systems.Messenger import Messenger
 from src.units.SkillClasses import *
 from src.utils.utils import merge_dictionaries
@@ -41,13 +41,13 @@ class Entity:
         return self.__name
 
     def get_max_hp(self):
-        return self.__base_stats.hp
+        return self.__battle_stats.max_hp
 
     def get_curr_hp(self):
         return self.__battle_stats.hp
 
     def get_max_mp(self):
-        return self.__base_stats.mp
+        return self.__battle_stats.max_mp
 
     def get_curr_mp(self):
         return self.__battle_stats.mp
@@ -57,6 +57,9 @@ class Entity:
 
     def get_battle_strength(self):
         return self.__battle_stats.strength
+
+    def get_battle_stats(self):
+        return self.__battle_stats
 
     def get_base_intel(self):
         return self.__base_stats.intel
@@ -101,14 +104,20 @@ class Entity:
         if self.__battle_stats.hp<0:
             self.__battle_stats.hp=0
         #Ensure health doesn't go above max
-        if self.__battle_stats.hp>self.__base_stats.hp:
-            self.__battle_stats.hp=self.__base_stats.hp
+        if self.__battle_stats.hp>self.__battle_stats.max_hp:
+            self.__battle_stats.hp=self.__battle_stats.max_hp
 
     def set_max_mp(self,mp):
         self.__base_stats.mp=mp
 
     def set_curr_mp(self,mp):
         self.__battle_stats.mp=mp
+        # MP shouldn't dip below 0:
+        if self.__battle_stats.mp < 0:
+            self.__battle_stats.mp = 0
+        #Ensure doesn't go above max
+        if self.__battle_stats.mp>self.__battle_stats.max_mp:
+            self.__battle_stats.mp=self.__battle_stats.max_mp
 
     def set_base_strength(self,strength):
         self.__base_stats.strength=strength
@@ -139,7 +148,24 @@ class Entity:
 
     def set_condition(self,condition:Condition):
         self.__condition=condition
+    #=======================================================================================================
+    def calculate_start_battle_stats(self):
+        self.__battle_stats=copy.deepcopy(self.__base_stats)
+        self.get_battle_stats().update_calculations(self.__level)
 
+    #=======================================================================================================
+    @staticmethod
+    def perform_special_move(user,target,move):
+        #Get battle stats
+        stats = user.get_battle_stats()
+        current_move = copy.deepcopy(move)
+        if user.get_curr_mp()> current_move.cost:
+            user.set_curr_mp(user.get_curr_mp() - current_move.cost)
+            current_move.dmg = (stats.sk_atk + randint(0, int(stats.sk_atk * VARIABILITY))) * current_move.dmg
+            current_move.potency += stats.potency + randint(0, int(stats.potency * VARIABILITY))
+            target.receive_attack(current_move)
+        else:
+            user.deliver_message(f"Not enough mp.\n ")
     #=======================================================================================================
     def attack(self,target=None):
 
@@ -152,7 +178,7 @@ class Entity:
 
         #MATH TO CALCULATE ATTACK: (BASE STR * MULTIPLIER + VARIABILITY)
         current_move= copy.deepcopy(self.__attack_move)
-        base_damage=self.__battle_stats.strength * ATK_MULTIPLIER
+        base_damage=self.__battle_stats.atk
         current_move.dmg= base_damage + randint(0,int(base_damage*VARIABILITY))
 
         self.deliver_message(f"{self.__name} attacks with {self.__attack_move.name}!\n ")
@@ -214,10 +240,10 @@ class Entity:
             return 0
         defense=0
         if "physical" in s_types:
-            defense = self.__battle_stats.strength * DEF_MULTIPLIER
+            defense = self.__battle_stats.blk
             defense = defense + randint(0, int(defense * VARIABILITY))
         elif "mental" in s_types:
-            defense = self.__battle_stats.intel * SKL_DEF_MULTIPLIER
+            defense = self.__battle_stats.sk_blk
             defense = defense + randint(0, int(defense * VARIABILITY))
 
         # Shield doubles defense:
@@ -274,11 +300,11 @@ class Entity:
                     self.deliver_message(f"{self.get_name()} is immune.\n ")
                     continue
                 #Calculate resistance:
-                resistance=self.__battle_stats.intel*SKL_RESIST_MULTIPLIER
+                resistance=self.__battle_stats.resist
                 resistance+=randint(0,int(resistance*VARIABILITY))
                 if attack.potency>resistance:
                     if effect not in self.__battle_stats.effects:
                         self.deliver_message(f"{self.get_name()} is {effect}.\n ")
                         self.__battle_stats.effects[effect]=attack.effect_duration
                     else:
-                        self.deliver_message(f"{self.get_name()} is already {attack.effects}.\n ")
+                        self.deliver_message(f"{self.get_name()} is already {effect}.\n ")
