@@ -42,7 +42,8 @@ class Animator:
             "KO": self.animate_ko,
             "eKO": self.animate_eko,
             "Die": self.animate_death_1,
-            "Intro": self.show_intro
+            "Intro": self.show_intro,
+            "Other":self.animate_defend
         }
 
         self.object_animation_dictionary = {
@@ -54,7 +55,8 @@ class Animator:
             "Growl": self.animate_nothing,
             "KO": self.animate_switch_in,
             "eKO": self.animate_switch_out,
-            "Die": self.animate_death_1
+            "Die": self.animate_death_1,
+            "Other": self.animate_defend
         }
 
     def update_object_dictionary(self,item:dict):
@@ -76,7 +78,11 @@ class Animator:
     def animate_list(self):
         if len(self.__queue)>0:
             # print(self.__queue)
-            action=self.__queue[0]["action"]
+            action= self.__queue[0]["action"]
+            if (self.__queue[0]["action"] not in self.subject_animation_dictionary and
+                self.__queue[0]["action"] not in self.object_animation_dictionary):
+                action="Other"
+
             if "subject" in self.__queue[0]:
                 subject=self.__queue[0]["subject"]
                 if self.subject_animation_dictionary[action](subject):

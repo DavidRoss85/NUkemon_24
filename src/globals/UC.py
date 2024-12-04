@@ -17,12 +17,14 @@ class UC:
     info_box_image=f"{absolute_path}/assets/images/text_box.png"
     menu_box_image = f"{absolute_path}/assets/images/text_box.png"
     stat_box_image=f"{absolute_path}/assets/images/stat_box.png"
+
     #Characters:
     main_char_image_01= f"{absolute_path}/assets/images/characters/Boy_backpack3.png"
     professor_a_image_01= f"{absolute_path}/assets/images/characters/Male_Professor_1_transparent.png"
     professor_b_image_01= f"{absolute_path}/assets/images/characters/Male_Professor_2_transparent.png"
     t_a_image_01=f"{absolute_path}/assets/images/characters/Female_TA1_transparent.png"
     nu_husky_image_01=f"{absolute_path}/assets/images/characters/NU_Husky_transparent.png"
+
     #Special Effects:
     punch_effect_image=f"{absolute_path}/assets/images/effects/punches_effect.bmp"
     discreet_math_effect_image=f"{absolute_path}/assets/images/effects/discreet_math_effect.bmp"

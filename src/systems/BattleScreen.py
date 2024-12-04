@@ -1,11 +1,6 @@
 import pygame
 import pygame.locals as btn
 from pygame.locals import (
-    K_UP,
-    K_DOWN,
-    K_LEFT,
-    K_RIGHT,
-    K_ESCAPE,
     KEYDOWN,
     QUIT,
 )
@@ -276,7 +271,6 @@ class BattleScreen:
 
         # Execute the stored function on the target (current_character)
         owner=verb["function"](o_ject["receiver"])
-        print(verb)
 
         # Add and animation the paused animation __queue
         # Game events will wait for these animations to complete

@@ -1,6 +1,7 @@
 from src.units.Character import Character
 from src.globals.sprites import Sprites
 from src.units.subcharacters.Husky import Husky
+from src.units.subcharacters.LazyStudent import LazyStudent
 from src.units.subcharacters.MathProfessor import MathProfessor
 from src.units.subcharacters.TeachingAssistant import TeachingAssistant
 
@@ -9,7 +10,7 @@ class Personas:
     """
     Characters in the game that have different attributes.
     """
-    rory=Character("Rory", 1, 150, 150, 10, 10,Sprites.rory_battle1)
+    rory=LazyStudent("Rory", 1, 150, 150, 10, 10,Sprites.rory_battle1)
 
     mina=Character("Mina",1,100,200,5,15,Sprites.emoji_chill)
 

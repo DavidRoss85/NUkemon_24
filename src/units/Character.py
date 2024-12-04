@@ -12,6 +12,7 @@ class Character(Entity):
         self.__sprite:Sprite=sprite
         self.__x=x
         self.__y=y
+        self.owner=self
 
 
     #Getters

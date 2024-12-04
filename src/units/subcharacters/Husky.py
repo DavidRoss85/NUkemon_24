@@ -5,7 +5,7 @@ class Husky(Character):
     def __init__(self,name,level,hp,mp,strength,intel,sprite,x=0,y=0):
         super().__init__(name,level,hp,mp,strength,intel,sprite,x,y)
         self.set_profession("Husky")
-        self.get_condition().immunities={"confused":True}
+        self.get_condition().immunities=["confused"]
         self.__husky_move_dict={
             "Skill":{
                 "menu":{

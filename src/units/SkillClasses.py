@@ -4,9 +4,9 @@ class Skill:
     """
     This is a class to hold skill properties
     """
-    def __init__(self, name,s_type,dmg,cost,effects=None,potency=0,effect_duration=0):
+    def __init__(self, name,s_types,dmg,cost,effects=None,potency=0,effect_duration=0):
         self.name = name
-        self.s_type=s_type
+        self.s_types=s_types
         self.dmg=dmg
         self.cost=cost
         self.effects=effects
@@ -25,8 +25,8 @@ class Stats:
 class Condition:
     def __init__(self):
         self.shield_up=False
-        self.immunities=dict()
-        self.affinities= {"physical":False}
-        self.aversions={"magic":False}
-        self.heal_affinity={"life":True}
+        self.immunities=[]
+        self.affinities= {} #physical: .5
+        self.aversions={} #magic: 2
+        self.heal_affinity={"heal":1,"life":1} #life:1
 
