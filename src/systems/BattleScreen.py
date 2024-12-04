@@ -381,7 +381,7 @@ class BattleScreen:
         """
         self.__running=True
         self.show_battle_intro()
-        self.__mixer.play_music(start=2.95)
+        self.__mixer.play_music(start=0)
         self.set_player_battle_stats()
         self.set_enemy_battle_stats()
         # self.__turn_system.set_player_turn(False)
