@@ -281,11 +281,12 @@ class BattleScreen:
             o_ject["owner"].unfreeze_frame()
             return
 
+        # Add and animation the paused animation __queue
+        # Game events will wait for these animations to complete
+
         # Execute the stored function on the target (current_character)
         owner=verb["function"](o_ject["receiver"])
 
-        # Add and animation the paused animation __queue
-        # Game events will wait for these animations to complete
         self.__animator.pause_and_animate({
             "subject": subject,
             "action": verb["name"]
@@ -381,7 +382,7 @@ class BattleScreen:
         """
         self.__running=True
         self.show_battle_intro()
-        self.__mixer.play_music(start=0)
+        self.__mixer.play_music(start=3)
         self.set_player_battle_stats()
         self.set_enemy_battle_stats()
         # self.__turn_system.set_player_turn(False)

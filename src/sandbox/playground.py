@@ -26,10 +26,10 @@ SCREEN_WIDTH = UC.screen_width
 SCREEN_HEIGHT = UC.screen_height
 
 renderer = Renderer(SCREEN_WIDTH,SCREEN_HEIGHT,UC.game_back_color)
-animator=Animator()
-sound_dict={"boop":"sound_file_boop.wav"}
+sound_dict={"boop":"sound_file_boop.wav","punch":"/effects/punch-classic-betacut.mp3"}
 music_file=f"rivalry-sulyya.mp3"
 mixer=Sound(0.7,sound_dict,music_file)
+animator=Animator(mixer)
 
 player1=Player()
 enemy1=Computer()

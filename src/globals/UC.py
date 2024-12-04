@@ -38,7 +38,14 @@ class UC:
 #Game menu:
     default_menu_item_selected_color = "blue"   #Selected text color
 
-#Sound:
+#Sound dictionary:
+    sound_path= f"{absolute_path}/assets/sounds"
+    se_path=f"{sound_path}/effects"
+    animator_sound_dictionary={
+        "punch": f"/effects/punch-classic-betacut.mp3",
+        "base_boom": f"/effects/slow-motion-glitch-rewind-joshua-chivers.mp3",
+        "swish": f"/effects/swish-airy-swish-smartsound.mp3"
+    }
 # Music from #Uppbeat
 # https://uppbeat.io/t/sulyya/rivalry
 # License code: BTSQ70TOAU4SG7RB

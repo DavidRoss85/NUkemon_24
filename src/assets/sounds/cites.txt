@@ -1,0 +1,8 @@
+#Sound:
+# Battle music Rivalry - Sulyya (rivalry-sulyya.mp3)
+# Music from #Uppbeat
+# https://uppbeat.io/t/sulyya/rivalry
+# License code: BTSQ70TOAU4SG7RB
+
+# Punch Sound - betacut (punch-classic-betacut.mp3)
+# Base_boom Sound - Joshua Chivers
