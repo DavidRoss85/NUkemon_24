@@ -1,6 +1,7 @@
 import pygame
 import sys
 import os
+
 sys.path.insert(0,os.path.join(os.path.dirname(__file__),'../..'))
 
 
@@ -9,6 +10,7 @@ from src.globals.personas import Personas, Crews
 from src.systems.BattleScreen import BattleScreen
 from src.systems.Animator import Animator
 from src.graphics.Renderer import Renderer
+from src.sound.sound import Sound
 
 from src.players.Human import Player
 from src.players.Computer import Computer
@@ -25,6 +27,9 @@ SCREEN_HEIGHT = UC.screen_height
 
 renderer = Renderer(SCREEN_WIDTH,SCREEN_HEIGHT,UC.game_back_color)
 animator=Animator()
+sound_dict={"boop":"sound_file_boop.wav"}
+music_file=f"rivalry-sulyya.mp3"
+mixer=Sound(0.7,sound_dict,music_file)
 
 player1=Player()
 enemy1=Computer()
@@ -33,7 +38,7 @@ player1.set_team(Crews.default_player)
 enemy1.set_team(Crews.default_enemy)
 
 
-battle_screen= BattleScreen(player1, enemy1, renderer, animator)
+battle_screen= BattleScreen(player1, enemy1, renderer, animator,mixer)
 battle_screen.create_layers(renderer)
 
 

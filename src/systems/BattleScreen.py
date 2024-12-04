@@ -29,7 +29,7 @@ class BattleScreen:
     ENEMY_Y=50
     FONT_HEIGHT=UC.default_font_pixel_height
 
-    def __init__(self,player,enemy,renderer, animator):
+    def __init__(self,player,enemy,renderer, animator,mixer):
         self.__renderer=renderer
         self.__player=player
         self.__enemy:Computer=enemy
@@ -37,9 +37,10 @@ class BattleScreen:
         self.__animation_layer=Overlay(0,0,UC.screen_width,UC.screen_height)
         self.__clock=pygame.time.Clock()
         self.__animator=animator
+        self.__mixer=mixer
 
 
-        self.__fps=120
+        self.__fps=30
         self.__intro_started=False
 
         self.__running=False
@@ -92,7 +93,7 @@ class BattleScreen:
 
         self.__menu_list = [self.__player_menu, self.__target_menu]  # Maybe keep this...
 
-        self.__messenger = Messenger(self.__message_box)
+        self.__messenger = Messenger(self.__message_box,self.__mixer)
         self.__player.set_messenger(self.__messenger)
         self.__enemy.set_messenger(self.__messenger)
         self.__turn_system.set_messenger(self.__messenger)
@@ -379,7 +380,8 @@ class BattleScreen:
         :return:
         """
         self.__running=True
-        # self.show_battle_intro()
+        self.show_battle_intro()
+        self.__mixer.play_music(start=2.95)
         self.set_player_battle_stats()
         self.set_enemy_battle_stats()
         # self.__turn_system.set_player_turn(False)
