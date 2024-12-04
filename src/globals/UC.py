@@ -38,3 +38,7 @@ class UC:
 #Game menu:
     default_menu_item_selected_color = "blue"   #Selected text color
 
+#Sound:
+# Music from #Uppbeat
+# https://uppbeat.io/t/sulyya/rivalry
+# License code: BTSQ70TOAU4SG7RB
