@@ -42,3 +42,8 @@ class UC:
 # Music from #Uppbeat
 # https://uppbeat.io/t/sulyya/rivalry
 # License code: BTSQ70TOAU4SG7RB
+
+# Sound Effects from Mixkit
+# https://mixkit.co/free-sound-effects/click/
+# Sound Effects under free license can be used in video games 
+# for commercial and non-commercial projects
