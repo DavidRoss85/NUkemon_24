@@ -23,6 +23,7 @@ class Animator:
     SWITCH_LENGTH=20
     KO_LENGTH=20
     PAUSE_LENGTH=30
+    SCREEN_TRANSITION_LENGTH=90
 
     def __init__(self,mixer=None):
         self.__queue=[]
@@ -63,7 +64,8 @@ class Animator:
             "eKO": self.animate_eko,
             "Die": self.animate_death_1,
             "Intro": self.show_intro,
-            "Other":self.animate_defend
+            "Other":self.animate_defend,
+            "Screen_Transition": self.animate_screen_transition
         }
 
         self.object_animation_dictionary = {
@@ -291,6 +293,37 @@ class Animator:
         else:
             return False
     #======================================================================================================
+    def animate_screen_transition(self,subject):
+        self.__animating=True
+        player = self.__object_dictionary["player"]
+        enemy = self.__object_dictionary["enemy"]
+        background = self.__object_dictionary["background"]
+        stats1 = self.__object_dictionary["player_stat_box"]
+        stats2 = self.__object_dictionary["enemy_stat_box"]
+        a_layer=self.__object_dictionary["animation_layer"]
+        effect=subject
+        ani_ref="Transition_effect"
+
+        if self.__tick < 1:
+            background.set_x(background.get_x()-500)
+            player.set_visible(False)
+            enemy.set_visible(False)
+            stats1.set_visible(False)
+            stats2.set_visible(False)
+            a_layer.add_to_queue(ani_ref, effect, 0, 0)
+
+        self.__tick+=1
+        effect.set_frame_index((min(self.__tick , effect.get_max_frames()-1)))
+
+        if self.__tick>self.SCREEN_TRANSITION_LENGTH:
+            a_layer.remove_from_queue(ani_ref)
+
+        if self.__tick>self.SCREEN_TRANSITION_LENGTH:
+            self.__tick=0
+            return True
+        else:
+            return False
+    #======================================================================================================
     def show_intro(self,args):
         self.__animating=True
         player=self.__object_dictionary["player"]
@@ -304,11 +337,13 @@ class Animator:
             self.__org_x=player.get_x()
             self.__org_x2=enemy.get_x()
             self.__org_x3=background.get_x()
-            player.set_x(player.get_x()+500)
-            enemy.set_x(enemy.get_x()-500)
-            background.set_x(background.get_x()-500)
+            # background.set_x(background.get_x()-500)
             stats1.set_visible(False)
             stats2.set_visible(False)
+            player.set_x(player.get_x()+500)
+            enemy.set_x(enemy.get_x()-500)
+            player.set_visible(True)
+            enemy.set_visible(True)
 
         self.__tick+=1
 
@@ -326,7 +361,7 @@ class Animator:
             self.__animating=False
             player.set_x(self.__org_x)
             enemy.set_x(self.__org_x2)
-            background.set_x(self.__org_x3)
+            # background.set_x(self.__org_x3)
             stats1.set_visible(True)
             stats2.set_visible(True)
             self.__done_bool=False
@@ -362,5 +397,6 @@ class Animator:
     def animate_confusion(self,subject):
         return True
     #======================================================================================================
+
     def animate_nothing(self,subject):
         return True

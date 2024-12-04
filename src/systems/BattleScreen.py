@@ -10,6 +10,7 @@ from src.game_objects.BattleMenu import BattleMenu
 from src.game_objects.Overlay import Overlay
 from src.game_objects.StatBox import StatBox
 from src.game_objects.InfoBox import InfoBox
+from src.graphics.Effect import Effect
 from src.graphics.Sprite import Sprite
 from src.players.Computer import Computer
 from src.systems.Messenger import Messenger
@@ -18,6 +19,7 @@ from src.systems.Messenger import Messenger
 from src.graphics.Renderer import Renderer
 from src.globals.UC import *
 from src.systems.TurnSystem import TurnSystem
+from src.utils.utils import generate_battle_transition
 
 
 class BattleScreen:
@@ -50,6 +52,7 @@ class BattleScreen:
         self.__messenger=None
         self.__enemy_stat_box=None
         self.__player_stat_box=None
+        self.__previous_screen=None
         
         self.__turn_system= TurnSystem(player, enemy, self.__messenger)
 
@@ -232,6 +235,9 @@ class BattleScreen:
         renderer.add_to_layer(self.__animation_layer,4)
 
     # =======================================================================================================
+    def set_previous_screen(self,sprite):
+        self.__previous_screen=sprite
+
     def execute_menu(self,name):
         """
         Carries out an action when user selects an item from the battle menu
@@ -364,6 +370,15 @@ class BattleScreen:
 
     # =======================================================================================================
     def show_battle_intro(self):
+        surf=Sprite(0,0,UC.screen_width,UC.screen_height,None,(127,127,127),(1,0,0))
+        if self.__previous_screen is not None:
+            surf.draw_on_surface(self.__previous_screen.get_surface(),0,0,True)
+
+        intro_effect=Effect(
+            0,0,UC.screen_width,UC.screen_height,
+            generate_battle_transition(surf.get_surface(),9,10)
+        )
+        self.__animator.pause_and_animate({"action":"Screen_Transition","subject": intro_effect})
         self.__animator.pause_and_animate({"action":"Intro","subject":"errbody"})
 
     # =======================================================================================================
@@ -382,7 +397,7 @@ class BattleScreen:
         """
         self.__running=True
         self.show_battle_intro()
-        self.__mixer.play_music(start=3)
+        self.__mixer.play_music(start=0)
         self.set_player_battle_stats()
         self.set_enemy_battle_stats()
         # self.__turn_system.set_player_turn(False)

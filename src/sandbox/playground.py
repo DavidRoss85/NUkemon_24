@@ -2,6 +2,8 @@ import pygame
 import sys
 import os
 
+from src.graphics.Sprite import Sprite
+
 sys.path.insert(0,os.path.join(os.path.dirname(__file__),'../..'))
 
 
@@ -40,6 +42,6 @@ enemy1.set_team(Crews.default_enemy)
 
 battle_screen= BattleScreen(player1, enemy1, renderer, animator,mixer)
 battle_screen.create_layers(renderer)
-
+battle_screen.set_previous_screen(Sprite(0,0,UC.screen_width,UC.screen_height,UC.background_image))
 
 battle_screen.start()

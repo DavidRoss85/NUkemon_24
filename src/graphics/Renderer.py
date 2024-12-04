@@ -16,6 +16,9 @@ class Renderer:
         self.__screen=pygame.display.set_mode((screen_width,screen_height))
         pygame.init()
 
+    def clear_all_layers(self):
+        self.__layers=[[], [], [],[],[]]
+
     def add_to_layer(self,item,layer=0):
         self.__layers[layer].append(item)
 
