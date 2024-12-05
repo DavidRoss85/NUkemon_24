@@ -112,7 +112,7 @@ class Animator:
                 subject=self.__queue[0]["subject"]
                 if self.subject_animation_dictionary[action](subject):
                     self.__queue.pop(0)
-                    # self.__animating=False
+                    # self.__animating_hp=False
 
             elif "object" in self.__queue[0]:
                 subject=self.__queue[0]["object"]

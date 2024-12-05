@@ -364,6 +364,12 @@ class BattleScreen:
         self.__player_menu.update_menu(self.__player.get_menu_dictionary())
         self.__messenger.stream_text()
         self.__animator.animate_list()
+        if not self.__animator.get_animating_status() or self.__enemy_stat_box.get_animating():
+            self.__enemy_stat_box.update_stats()
+
+        if not self.__animator.get_animating_status() or self.__player_stat_box.get_animating():
+            self.__player_stat_box.update_stats()
+
         self.__turn_system.check_loss_conditions(self.perform_action)
         if self.__turn_system.check_win_conditions(self.perform_action):
             pass
@@ -396,8 +402,8 @@ class BattleScreen:
         :return:
         """
         self.__running=True
-        self.show_battle_intro()
-        self.__mixer.play_music(start=0)
+        # self.show_battle_intro()
+        self.__mixer.play_music(start=3)
         self.set_player_battle_stats()
         self.set_enemy_battle_stats()
         # self.__turn_system.set_player_turn(False)
