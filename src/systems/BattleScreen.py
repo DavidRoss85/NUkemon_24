@@ -10,7 +10,7 @@ from src.game_objects.BattleMenu import BattleMenu
 from src.game_objects.Overlay import Overlay
 from src.game_objects.StatBox import StatBox
 from src.game_objects.InfoBox import InfoBox
-from src.graphics.Effect import Effect
+from src.game_objects.Effect import Effect
 from src.graphics.Sprite import Sprite
 from src.players.Computer import Computer
 from src.systems.Messenger import Messenger

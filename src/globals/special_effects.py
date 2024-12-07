@@ -1,6 +1,4 @@
-from src.globals.sprites import Sprites
-from src.graphics.Effect import Effect
-from src.graphics.Sprite import Sprite
+from src.game_objects.Effect import Effect
 from src.globals.UC import *
 from src.utils.utils import generate_effect_array
 
