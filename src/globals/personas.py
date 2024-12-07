@@ -10,7 +10,7 @@ class Personas:
     """
     Characters in the game that have different attributes.
     """
-    rory=LazyStudent("Rory", 1, 10, 10, 5, 5,Sprites.rory_battle1)
+    rory=LazyStudent("Rory", 1, 10, 10, 12, 5,Sprites.rory_battle1)
 
     mina=Character("Mina",1,10,10,4,6,Sprites.emoji_chill)
 

@@ -30,6 +30,9 @@ class StatBox:
         self.__displayed_health=linked_object.get_current_character().get_curr_hp()
         self.__displayed_mana = linked_object.get_current_character().get_curr_mp()
         self.__visible=True
+        self.__animating_hp=False
+        self.__animating_mp=False
+
         self.__background_pic = StatBox.DEFAULT_PIC
         self.__font=StatBox.DEFAULT_FONT
         self.__font_size=StatBox.DEFAULT_FONT_SIZE
@@ -40,11 +43,18 @@ class StatBox:
         self.__text_end_percent_x=StatBox.DEFAULT_TEXT_END_PERCENT_X
 
         self.__sprite=Sprite(x, y, box_width, box_height, self.__background_pic, mask, box_color)
-        self.display_stats()
+        self.update_stats()
+
 
 
     def set_visible(self,value:bool=True):
         self.__visible=value
+
+    def get_animating(self):
+        if self.__animating_hp or self.__animating_mp:
+            return True
+        else:
+            return False
 
     def get_x(self):
         return self.__x
@@ -56,7 +66,7 @@ class StatBox:
         return self.__visible
 
     def get_sprite(self):
-        self.display_stats()
+        # self.display_stats()
         return self.__sprite
 
     def display_name(self):
@@ -94,9 +104,14 @@ class StatBox:
         curr_char=self.__linked_object.get_current_character()
         max_hp=curr_char.get_max_hp()
         if max_hp==0: return
-
+        dec_amt=max(max_hp//100,1)
         curr_hp=curr_char.get_curr_hp()
-        self.__displayed_health= self.__displayed_health-1 if curr_hp < self.__displayed_health <= max_hp else curr_hp
+        if curr_hp < self.__displayed_health <= max_hp:
+            self.__displayed_health=self.__displayed_health-dec_amt
+            self.__animating_hp=True
+        else:
+            self.__displayed_health=curr_hp
+            self.__animating_hp=False
         health_fraction= self.__displayed_health/max_hp
 
         health_bar_red=Sprite(self.__width//10,self.__height//2.5,self.__width//1.25,self.__height//10,None,(1,1,1),(255,0,0))
@@ -118,9 +133,15 @@ class StatBox:
         curr_char = self.__linked_object.get_current_character()
         max_mp=curr_char.get_max_mp()
         if max_mp==0: return
-
+        dec_amt = max(max_mp // 100,1)
         curr_mp=curr_char.get_curr_mp()
-        self.__displayed_mana=self.__displayed_mana-1 if curr_mp < self.__displayed_mana < max_mp else curr_mp
+        if curr_mp < self.__displayed_mana<= max_mp:
+            self.__displayed_mana=self.__displayed_mana-dec_amt
+            self.__animating_mp=True
+        else:
+            self.__displayed_mana=curr_mp
+            self.__animating_mp=False
+
         mana_fraction = curr_mp / max_mp
 
         mana_bar_red = Sprite(self.__width // 2, self.__height // 2, self.__width // 2.5, self.__height // 20,
@@ -137,7 +158,7 @@ class StatBox:
                                     self.__font_size // 2)
         self.__sprite.draw_on_surface(mana_text, rect_red.x, rect_red.y + self.__height // 20)
 
-    def display_stats(self):
+    def update_stats(self):
         """
         Refreshes all the displays in the box
         :return:

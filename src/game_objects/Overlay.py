@@ -1,4 +1,4 @@
-from src.graphics.Effect import Effect
+from src.game_objects.Effect import Effect
 from src.graphics.Sprite import Sprite
 
 
