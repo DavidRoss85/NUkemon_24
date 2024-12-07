@@ -1,7 +1,7 @@
 from random import randint
 
 from src.globals.UC import UC
-from src.systems.Animator import Animator
+from src.systems.BattleAnimator import BattleAnimator
 from src.units.Team import Team
 from src.systems.ComputerLogic import ai_dictionary #contains a list of the functions that govern cpu behavior
 

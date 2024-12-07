@@ -13,6 +13,7 @@ from src.game_objects.InfoBox import InfoBox
 from src.game_objects.Effect import Effect
 from src.graphics.Sprite import Sprite
 from src.players.Computer import Computer
+from src.systems.BattleAnimator import BattleAnimator
 from src.systems.Messenger import Messenger
 
 
@@ -31,15 +32,16 @@ class BattleScreen:
     ENEMY_Y=50
     FONT_HEIGHT=UC.default_font_pixel_height
 
-    def __init__(self,player,enemy,renderer, animator,mixer):
+    def __init__(self,player,enemy,renderer,music_mixer,sound_mixer):
         self.__renderer=renderer
         self.__player=player
         self.__enemy:Computer=enemy
         self.__background=Background(0, 0, UC.screen_width, UC.screen_height)
         self.__animation_layer=Overlay(0,0,UC.screen_width,UC.screen_height)
         self.__clock=pygame.time.Clock()
-        self.__animator=animator
-        self.__mixer=mixer
+        self.__music_mixer=music_mixer
+        self.__sound_mixer=sound_mixer
+        self.__animator=BattleAnimator(sound_mixer)
 
 
         self.__fps=30
@@ -96,7 +98,7 @@ class BattleScreen:
 
         self.__menu_list = [self.__player_menu, self.__target_menu]  # Maybe keep this...
 
-        self.__messenger = Messenger(self.__message_box,self.__mixer)
+        self.__messenger = Messenger(self.__message_box, self.__sound_mixer)
         self.__player.set_messenger(self.__messenger)
         self.__enemy.set_messenger(self.__messenger)
         self.__turn_system.set_messenger(self.__messenger)
@@ -312,47 +314,50 @@ class BattleScreen:
         :return:
         """
         player_turn = self.__turn_system.get_player_turn()
+        animating=self.__animator.get_animating_status()
         for event in event_list:
-            if player_turn and event.type == KEYDOWN and not self.__animator.get_animating_status():
-                match event.key:
-                    case btn.K_ESCAPE:
-                        self.__running=False
-                    case btn.K_LEFT:
-                        pass
-                        # self.__player.change_character()
-                    case btn.K_RIGHT:
-                        pass
-                        # self.__player.change_character(self.__player.get_team()["Mina"])
-                    case btn.K_UP:
-                        self.__menu_list[self.__target_menu.get_visible()].prev_menu_item()
-                    case btn.K_DOWN:
-                        self.__menu_list[self.__target_menu.get_visible()].next_menu_item()
-                    case btn.K_BACKSPACE:
+            if event.type == KEYDOWN:
+                if event.key== btn.K_ESCAPE:
+                    self.__running = False
 
-                        self.__queued_action=None
-                        if len(self.__menu_tree)>0:
-                            self.__menu_tree.pop()
+                if player_turn and not animating:
+                    match event.key:
+                        case btn.K_LEFT:
+                            pass
+                            # self.__player.change_character()
+                        case btn.K_RIGHT:
+                            pass
+                            # self.__player.change_character(self.__player.get_team()["Mina"])
+                        case btn.K_UP:
+                            self.__menu_list[self.__target_menu.get_visible()].prev_menu_item()
+                        case btn.K_DOWN:
+                            self.__menu_list[self.__target_menu.get_visible()].next_menu_item()
+                        case btn.K_BACKSPACE:
 
-                        if len(self.__menu_tree)==0:
-                            self.__target_menu.set_visible(False)
-                        else:
-                            self.execute_menu(self.__menu_tree[-1])
+                            self.__queued_action=None
+                            if len(self.__menu_tree)>0:
+                                self.__menu_tree.pop()
 
-                    case btn.K_RETURN:
-                        name=0
-                        self.__player.get_menu_dictionary()
-                        if len(self.__menu_tree)==0:
-                            name=self.__menu_list[0].get_current_selection()
-                        else:
-                            name = self.__menu_list[1].get_current_selection()
-                        # print(f"Battle Screen: {self.__menu_tree}")
-                        self.__menu_tree.append(name)
-                        self.execute_menu(name)
+                            if len(self.__menu_tree)==0:
+                                self.__target_menu.set_visible(False)
+                            else:
+                                self.execute_menu(self.__menu_tree[-1])
 
+                        case btn.K_RETURN:
+                            name=0
+                            self.__player.get_menu_dictionary()
+                            if len(self.__menu_tree)==0:
+                                name=self.__menu_list[0].get_current_selection()
+                            else:
+                                name = self.__menu_list[1].get_current_selection()
+                            # print(f"Battle Screen: {self.__menu_tree}")
+                            self.__menu_tree.append(name)
+                            self.execute_menu(name)
 
-
-            elif event.type == QUIT:
+            elif event.type == btn.QUIT:
                 self.__running = False
+            elif event.type==UC.MUSIC_EVENT_END:
+                self.__music_mixer.repeat_music()
 
     # =======================================================================================================
     def perform_updates(self):
@@ -403,7 +408,7 @@ class BattleScreen:
         """
         self.__running=True
         # self.show_battle_intro()
-        self.__mixer.play_music(start=3)
+        self.__music_mixer.play_music(repeat_time=13.19)
         self.set_player_battle_stats()
         self.set_enemy_battle_stats()
         # self.__turn_system.set_player_turn(False)

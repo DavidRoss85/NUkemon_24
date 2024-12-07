@@ -1,5 +1,7 @@
-import sys
 import os
+
+import pygame
+
 
 #Holds Universal Constants
 class UC:
@@ -11,6 +13,8 @@ class UC:
     screen_height=768   #Screen height
     image_mask_color=(64,177,64)    #Mask color for sprites (R,G,B) tuple
     game_back_color=(0,0,0) #Background color (R,G,B) tuple
+    MUSIC_EVENT_END= pygame.USEREVENT + 13
+    music_repeat_point=MUSIC_EVENT_END
 
 #Image assets:
     background_image=f"{absolute_path}/assets/images/backgrounds/Background8.png"
@@ -39,13 +43,16 @@ class UC:
     default_menu_item_selected_color = "blue"   #Selected text color
 
 #Sound dictionary:
-    sound_path= f"{absolute_path}/assets/sounds"
-    se_path=f"{sound_path}/effects"
+    sound_path= f"{absolute_path}/assets/sounds/"
+    music_path= f"{sound_path}/music/"
+    se_path=f"{sound_path}/effects/"
     animator_sound_dictionary={
-        "punch": f"/effects/punch-classic-betacut.mp3",
-        "base_boom": f"/effects/slow-motion-glitch-rewind-joshua-chivers.mp3",
-        "swish": f"/effects/swish-airy-swish-smartsound.mp3"
+        "punch": "punch-classic-betacut.mp3",
+        "base_boom": "slow-motion-glitch-rewind-joshua-chivers.mp3",
+        "swish": "swish-airy-swish-smartsound.mp3",
+        "boop": "boop.wav"
     }
+    music_file=f"rivalry-sulyya4.ogg"
 # Music from #Uppbeat
 # https://uppbeat.io/t/sulyya/rivalry
 # License code: BTSQ70TOAU4SG7RB

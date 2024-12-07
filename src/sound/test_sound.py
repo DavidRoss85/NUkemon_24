@@ -21,7 +21,7 @@ print(mysound.get_sounds())    # {'boop': 'sound_boop.wav', 'robot': 'sound_robo
 
 
 mysound.play("boop")
-mysound.play_music(start=20)
+mysound.play_music(start=20, repeat=True)
 
 start = time.time()
 
