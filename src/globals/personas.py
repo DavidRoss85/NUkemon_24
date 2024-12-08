@@ -1,5 +1,6 @@
 from src.units.Character import Character
 from src.globals.sprites import Sprites
+from src.units.subcharacters.AllPowerful import AllPowerful
 from src.units.subcharacters.Husky import Husky
 from src.units.subcharacters.LazyStudent import LazyStudent
 from src.units.subcharacters.MathProfessor import MathProfessor
@@ -10,7 +11,10 @@ class Personas:
     """
     Characters in the game that have different attributes.
     """
-    rory=LazyStudent("Rory", 1, 10, 10, 12, 5,Sprites.rory_battle1)
+
+    big_g=AllPowerful("He-Man", 10,10,10,6,6,Sprites.rory_battle1)
+
+    rory=LazyStudent("Rory", 1, 10, 10, 5, 5,Sprites.rory_battle1)
 
     mina=Character("Mina",1,10,10,4,6,Sprites.emoji_chill)
 
@@ -33,6 +37,7 @@ class Crews:
     Teams comprised of personas
     """
     default_player=[
+        Personas.big_g,
         Personas.rory,
         Personas.mina
         ,Personas.chris

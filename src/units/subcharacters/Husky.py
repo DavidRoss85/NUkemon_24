@@ -1,7 +1,4 @@
-import copy
-from random import randint
 
-from src.globals.balance import VARIABILITY
 from src.units.Character import Character
 from src.units.SkillClasses import Skill
 
@@ -24,13 +21,5 @@ class Husky(Character):
 
         self.update_move_dictionary(self.__husky_move_dict)
 
-
-
-
     def use_growl(self,target):
-        self.deliver_message(f"{self.get_name()} uses {self.__profession_move.name}...\n ")
-        current_move = copy.deepcopy(self.__profession_move)
-        self.set_curr_mp(self.get_curr_mp() - current_move.cost)
-        current_move.potency += self.get_battle_stats().potency + randint(0, (
-                    self.get_battle_stats().potency * VARIABILITY))
-        target.receive_attack(current_move)
+        self.perform_special_move(self, target, self.__profession_move)

@@ -25,9 +25,5 @@ class TeachingAssistant(Character):
         self.update_move_dictionary(self.__t_a_move_dict)
 
     def stub_func(self,target):
-        self.deliver_message(f"{self.get_name()} uses {self.__profession_move.name}...\n ")
-        current_move = copy.deepcopy(self.__profession_move)
-        self.set_curr_mp(self.get_curr_mp() - current_move.cost)
-        current_move.potency += self.get_battle_stats().potency + randint(0, (
-                    self.get_battle_stats().potency * VARIABILITY))
-        target.receive_attack(current_move)
+
+        self.perform_special_move(self,target,self.__profession_move)
