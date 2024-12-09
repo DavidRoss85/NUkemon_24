@@ -227,6 +227,10 @@ class BattleMenu:
         if width is not None:
             self.__width=width
         if height is not None:
+            #Ensure height does not exceed maximum when resizing
+            max_height=self.__max_items * self.__text_pixel_scale_height
+            if height > max_height:
+                height= max_height
             self.__height=height
 
         self.display_menu()
