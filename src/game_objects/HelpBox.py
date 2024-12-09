@@ -5,6 +5,12 @@ from src.graphics.Sprite import Sprite
 MASK=UC.image_mask_color
 
 class HelpBox:
+    """
+    This is a text box that appears at the top of the window to help players understand
+    the menu selection items and what the character skills do
+    """
+
+    #Create defaults from Universal Constant (UC) class
     DEFAULT_PIC = UC.stat_box_image
     DEFAULT_FONT = UC.default_font
     DEFAULT_FONT_SIZE = int(UC.default_font_size/1.5)
@@ -12,36 +18,53 @@ class HelpBox:
 
 
     def __init__(self,x,y,width,height,color:tuple=(0,0,0),mask:tuple=MASK):
-        self.__x = x
-        self.__y = y
-        self.__width = width
-        self.__height = height
-        self.__color = color
-        self.__visible=True
+        self.__x = x    #x coord
+        self.__y = y    #y coord
+        self.__width = width    #width
+        self.__height = height  #height
+        self.__color = color    #This color additively blends with the sprite
+        self.__visible=True #Toggle visibility
 
-        self.__background_pic=self.DEFAULT_PIC
-        self.__font = self.DEFAULT_FONT
-        self.__font_size = self.DEFAULT_FONT_SIZE
-        self.__font_color = self.DEFAULT_FONT_COLOR
-        self.__text_start_x_percent = int(self.__width*.05)
-        self.__text_start_y = 5
+        self.__background_pic=self.DEFAULT_PIC  #Background pic
+        self.__font = self.DEFAULT_FONT #Font
+        self.__font_size = self.DEFAULT_FONT_SIZE   #Font size
+        self.__font_color = self.DEFAULT_FONT_COLOR #Font color
+        self.__text_start_x_percent = int(self.__width*.05) #Start x coord of the text drawing
+        self.__text_start_y = 5 #Start y coord for text drawing
 
+        #Main sprite for rendering
         self.__sprite = Sprite(x, y, width, height, self.__background_pic, mask, color)
         self.clear_self()
 
     def set_visible(self, value: bool = True):
+        """
+        Toggle visibility
+        :param value: Boolean (True/False)
+        """
         self.__visible = value
 
     def get_x(self):
+        """
+        :returns: x coord
+        """
         return self.__x
 
     def get_y(self):
+        """
+        :returns: y coord
+        """
         return self.__y
 
     def get_visible(self):
+        """
+        :returns: visibility
+        """
         return self.__visible
 
     def get_sprite(self):
+        """
+        :returns: Object Sprite
+        """
         return self.__sprite
 
 
@@ -54,6 +77,10 @@ class HelpBox:
         self.__sprite.restore()
 
     def write_in_box(self,text):
+        """
+        Renders the text to the sprite object
+        :param text: String to render
+        """
         self.clear_self()
         info_text=self.write_text(text)
         self.__sprite.draw_on_surface(info_text, self.__text_start_x_percent, self.__text_start_y)

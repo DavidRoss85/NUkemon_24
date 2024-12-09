@@ -8,7 +8,7 @@ MASK = UC.image_mask_color
 
 class InfoBox:
     """
-    Scrolling text box
+    Text box that can display text in multiple lines
     """
     #Static constants
     DEFAULT_PIC = UC.info_box_image
@@ -21,39 +21,57 @@ class InfoBox:
     DEFAULT_TEXT_END_PERCENT_X= (100 - (DEFAULT_TEXT_START_PERCENT_X*2)) / 100
 
     def __init__(self,x,y,box_width,box_height,box_text,n_lines:int=4,box_color:tuple=(0,0,0),mask:tuple=MASK):
-        self.__x=x
-        self.__y=y
-        self.__width=box_width
-        self.__height=box_height
-        self.__text=box_text
-        self.__color=box_color
-        self.__n_text_lines=n_lines
-        self.__visible=True
-        self.__background_pic = InfoBox.DEFAULT_PIC
-        self.__font=InfoBox.DEFAULT_FONT
-        self.__font_size=InfoBox.DEFAULT_FONT_SIZE
-        self.__font_color=InfoBox.DEFAULT_FONT_COLOR
-        self.__text_pixel_scale_width=InfoBox.DEFAULT_TEXT_TO_PIXEL_SCALE_WIDTH
-        self.__text_pixel_scale_height=InfoBox.DEFAULT_TEXT_TO_PIXEL_SCALE_HEIGHT
-        self.__text_start_percent_x=InfoBox.DEFAULT_TEXT_START_PERCENT_X
-        self.__text_end_percent_x=InfoBox.DEFAULT_TEXT_END_PERCENT_X
+        self.__x=x  #x coord
+        self.__y=y  #y coord
+        self.__width=box_width  #width
+        self.__height=box_height    #height
+        self.__text=box_text    #String of text to display
+        self.__color=box_color  #Additive blend color (Tuple)
+        self.__n_text_lines=n_lines #Number of lines of  text to render
+        self.__visible=True #Toggle visibility
+        self.__background_pic = InfoBox.DEFAULT_PIC #Sprite picture
+        self.__font=self.DEFAULT_FONT    #Font
+        self.__font_size=self.DEFAULT_FONT_SIZE  #Font size
+        self.__font_color=self.DEFAULT_FONT_COLOR    #Font color
+        self.__text_pixel_scale_width=self.DEFAULT_TEXT_TO_PIXEL_SCALE_WIDTH #Controls width of text surfaces
+        self.__text_pixel_scale_height=self.DEFAULT_TEXT_TO_PIXEL_SCALE_HEIGHT   #Controls height of text surfaces
+        self.__text_start_percent_x=self.DEFAULT_TEXT_START_PERCENT_X    #Start x coord for text
+        self.__text_end_percent_x=self.DEFAULT_TEXT_END_PERCENT_X    #End x coord for text
 
+        #Main sprite for rendering
         self.__sprite=Sprite(x, y, box_width, box_height, self.__background_pic, mask, box_color)
+        #Initialize object settings:
         self.write_text(self.__text)
 
     def set_visible(self,value:bool=True):
+        """
+        Toggle visibility
+        :param value: Boolean (True/False)
+        """
         self.__visible=value
 
     def get_x(self):
+        """
+        :return: x coord
+        """
         return self.__x
 
     def get_y(self):
+        """
+        :return: y coord
+        """
         return self.__y
 
     def get_visible(self):
+        """
+        :return: visibility
+        """
         return self.__visible
 
     def get_sprite(self):
+        """
+        :return: Object Sprite
+        """
         return self.__sprite
 
     def write_text(self,text):
