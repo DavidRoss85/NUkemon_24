@@ -293,12 +293,12 @@ class BattleScreen:
             o_ject["owner"].unfreeze_frame()
             return
 
-        # Add and animation the paused animation __queue
-        # Game events will wait for these animations to complete
 
         # Execute the stored function on the target (current_character)
         owner=verb["function"](o_ject["receiver"])
 
+        # Add an animation to the paused animation __queue
+        # Game events will wait for these animations to complete
         self.__animator.pause_and_animate({
             "subject": subject,
             "action": verb["name"]
@@ -349,7 +349,7 @@ class BattleScreen:
                                 self.__target_menu.set_visible(False)
                             else:
                                 self.execute_menu(self.__menu_tree[-1])
-                                
+
                             menu = self.__menu_list[self.__target_menu.get_visible()]
                             self.show_description(menu)
                         case btn.K_RETURN:

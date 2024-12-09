@@ -21,7 +21,7 @@ class TurnSystem:
         effects=character.get_battle_effects()
         delete_list=[]
         for key,value in effects.items():
-            if key=="asleep" or key=="paralyzed":
+            if key=="asleep" or key=="paralyzed" or key=="frozen":
                 character.deliver_message(f"{character.get_name()} is {key}.\n ")
                 allowed_moves=["Switch"]
 

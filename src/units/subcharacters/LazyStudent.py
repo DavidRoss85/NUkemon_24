@@ -7,9 +7,9 @@ class LazyStudent(Character):
     def __init__(self, name, level, hp, mp, strength, intel, sprite, x=0, y=0):
         super().__init__(name, level, hp, mp, strength, intel, sprite, x, y)
         self.set_profession("Lazy Student")
-        self.__profession_move=Skill("Sleep in Class", ["heal"], 2, 10, ["asleep"], 1, 3)
+        self.__profession_move=Skill("Sleep in Class", ["heal"], 2.5, 10, ["asleep"], 1, 4)
         self.get_condition().immunities = []
-        self.__lazy_move_dict = {
+        self.__profession_dict = {
             "Skill": {
                 "description": "Use a special ability",
                 "menu": {
@@ -23,9 +23,9 @@ class LazyStudent(Character):
             }
         }
 
-        self.update_move_dictionary(self.__lazy_move_dict)
+        self.update_move_dictionary(self.__profession_dict)
 
     def sleep_in_class(self,target):
-
+        self.deliver_message(f"{self.get_name()} falls asleep 'Zzz'...\n ")
         self.perform_special_move(self,target,self.__profession_move)
         return self

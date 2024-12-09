@@ -9,7 +9,7 @@ class Husky(Character):
         self.set_profession("Husky")
         self.get_condition().immunities=["confused"]
         self.__profession_move = Skill("Growl", ["mental"], 0, 10, ["afraid"], 1, 3)
-        self.__husky_move_dict={
+        self.__profession_dict={
             "Skill":{
                 "description": "Use a special ability",
                 "menu":{
@@ -23,7 +23,8 @@ class Husky(Character):
             }
         }
 
-        self.update_move_dictionary(self.__husky_move_dict)
+        self.update_move_dictionary(self.__profession_dict)
 
     def use_growl(self,target):
+        self.deliver_message(f"{self.get_name()} used Growl!\n 'GRRRRR...'\n ")
         self.perform_special_move(self, target, self.__profession_move)

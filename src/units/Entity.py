@@ -158,9 +158,14 @@ class Entity:
         stats = user.get_battle_stats()
 
         current_move = copy.deepcopy(move)
+        determiner=stats.sk_atk
+        #If the skill is a physical attack the damage effect will depend on user's attack vs skill power
+        if "physical" in current_move.s_types:
+            determiner=stats.atk
+
         if user.get_curr_mp()> current_move.cost:
             user.set_curr_mp(user.get_curr_mp() - current_move.cost)
-            current_move.dmg = (stats.sk_atk + randint(0, int(stats.sk_atk * VARIABILITY))) * current_move.dmg
+            current_move.dmg = (determiner + randint(0, int(determiner * VARIABILITY))) * current_move.dmg
             current_move.potency += stats.potency + randint(0, int(stats.potency * VARIABILITY))
             target.receive_attack(current_move)
         else:
@@ -292,9 +297,22 @@ class Entity:
         return {"heal":is_heal,"damage":int(final_dmg)}
     # =======================================================================================================
     def calculate_status_effect(self,attack):
+        remedy=False
         if attack.effects is not None:
             #Check for immunity:
+            if "remedy" in attack.s_types:remedy=True
             for effect in attack.effects:
+                #Check for remedies to statuses and fix:
+                if remedy:
+                    if effect[0:3]=="un-":
+                        print('UNDOING SOMETHING')
+                        effect=effect[3:]
+                        print(f"Undoing {effect}")
+                        if effect in self.__battle_stats.effects:
+                            del self.__battle_stats.effects[effect]
+                            self.deliver_message(f"{self.get_name()} is no longer {effect}.\n ")
+                            continue
+
                 if effect in self.__condition.immunities:
                     self.deliver_message(f"{self.get_name()} is immune.\n ")
                     continue

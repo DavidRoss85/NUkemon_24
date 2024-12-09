@@ -11,7 +11,7 @@ class AllPowerful(Husky,LazyStudent,MathProfessor,TeachingAssistant):
         self.set_profession("All Powerful")
         # self.__profession_move=Skill("Sleep in Class", ["heal"], 2, 10, ["asleep"], 1, 3)
         self.get_condition().immunities = []
-        # self.__lazy_move_dict = {
+        # self.__profession_dict = {
         #     "Skill": {
         #         "menu": {
         #             "Sleep in Class": {
@@ -21,9 +21,9 @@ class AllPowerful(Husky,LazyStudent,MathProfessor,TeachingAssistant):
         #     }
         # }
 
-        # self.update_move_dictionary(self.__lazy_move_dict)
+        # self.update_move_dictionary(self.__profession_dict)
 
-    def sleep_in_class(self,target):
-
-        self.perform_special_move(self,target,self.__profession_move)
-        return self
+    # def sleep_in_class(self,target):
+    #
+    #     self.perform_special_move(self,target,self.__profession_move)
+    #     return self

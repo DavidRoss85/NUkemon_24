@@ -1,6 +1,8 @@
 from src.units.Character import Character
 from src.globals.sprites import Sprites
 from src.units.subcharacters.AllPowerful import AllPowerful
+from src.units.subcharacters.Brute import Brute
+from src.units.subcharacters.Genius import Genius
 from src.units.subcharacters.Husky import Husky
 from src.units.subcharacters.LazyStudent import LazyStudent
 from src.units.subcharacters.MathProfessor import MathProfessor
@@ -16,11 +18,11 @@ class Personas:
 
     rory=LazyStudent("Rory", 1, 10, 10, 5, 5, Sprites.male_normal_backpack_behind)
 
-    lin=Character("Lin",1,10,10,4,6,Sprites.girl_black_hair)
+    lin=Genius("Lin",1,10,10,4,6,Sprites.girl_black_hair)
 
     jen = Character("Jen", 1, 10, 10, 4, 6, Sprites.girl_brown_hair)
 
-    chris=Character("Chris", 1, 10, 10, 6, 4, Sprites.male_muscular_shirtless_behind)
+    chris=Brute("Chris", 1, 10, 10, 6, 4, Sprites.male_muscular_shirtless_behind)
 
     enemy1=Character("Wendie",1,200,200,5,5,Sprites.emoji_on_fire,600,200)
 
