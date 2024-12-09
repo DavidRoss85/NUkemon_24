@@ -17,17 +17,22 @@ class UC:
     music_repeat_point=MUSIC_EVENT_END
 
 #Image assets:
-    background_image=f"{absolute_path}/assets/images/backgrounds/Background8.png"
-    info_box_image=f"{absolute_path}/assets/images/text_box.png"
-    menu_box_image = f"{absolute_path}/assets/images/text_box.png"
-    stat_box_image=f"{absolute_path}/assets/images/stat_box.png"
+    image_path=f"{absolute_path}/assets/images/"
+    background_image=f"{image_path}/backgrounds/Background8.png"
+    info_box_image=f"{image_path}text_box.png"
+    menu_box_image = f"{image_path}text_box.png"
+    stat_box_image=f"{image_path}stat_box.png"
 
     #Characters:
-    main_char_image_01= f"{absolute_path}/assets/images/characters/Boy_backpack3.png"
-    professor_a_image_01= f"{absolute_path}/assets/images/characters/Male_Professor_1_transparent.png"
-    professor_b_image_01= f"{absolute_path}/assets/images/characters/Male_Professor_2_transparent.png"
-    t_a_image_01=f"{absolute_path}/assets/images/characters/Female_TA1_transparent.png"
-    nu_husky_image_01=f"{absolute_path}/assets/images/characters/NU_Husky_transparent.png"
+    character_path=f"{absolute_path}/assets/images/characters/"
+    male_normal_behind_image= f"{character_path}Boy_backpack4.png"
+    male_muscle_behind_image=f"{character_path}Muscle_boy_backpack.png"
+    female_brown_hair_image=f"{character_path}Girl_brown_hair.png"
+    female_black_hair_image=f"{character_path}Girl_black_hair.png"
+    professor_a_image_01= f"{character_path}Male_Professor_1_transparent.png"
+    professor_b_image_01= f"{character_path}Male_Professor_2_transparent.png"
+    t_a_image_01=f"{character_path}Female_TA1_transparent.png"
+    nu_husky_image_01=f"{character_path}NU_Husky_transparent.png"
 
     #Special Effects:
     punch_effect_image=f"{absolute_path}/assets/images/effects/punches_effect.bmp"

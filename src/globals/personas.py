@@ -12,13 +12,15 @@ class Personas:
     Characters in the game that have different attributes.
     """
 
-    big_g=AllPowerful("He-Man", 10,10,10,6,6,Sprites.rory_battle1)
+    big_g=AllPowerful("He-Man", 10, 10, 10, 6, 6, Sprites.male_normal_backpack_behind)
 
-    rory=LazyStudent("Rory", 1, 10, 10, 5, 5,Sprites.rory_battle1)
+    rory=LazyStudent("Rory", 1, 10, 10, 5, 5, Sprites.male_normal_backpack_behind)
 
-    mina=Character("Mina",1,10,10,4,6,Sprites.emoji_chill)
+    lin=Character("Lin",1,10,10,4,6,Sprites.girl_black_hair)
 
-    chris=Character("Chris", 1, 10, 10, 6,4 ,Sprites.rory_battle1)
+    jen = Character("Jen", 1, 10, 10, 4, 6, Sprites.girl_brown_hair)
+
+    chris=Character("Chris", 1, 10, 10, 6, 4, Sprites.male_muscular_shirtless_behind)
 
     enemy1=Character("Wendie",1,200,200,5,5,Sprites.emoji_on_fire,600,200)
 
@@ -39,8 +41,9 @@ class Crews:
     default_player=[
         Personas.big_g,
         Personas.rory,
-        Personas.mina
-        ,Personas.chris
+        Personas.lin,
+        Personas.chris,
+        Personas.jen
     ]
     default_enemy=[
         Personas.math_professor_a,

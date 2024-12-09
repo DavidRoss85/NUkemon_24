@@ -11,6 +11,7 @@ class LazyStudent(Character):
         self.get_condition().immunities = []
         self.__lazy_move_dict = {
             "Skill": {
+                "description": "Use a special ability",
                 "menu": {
                     "Sleep in Class": {
                         "name": "Sleep in Class",

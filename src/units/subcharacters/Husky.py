@@ -11,6 +11,7 @@ class Husky(Character):
         self.__profession_move = Skill("Growl", ["mental"], 0, 10, ["afraid"], 1, 3)
         self.__husky_move_dict={
             "Skill":{
+                "description": "Use a special ability",
                 "menu":{
                     "Growl": {
                         "name": "Growl",

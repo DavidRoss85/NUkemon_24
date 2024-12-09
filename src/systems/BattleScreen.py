@@ -349,7 +349,8 @@ class BattleScreen:
                                 self.__target_menu.set_visible(False)
                             else:
                                 self.execute_menu(self.__menu_tree[-1])
-
+                                
+                            menu = self.__menu_list[self.__target_menu.get_visible()]
                             self.show_description(menu)
                         case btn.K_RETURN:
                             name=0

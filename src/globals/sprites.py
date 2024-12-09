@@ -5,11 +5,30 @@ class Sprites:
     """
     Holds sprites for use in game
     """
-    rory_battle1 = Sprite(
-        200, 400, 320, 320,
-        UC.main_char_image_01,
+    male_normal_backpack_behind = Sprite(
+        200, 400, 450, 450,
+        UC.male_normal_behind_image,
         (64, 177, 64),
     )
+
+    male_muscular_shirtless_behind= Sprite(
+        200, 400, 550, 550,
+        UC.male_muscle_behind_image,
+        (64, 177, 64),
+    )
+
+    girl_brown_hair = Sprite(
+        200, 400, 550, 550,
+        UC.female_brown_hair_image,
+        (64, 177, 64),
+    )
+
+    girl_black_hair = Sprite(
+        200, 400, 550, 550,
+        UC.female_black_hair_image,
+        (64, 177, 64),
+    )
+
     emoji_chill = Sprite(
         200, 400, 200, 200,
         f"{UC.absolute_path}/assets/images/test_images/Emoji-Chill.png",

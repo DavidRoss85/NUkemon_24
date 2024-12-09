@@ -11,6 +11,7 @@ class MathProfessor(Character):
         self.__profession_move=Skill("Discreet Math", ["mental"], 0, 10, ["confused"], 1, 3)
         self.__math_professor_move_dict = {
             "Skill": {
+                "description": "Use a special ability",
                 "menu":{
                     "Discreet Math": {
                         "name": "Discreet Math",
