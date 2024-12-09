@@ -166,7 +166,7 @@ class Entity:
         if user.get_curr_mp()> current_move.cost:
             user.set_curr_mp(user.get_curr_mp() - current_move.cost)
             current_move.dmg = (determiner + randint(0, int(determiner * VARIABILITY))) * current_move.dmg
-            current_move.potency += stats.potency + randint(0, int(stats.potency * VARIABILITY))
+            current_move.potency += (stats.potency + randint(0, int(stats.potency * VARIABILITY))) * current_move.potency
             target.receive_attack(current_move)
         else:
             user.deliver_message(f"Not enough mp.\n ")

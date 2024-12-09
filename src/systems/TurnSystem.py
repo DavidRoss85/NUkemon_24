@@ -1,4 +1,6 @@
 from src.players.Computer import Computer
+from src.units.SkillClasses import Skill
+
 
 class TurnSystem:
     def __init__(self,player,enemy,messenger):
@@ -17,13 +19,25 @@ class TurnSystem:
         :param active: boolean if the user is active or not
         :return: list of allowed moves Ex: ['Switch','Attack']
         """
+
         allowed_moves=['all']   #Default, all moves allowed
         effects=character.get_battle_effects()
+        stats=character.get_battle_stats()
         delete_list=[]
         for key,value in effects.items():
             if key=="asleep" or key=="paralyzed" or key=="frozen":
                 character.deliver_message(f"{character.get_name()} is {key}.\n ")
                 allowed_moves=["Switch"]
+            if key=="injured":
+                character.deliver_message(f"{character.get_name()} is {key}.\n ")
+                character.receive_attack(
+                    Skill(
+                        "",
+                        ["physical"],
+                        stats.blk+max(stats.max_hp//20,1),
+                        0
+                    )
+                )
 
             value-=1
             effects[key]=value
