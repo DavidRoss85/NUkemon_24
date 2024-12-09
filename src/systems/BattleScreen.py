@@ -7,6 +7,7 @@ from pygame.locals import (
 
 from src.game_objects.Background import Background
 from src.game_objects.BattleMenu import BattleMenu
+from src.game_objects.HelpBox import HelpBox
 from src.game_objects.Overlay import Overlay
 from src.game_objects.StatBox import StatBox
 from src.game_objects.InfoBox import InfoBox
@@ -54,6 +55,7 @@ class BattleScreen:
         self.__messenger=None
         self.__enemy_stat_box=None
         self.__player_stat_box=None
+        self.__help_box=None
         self.__previous_screen=None
 
         self.__turn_system= TurnSystem(player, enemy, self.__messenger)
@@ -96,7 +98,8 @@ class BattleScreen:
         self.__message_box = InfoBox(0, 568, 680, 200, "", 5, (1, 1, 1))
         self.__player_menu = BattleMenu(681, 568, 347, 200, self.__player.get_menu_dictionary())
 
-        self.__menu_list = [self.__player_menu, self.__target_menu]  # Maybe keep this...
+        self.__menu_list = [self.__player_menu, self.__target_menu]  #Two menu boxes for displaying options
+        self.__help_box=HelpBox(1,1,700,50)
 
         self.__messenger = Messenger(self.__message_box, self.__sound_mixer)
         self.__player.set_messenger(self.__messenger)
@@ -231,6 +234,7 @@ class BattleScreen:
         renderer.add_to_layer(self.__player, 1)
         renderer.add_to_layer(self.__enemy_stat_box, 2)
         renderer.add_to_layer(self.__player_stat_box, 2)
+        renderer.add_to_layer(self.__help_box,2)
         renderer.add_to_layer(self.__message_box, 2)
         renderer.add_to_layer(self.__player_menu, 3)
         renderer.add_to_layer(self.__target_menu, 3)
@@ -277,7 +281,7 @@ class BattleScreen:
                 # Switch to __enemy turn
                 self.__turn_system.set_player_turn(False)
 
-
+        self.show_description(self.__menu_list[self.__target_menu.get_visible()])
 
     # =======================================================================================================
     def perform_action(self, subject, verb, o_ject):
@@ -315,6 +319,7 @@ class BattleScreen:
         """
         player_turn = self.__turn_system.get_player_turn()
         animating=self.__animator.get_animating_status()
+        menu=self.__menu_list[self.__target_menu.get_visible()]
         for event in event_list:
             if event.type == KEYDOWN:
                 if event.key== btn.K_ESCAPE:
@@ -329,9 +334,11 @@ class BattleScreen:
                             pass
                             # self.__player.change_character(self.__player.get_team()["Mina"])
                         case btn.K_UP:
-                            self.__menu_list[self.__target_menu.get_visible()].prev_menu_item()
+                            menu.prev_menu_item()
+                            self.show_description(menu)
                         case btn.K_DOWN:
-                            self.__menu_list[self.__target_menu.get_visible()].next_menu_item()
+                            menu.next_menu_item()
+                            self.show_description(menu)
                         case btn.K_BACKSPACE:
 
                             self.__queued_action=None
@@ -343,14 +350,17 @@ class BattleScreen:
                             else:
                                 self.execute_menu(self.__menu_tree[-1])
 
+                            self.show_description(menu)
                         case btn.K_RETURN:
                             name=0
                             self.__player.get_menu_dictionary()
                             if len(self.__menu_tree)==0:
                                 name=self.__menu_list[0].get_current_selection()
+
                             else:
                                 name = self.__menu_list[1].get_current_selection()
-                            # print(f"Battle Screen: {self.__menu_tree}")
+
+
                             self.__menu_tree.append(name)
                             self.execute_menu(name)
 
@@ -365,6 +375,7 @@ class BattleScreen:
         Update every cycle
         :return:
         """
+        self.__help_box.set_visible(self.__turn_system.get_player_turn())
         self.update_dictionaries()
         self.__player_menu.update_menu(self.__player.get_menu_dictionary())
         self.__messenger.stream_text()
@@ -378,6 +389,13 @@ class BattleScreen:
         self.__turn_system.check_loss_conditions(self.perform_action)
         if self.__turn_system.check_win_conditions(self.perform_action):
             pass
+    # =======================================================================================================
+    def show_description(self, on_menu):
+        m_dict=on_menu.get_current_selection()
+        if "description" in m_dict:
+            self.__help_box.write_in_box(m_dict["description"])
+        else:
+            self.__help_box.write_in_box("")
 
     # =======================================================================================================
     def show_battle_intro(self):
@@ -408,7 +426,7 @@ class BattleScreen:
         """
         self.__running=True
         # self.show_battle_intro()
-        self.__music_mixer.play_music(repeat_time=13.19)
+        self.__music_mixer.play_music(start=3,repeat_time=13.19)
         self.set_player_battle_stats()
         self.set_enemy_battle_stats()
         # self.__turn_system.set_player_turn(False)
@@ -426,4 +444,5 @@ class BattleScreen:
             self.__renderer.render_all()
             self.__renderer.flip_screen()
             self.__clock.tick(self.__fps)
+
 

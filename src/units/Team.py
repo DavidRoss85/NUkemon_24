@@ -17,7 +17,12 @@ class Team:
         self.__frozen_frame=False
         self.sprite_frame=None
         self.__menu_options={
-            "Switch": {"name": "Switch","target": "team", "function":self.change_character},
+            "Switch": {
+                "name": "Switch",
+                "target": "team",
+                "function":self.change_character,
+                "description": "Change characters"
+            },
         }
 
         # "Do Magic": {"menu": {

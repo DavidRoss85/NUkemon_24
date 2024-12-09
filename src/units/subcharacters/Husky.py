@@ -13,7 +13,10 @@ class Husky(Character):
             "Skill":{
                 "menu":{
                     "Growl": {
-                        "name": "Growl", "target": "enemies", "function":self.use_growl
+                        "name": "Growl",
+                        "target": "enemies",
+                        "function":self.use_growl,
+                        "description": "Growls at the target, lowering their attack."
                     }
                 }
             }

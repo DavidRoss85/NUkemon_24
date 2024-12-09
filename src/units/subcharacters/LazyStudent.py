@@ -13,7 +13,10 @@ class LazyStudent(Character):
             "Skill": {
                 "menu": {
                     "Sleep in Class": {
-                        "name": "Sleep in Class", "target": "self", "function": self.sleep_in_class
+                        "name": "Sleep in Class",
+                        "target": "self",
+                        "function": self.sleep_in_class,
+                        "description": "Student falls asleep for 3 turns, but recovers health in the process."
                     }
                 }
             }

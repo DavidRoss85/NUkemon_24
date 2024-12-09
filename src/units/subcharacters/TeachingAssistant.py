@@ -16,7 +16,10 @@ class TeachingAssistant(Character):
             "Skill": {
                 "menu": {
                     "Shoo": {
-                        "name": "Growl", "target": "enemies", "function": self.stub_func
+                        "name": "Shoo",
+                        "target": "enemies",
+                        "function": self.stub_func,
+                        "description": "Shoos away the target, making them feel bad"
                     }
                 }
             }
