@@ -10,6 +10,7 @@ class TurnSystem:
         self.__enemy:Computer=enemy
         self.__messenger=messenger
         self.__battle_over=False
+        self.__player_victory=False
     # =======================================================================================================
     @staticmethod
     def evaluate_status(character,active:bool=True):
@@ -50,6 +51,13 @@ class TurnSystem:
 
         return allowed_moves
 
+    def get_battle_status(self):
+        if self.__battle_over and self.__player_victory:
+            return "victory"
+        elif self.__battle_over and not self.__player_victory:
+            return "loss"
+        else:
+            return "ongoing"
     # =======================================================================================================
     def set_messenger(self,messenger):
         self.__messenger=messenger
@@ -88,6 +96,8 @@ class TurnSystem:
                )
             else:
                 print("GAME OVER")
+                self.__battle_over=True
+                self.__player_victory=False
     # =======================================================================================================
     def check_win_conditions(self,perform_action):
         enemy_cur_char=self.__enemy.get_current_character()
@@ -118,10 +128,12 @@ class TurnSystem:
                             "receiver": enemy_cur_char
                         }
                     )
+
                     self.__deliver_message(f"Congratulations!\n You have defeated the enemy!!\n "
                                            f"You earn some random amount of experience.")
                     self.__player_turn=True
                     self.__battle_over=True
+                    self.__player_victory=True
                     return True
 
         return False

@@ -44,9 +44,9 @@ class BattleScreen:
         self.__sound_mixer=sound_mixer
         self.__animator=BattleAnimator(sound_mixer)
 
-
-        self.__fps=30
+        self.__fps=120
         self.__intro_started=False
+        self.__playing_victory_music=False
 
         self.__running=False
 
@@ -117,7 +117,8 @@ class BattleScreen:
             "player":self.__player,
             "enemy": self.__enemy,
             "background":self.__background,
-            "animation_layer":self.__animation_layer
+            "animation_layer":self.__animation_layer,
+            "help_box":self.__help_box
         })
 
     # =======================================================================================================
@@ -369,6 +370,9 @@ class BattleScreen:
                 self.__running = False
             elif event.type==UC.MUSIC_EVENT_END:
                 self.__music_mixer.repeat_music()
+                if self.__turn_system.get_battle_status()=="victory":
+                    pass
+                    # self.__running=False
 
     # =======================================================================================================
     def perform_updates(self):
@@ -420,14 +424,19 @@ class BattleScreen:
         for teammate in self.__player.get_team().values():
             teammate.calculate_start_battle_stats()
     # =======================================================================================================
+    def change_music(self,new_song,start=0,repeat_time=-1):
+        self.__music_mixer.stop_music()
+        self.__music_mixer.play_music(new_song,start,repeat_time)
+
+    # =======================================================================================================
     def start(self):
         """
         Main Battle loop
         :return:
         """
         self.__running=True
-        # self.show_battle_intro()
-        self.__music_mixer.play_music(start=3,repeat_time=13.19)
+        self.show_battle_intro()
+        self.__music_mixer.play_music(start=0,repeat_time=13.19)
         self.set_player_battle_stats()
         self.set_enemy_battle_stats()
         # self.__turn_system.set_player_turn(False)
@@ -445,5 +454,12 @@ class BattleScreen:
             self.__renderer.render_all()
             self.__renderer.flip_screen()
             self.__clock.tick(self.__fps)
+
+            if self.__turn_system.get_battle_status()=="victory" and not animating and player_turn and not self.__playing_victory_music:
+               self.change_music(UC.victory_music)
+               self.__playing_victory_music=True
+
+
+
 
 

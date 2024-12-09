@@ -49,15 +49,16 @@ class UC:
 
 #Sound dictionary:
     sound_path= f"{absolute_path}/assets/sounds/"
-    music_path= f"{sound_path}/music/"
-    se_path=f"{sound_path}/effects/"
+    music_path= f"{sound_path}music/"
+    se_path=f"{sound_path}effects/"
     animator_sound_dictionary={
         "punch": "punch-classic-betacut.mp3",
         "base_boom": "slow-motion-glitch-rewind-joshua-chivers.mp3",
         "swish": "swish-airy-swish-smartsound.mp3",
         "boop": "boop.wav"
     }
-    music_file=f"rivalry-sulyya4.ogg"
+    battle_music= f"rivalry-sulyya.ogg"
+    victory_music=f"victory1.ogg"
 # Music from #Uppbeat
 # https://uppbeat.io/t/sulyya/rivalry
 # License code: BTSQ70TOAU4SG7RB

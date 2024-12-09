@@ -29,8 +29,8 @@ SCREEN_HEIGHT = UC.screen_height
 
 renderer = Renderer(SCREEN_WIDTH,SCREEN_HEIGHT,UC.game_back_color)
 # sound_dict={"boop":"boop.wav","punch":"/effects/punch-classic-betacut.mp3"}
-# music_file=f"rivalry-sulyya.mp3"
-music_mixer= Sound(music_volume=0.6, music_file=UC.music_file)
+# battle_music=f"rivalry-sulyya.mp3"
+music_mixer= Sound(music_volume=0.6, music_file=UC.battle_music)
 sound_mixer= Sound(effect_volume=1,sound_dict=UC.animator_sound_dictionary)
 # animator=BattleAnimator(mixer)
 

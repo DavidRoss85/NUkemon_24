@@ -164,7 +164,8 @@ class Sound:
         if self.__music_file:
             pygame.mixer.music.set_volume(self.__music_volume)
             pygame.mixer.music.play(start= start)   # -1 means loop indefinitely
-            pygame.mixer.music.set_endevent(UC.MUSIC_EVENT_END)
+            if repeat_time>=0:
+                pygame.mixer.music.set_endevent(UC.MUSIC_EVENT_END)
 
         else:
             print("No music file loaded. Can't play music.")
@@ -172,7 +173,7 @@ class Sound:
     def repeat_music(self):
         if self.__music_file:
             pygame.mixer.music.set_volume(self.__music_volume)
-            pygame.mixer.music.play(start=self.__music_repeat_time)  # -1 means loop indefinitely
+            pygame.mixer.music.play(start=self.__music_repeat_time)
             pygame.mixer.music.set_endevent(UC.MUSIC_EVENT_END)
 
     def stop_music(self):
@@ -180,4 +181,5 @@ class Sound:
         Stop playing music
         """
         pygame.mixer.music.stop()
+        pygame.event.clear(UC.MUSIC_EVENT_END)
 

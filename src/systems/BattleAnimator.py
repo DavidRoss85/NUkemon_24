@@ -300,6 +300,7 @@ class BattleAnimator:
         background = self.__object_dictionary["background"]
         stats1 = self.__object_dictionary["player_stat_box"]
         stats2 = self.__object_dictionary["enemy_stat_box"]
+        h_box = self.__object_dictionary["help_box"]
         a_layer=self.__object_dictionary["animation_layer"]
         effect=subject
         ani_ref="Transition_effect"
@@ -310,6 +311,7 @@ class BattleAnimator:
             enemy.set_visible(False)
             stats1.set_visible(False)
             stats2.set_visible(False)
+            h_box.set_visible(False)
             a_layer.add_to_queue(ani_ref, effect, 0, 0)
 
         self.__tick+=1
@@ -332,6 +334,7 @@ class BattleAnimator:
         stats1=self.__object_dictionary["player_stat_box"]
         stats2=self.__object_dictionary["enemy_stat_box"]
         m_box=self.__object_dictionary["messenger"]
+        h_box=self.__object_dictionary["help_box"]
 
         if self.__tick<1:
             self.__org_x=player.get_x()
@@ -340,6 +343,7 @@ class BattleAnimator:
             # background.set_x(background.get_x()-500)
             stats1.set_visible(False)
             stats2.set_visible(False)
+            h_box.set_visible(False)
             player.set_x(player.get_x()+500)
             enemy.set_x(enemy.get_x()-500)
             player.set_visible(True)
@@ -364,6 +368,7 @@ class BattleAnimator:
             # background.set_x(self.__org_x3)
             stats1.set_visible(True)
             stats2.set_visible(True)
+            # h_box.set_visible(True)
             self.__done_bool=False
             return True
         else:
