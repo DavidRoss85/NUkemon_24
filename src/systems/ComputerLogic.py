@@ -1,106 +1,134 @@
 from random import randint
 
 
+def careful_ai(computer,player,move_dictionary,action=None):
 
-def careful_ai(computer,player,animator,move_dictionary):
+    #Moves List:
+    attack=move_dictionary["Attack"]
+    switch=move_dictionary["Switch"]
+    switch["name"]="eSwitch"
+    defend=move_dictionary["Defend"]
 
-    me=computer.get_current_character()
+    my_character=computer.get_current_character()
     target=player.get_current_character()
     target_owner=player
-    if "confused" in me.get_battle_effects():
-        target=me
-        target_owner=computer
 
-    health_percent=(me.get_curr_hp()/me.get_max_hp())*100
+    o_ject={"owner": target_owner, "receiver": target}
+    myself={"owner": computer, "receiver":my_character}
+    health_percent=(my_character.get_curr_hp()/my_character.get_max_hp())*100
 
     num=randint(1,10)
 
     if num>1 and health_percent > 30:
-        move_dictionary["Attack"]["function"](target)
-        animator.pause_and_animate({"subject":computer,"action":"Attack"})
-        animator.pause_and_animate({"object": target_owner, "action": "Attack"})
+        action(computer, attack, o_ject)
     else:
         decision=randint(1,10)
         if len(computer.get_team())>1 and decision>=5:
             for name in computer.get_team():
                 if name!=computer.get_current_character().get_name():
                     computer.freeze_frame()
-                    move_dictionary["Switch"]["function"](computer.get_team()[name])
-                    animator.pause_and_animate({"subject": computer, "action": "eSwitch"})
-                    animator.pause_and_animate({"object": computer, "action": "eSwitch"})
+                    myself["receiver"] = computer.get_team()[name]
+                    action(computer, switch, myself)
                     break
         elif randint(1, 10)>5:
-            move_dictionary["Defend"]["function"](computer.get_current_character())
-            animator.pause_and_animate({"subject": computer, "action": "Defend"})
-            animator.pause_and_animate({"object": computer, "action": "Defend"})
+           action(computer, defend, myself)
         else:
-            move_dictionary["Attack"]["function"](target)
-            animator.pause_and_animate({"subject": computer, "action": "Attack"})
-            animator.pause_and_animate({"object": target_owner, "action": "Attack"})
+            action(computer, attack, o_ject)
 
     return True
 
-def berserk_ai(computer,player,animator,move_dictionary):
-
-    me = computer.get_current_character()
-    target = player.get_current_character()
-    target_owner = player
-    if "confused" in me.get_battle_effects():
-        target = me
-        target_owner = computer
-
-    move_dictionary["Attack"]["function"](target)
-    animator.pause_and_animate({"subject": computer, "action": "Attack"})
-    animator.pause_and_animate({"object": target_owner, "action": "Attack"})
-
-    return True
+def berserk_ai(computer,player,move_dictionary,action=None):
 
 
-def math_professor_ai(computer,player,animator,move_dictionary):
+    #Moves List:
+    attack=move_dictionary["Attack"]
+    switch=move_dictionary["Switch"]
+    switch["name"]="eSwitch"
+    defend=move_dictionary["Defend"]
 
-    me=computer.get_current_character()
+    my_character=computer.get_current_character()
     target=player.get_current_character()
     target_owner=player
-    if "confused" in me.get_battle_effects():
-        target=me
-        target_owner=computer
 
-    health_percent=(me.get_curr_hp()/me.get_max_hp())*100
+    o_ject={"owner": target_owner, "receiver": target}
+    myself={"owner": computer, "receiver":my_character}
+    health_percent=(my_character.get_curr_hp()/my_character.get_max_hp())*100
+
+    num=randint(1,10)
+    action(computer,attack,o_ject)
+    return True
+
+
+def math_professor_ai(computer,player,move_dictionary,action=None):
+
+    #Moves List:
+    attack=move_dictionary["Attack"]
+    discreet_math= move_dictionary["Skill"]["menu"]["Discreet Math"]
+    switch=move_dictionary["Switch"]
+    switch["name"]="eSwitch"
+    defend=move_dictionary["Defend"]
+
+    my_character=computer.get_current_character()
+    target=player.get_current_character()
+    target_owner=player
+
+
+    o_ject={"owner": target_owner, "receiver": target}
+    myself={"owner": computer, "receiver":my_character}
+    health_percent=(my_character.get_curr_hp()/my_character.get_max_hp())*100
 
     num=randint(1,10)
 
     if num>3 and health_percent > 30:
-        move_dictionary["Attack"]["function"](target)
-        animator.pause_and_animate({"subject":computer,"action":"Attack"})
-        animator.pause_and_animate({"object": target_owner, "action": "Attack"})
-    elif num>1 and health_percent>30 and me.get_curr_mp()>10:
-        move_dictionary["Skill"]["menu"]["Discreet Math"]["function"](player.get_current_character())
-        animator.pause_and_animate({"subject":computer,"action":"Discreet Math"})
-        animator.pause_and_animate({"object": player, "action": "Discreet Math"})
+        action(computer, attack, o_ject)
+    elif num>1 and health_percent>30 and my_character.get_curr_mp()>10:
+        action(computer,discreet_math,o_ject)
     else:
         decision=randint(1,10)
         if len(computer.get_team())>1 and decision>=5:
             for name in computer.get_team():
-                if name!=computer.get_current_character().get_name():
+                if name!=my_character.get_name():
                     computer.freeze_frame()
-                    move_dictionary["Switch"]["function"](computer.get_team()[name])
-                    animator.pause_and_animate({"subject": computer, "action": "eSwitch"})
-                    animator.pause_and_animate({"object": computer, "action": "eSwitch"})
+                    myself["receiver"]=computer.get_team()[name]
+                    action(computer,switch,myself)
                     break
         elif randint(1, 10)>5:
-            move_dictionary["Defend"]["function"](computer.get_current_character())
-            animator.pause_and_animate({"subject": computer, "action": "Defend"})
-            animator.pause_and_animate({"object": computer, "action": "Defend"})
+            action(computer,defend,myself)
         else:
-            move_dictionary["Attack"]["function"](target)
-            animator.pause_and_animate({"subject": computer, "action": "Attack"})
-            animator.pause_and_animate({"object": target_owner, "action": "Attack"})
+            action(computer,attack,o_ject)
 
     return True
 
 
+def husky_ai(computer,player,move_dictionary,action=None):
+
+    #Moves List:
+    attack=move_dictionary["Attack"]
+    growl= move_dictionary["Skill"]["menu"]["Growl"]
+    switch=move_dictionary["Switch"]
+    switch["name"]="eSwitch"
+    defend=move_dictionary["Defend"]
+
+    my_character=computer.get_current_character()
+    target=player.get_current_character()
+    target_owner=player
+
+
+    o_ject={"owner": target_owner, "receiver": target}
+    myself={"owner": computer, "receiver":my_character}
+    health_percent=(my_character.get_curr_hp()/my_character.get_max_hp())*100
+
+    num=randint(1,10)
+
+    if num<=2 and my_character.get_curr_mp()>10:
+        action(computer,growl,o_ject)
+    else:
+        action(computer, attack, o_ject)
+
+    return True
+
 ai_dictionary={
     "Math professor": math_professor_ai,
-    "Husky": berserk_ai,
+    "Husky": husky_ai,
     "generic": careful_ai
 }

@@ -163,7 +163,7 @@ class Entity:
         if "physical" in current_move.s_types:
             determiner=stats.atk
 
-        if user.get_curr_mp()> current_move.cost:
+        if user.get_curr_mp()>= current_move.cost:
             user.set_curr_mp(user.get_curr_mp() - current_move.cost)
             current_move.dmg = (determiner + randint(0, int(determiner * VARIABILITY))) * current_move.dmg
             current_move.potency += (stats.potency + randint(0, int(stats.potency * VARIABILITY))) * current_move.potency

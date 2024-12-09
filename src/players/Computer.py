@@ -15,14 +15,14 @@ class Computer(Team):
     def set_animator(self,animator):
         self.__animator=animator
 
-    def execute_move(self,player):
+    def execute_move(self,player,action_function):
         moves=self.get_menu_dictionary()
         res=0
         #<<CPU AI LOGIC GOES HERE>>
         profession=self.get_current_character().get_profession()
         if profession in ai_dictionary:
-            res= ai_dictionary[profession](self,player,self.__animator,moves)
+            res= ai_dictionary[profession](self,player,moves,action_function)
         else:
-            res= ai_dictionary["generic"](self,player,self.__animator,moves)
-
+            res= ai_dictionary["generic"](self,player,moves,action_function)
+            res=True
         return res

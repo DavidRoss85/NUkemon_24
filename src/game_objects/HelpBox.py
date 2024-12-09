@@ -23,7 +23,7 @@ class HelpBox:
         self.__font = self.DEFAULT_FONT
         self.__font_size = self.DEFAULT_FONT_SIZE
         self.__font_color = self.DEFAULT_FONT_COLOR
-        self.__text_start_x = 35
+        self.__text_start_x_percent = int(self.__width*.05)
         self.__text_start_y = 5
 
         self.__sprite = Sprite(x, y, width, height, self.__background_pic, mask, color)
@@ -56,7 +56,7 @@ class HelpBox:
     def write_in_box(self,text):
         self.clear_self()
         info_text=self.write_text(text)
-        self.__sprite.draw_on_surface(info_text, self.__text_start_x, self.__text_start_y)
+        self.__sprite.draw_on_surface(info_text, self.__text_start_x_percent, self.__text_start_y)
 
     def write_text(self,text,font_style=None,font_size=None):
         """

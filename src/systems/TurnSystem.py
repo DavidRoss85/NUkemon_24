@@ -49,6 +49,7 @@ class TurnSystem:
             del effects[effect]
 
         return allowed_moves
+
     # =======================================================================================================
     def set_messenger(self,messenger):
         self.__messenger=messenger
@@ -63,9 +64,11 @@ class TurnSystem:
         self.__player_turn=not self.__player_turn
     # =======================================================================================================
     def cpu_perform_action(self,perform_action):
-        self.__player_turn=self.__enemy.execute_move(self.__player)
         for character in self.__enemy.get_team().values():
-            TurnSystem.evaluate_status(character,character==self.__enemy.get_current_character())
+            if character!=self.__enemy.get_current_character():
+                m= TurnSystem.evaluate_status(character,character==self.__enemy.get_current_character())
+
+        self.__player_turn=self.__enemy.execute_move(self.__player,perform_action)
 
     # =======================================================================================================
     def check_loss_conditions(self,perform_action):

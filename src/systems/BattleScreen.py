@@ -99,7 +99,7 @@ class BattleScreen:
         self.__player_menu = BattleMenu(681, 568, 347, 200, self.__player.get_menu_dictionary())
 
         self.__menu_list = [self.__player_menu, self.__target_menu]  #Two menu boxes for displaying options
-        self.__help_box=HelpBox(1,1,700,50)
+        self.__help_box=HelpBox(1,1,1000,40)
 
         self.__messenger = Messenger(self.__message_box, self.__sound_mixer)
         self.__player.set_messenger(self.__messenger)
@@ -288,7 +288,7 @@ class BattleScreen:
         o_ject["owner"].freeze_frame()
 
         #Evaluate the current character status and only do move if allowed:
-        allowed_moves=TurnSystem.evaluate_status(self.__player.get_current_character())
+        allowed_moves=TurnSystem.evaluate_status(subject.get_current_character())
         if (len(allowed_moves)==0 or verb["name"] not in allowed_moves) and "all" not in allowed_moves:
             o_ject["owner"].unfreeze_frame()
             return
@@ -361,7 +361,7 @@ class BattleScreen:
                             else:
                                 name = self.__menu_list[1].get_current_selection()
 
-
+                            print(name)
                             self.__menu_tree.append(name)
                             self.execute_menu(name)
 
@@ -376,7 +376,7 @@ class BattleScreen:
         Update every cycle
         :return:
         """
-        self.__help_box.set_visible(self.__turn_system.get_player_turn())
+        self.__help_box.set_visible(self.__turn_system.get_player_turn() and  not self.__animator.get_animating_status())
         self.update_dictionaries()
         self.__player_menu.update_menu(self.__player.get_menu_dictionary())
         self.__messenger.stream_text()

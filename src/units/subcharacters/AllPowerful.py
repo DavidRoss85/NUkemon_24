@@ -31,7 +31,7 @@ class AllPowerful(Husky,LazyStudent,MathProfessor,TeachingAssistant,Brute,CSProf
         #     }
         # }
 
-        self.update_move_dictionary(self.__profession_dict)
+        # self.update_move_dictionary(self.__profession_dict)
 
     # def sleep_in_class(self,target):
     #
