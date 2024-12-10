@@ -221,6 +221,7 @@ class TurnSystem:
                                            f"GAME OVER\n")
                     self.__battle_over=True
                     self.__player_victory=False
+                    self.__player_turn=True
                     return True
         return False
 
