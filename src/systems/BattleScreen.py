@@ -378,8 +378,22 @@ class BattleScreen:
             if event.type == KEYDOWN:
 
                 #These are always listed for:
-                if event.key== btn.K_ESCAPE:    #Escape key
-                    self.__running = False  #end loop
+                match event.key:
+                    case btn.K_0:
+                        self.__fps=240
+                        print(self.__fps)
+                    case btn.K_9:
+                        self.__fps=30
+                        print(self.__fps)
+                    case btn.K_KP_PLUS:  # Numpad +
+                        self.__fps += 10  # Speed up game
+                        print(self.__fps)
+
+                    case btn.K_KP_MINUS:  # Numpad -
+                        self.__fps -= 10  # Slow down game
+                        print(self.__fps)
+                    case btn.K_ESCAPE:    #Escape key
+                        self.__running = False  #end loop
 
 
 
@@ -388,13 +402,7 @@ class BattleScreen:
 
                     #Switch Case:
                     match event.key:
-                        case btn.K_KP_PLUS: #Numpad +
-                            self.__fps+=10  #Speed up game
-                            print(self.__fps)
 
-                        case btn.K_KP_MINUS:    #Numpad -
-                            self.__fps-=10  #Slow down game
-                            print(self.__fps)
                         case btn.K_1:
                             self.__player.get_current_character().set_curr_hp(1)
                         case btn.K_LEFT:    #Left key
