@@ -24,7 +24,9 @@ class Team:
                 "description": "Change characters"
             },
         }
+        #Empty menu dictionary when there are no characters left to switch to:
         self.__no_team_options={}
+        
         #Set messenger for receiving text
         self.__messanger=None
 
@@ -209,6 +211,7 @@ class Team:
         """
         :return: menu options for teams
         """
+        #Only return an option to switch if there is more than one person on the team:
         if len(self.__team)>1:
             return self.__menu_options
         else:
