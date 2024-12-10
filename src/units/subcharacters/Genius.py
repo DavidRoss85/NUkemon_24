@@ -17,7 +17,7 @@ class Genius(Character):
                 "menu": {
                     "Explain": {
                         "name": "Explain",
-                        "target": "team",
+                        "target": "teammates",
                         "function": self.explain,
                         "description": "Removes confusion from one teammate"
                     },

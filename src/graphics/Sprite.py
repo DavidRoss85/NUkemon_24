@@ -85,6 +85,11 @@ class Sprite(pygame.sprite.Sprite):
     def set_height(self, height):
         self.__rect.height = height
 
+    def set_alpha(self,alpha):
+        if alpha<0: alpha=0
+        if alpha>255: alpha=255
+        self.__surface.set_alpha(alpha)
+
     def set_new_default(self):
         """
         Copies the current state of the __sprite into the original surface

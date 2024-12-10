@@ -66,6 +66,12 @@ class Renderer:
         #Copy main surface to screen
         self.__screen.blit(self.__main_surface,self.__rect)
 
+    def get_screen_surface(self):
+        """
+        Returns the last thing shown as a surface. Used for transitions
+        :returns: Pygame surface
+        """
+        return self.__screen
 
     def flip_screen(self):
         """

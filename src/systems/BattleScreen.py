@@ -79,13 +79,17 @@ class BattleScreen:
         self.__team_dict=dict() #List of team members, not including player
         self.__active_dict=dict()   #List of all players on the field
         self.__self_dict=dict() #Just self
+        self.__allies_dict=dict()
+        self.__entire_party=dict()
 
         #Target dictionary. Menu references this to display available targets for a selected action:
         self.__target_dictionary={
             "enemies": self.__enemy_dict,
-            "team": self.__team_dict,
+            "teammates": self.__team_dict,
             "active": self.__active_dict,
-            "self": self.__self_dict
+            "self": self.__self_dict,
+            "party": {"Entire Team": self.__player},
+            "allies": self.__team_dict
         }
 
         #Set up the UI:
@@ -183,14 +187,37 @@ class BattleScreen:
         self.__team_dict= self.__list_player_team()
         self.__active_dict= self.__list_active_actors()
         self.__self_dict= self.__list_self()
+        self.__allies_dict= self.__list_team_including_self()
+        self.__entire_party=self.__list_group_as_one()
         self.__target_dictionary={
             "enemies": self.__enemy_dict,
-            "team": self.__team_dict,
+            "teammates": self.__team_dict,
             "active": self.__active_dict,
-            "self": self.__self_dict
+            "self": self.__self_dict,
+            "party": self.__entire_party,
+            "allies": self.__allies_dict
         }
+    # =======================================================================================================
+    def __list_group_as_one(self):
+        """
+        Create an object that represents the team as a whole
+        """
+        td=dict()
+        td["Entire Party"] = {"owner": self.__player, "receiver": self.__player}
+        return td
 
     # =======================================================================================================
+    def __list_team_including_self(self):
+        """
+        Create a list of all team members and current character
+        """
+        td=dict()
+        for teammate in self.__player.get_team().values():
+            td[teammate.get_name()] = {"owner": self.__player, "receiver": teammate}
+        return td
+
+    # =======================================================================================================
+
     def __list_enemies(self):
         """
         Create a list of all enemies on field

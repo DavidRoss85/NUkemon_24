@@ -26,7 +26,7 @@ class Team:
         }
         #Empty menu dictionary when there are no characters left to switch to:
         self.__no_team_options={}
-        
+
         #Set messenger for receiving text
         self.__messanger=None
 
@@ -131,6 +131,11 @@ class Team:
         #Add members on list to dictionary
         for teammate in team_list:
             self.add_team_member(teammate)
+
+    def receive_attack(self,attack):
+        print(f"Team.receive_attack: Team received attack")
+        for character in self.__team.values():
+            character.receive_attack(attack)
 
     def send_to_graveyard(self,team_member):
         """

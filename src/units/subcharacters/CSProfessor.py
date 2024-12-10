@@ -16,7 +16,7 @@ class CSProfessor(Character):
                 "menu":{
                     "Algorithms": {
                         "name": "Algorithms",
-                        "target": "team",
+                        "target": "teammates",
                         "function": self.use_algorithms,
                         "description": "Raises the targets intellect and strength for 3 turns"
                     }
