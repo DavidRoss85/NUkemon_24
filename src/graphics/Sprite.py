@@ -143,5 +143,5 @@ class Sprite(pygame.sprite.Sprite):
         new_mask = (min(blend_color[0] + mask_color[0], 255),
                     min(blend_color[1] + mask_color[1], 255),
                     min(blend_color[2] + mask_color[2], 255))
-        
+
         return new_mask

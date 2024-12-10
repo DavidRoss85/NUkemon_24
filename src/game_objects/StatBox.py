@@ -2,7 +2,7 @@ import pygame
 
 from src.globals.UC import UC
 from src.graphics.Sprite import Sprite
-from src.players.Human import Player
+from src.players.Player import Player
 
 MASK = UC.image_mask_color
 

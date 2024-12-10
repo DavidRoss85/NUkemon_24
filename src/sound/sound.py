@@ -18,13 +18,13 @@ class Sound:
         self.__loaded = {}    # this stores playing sounds so they can be stopped by name
         self.__music_file = None    # stores music file (only 1 can be played at a time)
         self.__music_volume = music_volume  # Default music volume 80%
-        self.__music_repeat_time=0
+        self.__music_repeat_time=0  #Time to restart music from
 
-        self.__sound_path=UC.sound_path
-        self.__music_path=UC.music_path
-        self.__sound_effect_path=UC.se_path
+        self.__sound_path=UC.sound_path #Reference to sounds directory
+        self.__music_path=UC.music_path #Reference to music directory
+        self.__sound_effect_path=UC.se_path #Reference to sound effect directory
 
-        self.load_music(music_file)
+        self.load_music(music_file) #Load music file immediately if possible
 
     def set_sound_path(self,path):
         """
@@ -149,7 +149,7 @@ class Sound:
         """
         self.__music_volume = music_volume
 
-    def play_music(self, music_file:str = None, start:float = 0, repeat_time:float=0):
+    def play_music(self, music_file:str = None, start:float = 0, repeat_time:float=-1):
         """
         Plays music file loaded
         :param music_file: name of music file
@@ -181,5 +181,6 @@ class Sound:
         Stop playing music
         """
         pygame.mixer.music.stop()
-        pygame.event.clear(UC.MUSIC_EVENT_END)
+        if pygame.mixer.music.get_endevent()==UC.MUSIC_EVENT_END:
+            pygame.event.clear(UC.MUSIC_EVENT_END)
 

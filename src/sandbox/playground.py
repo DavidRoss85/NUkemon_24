@@ -1,3 +1,7 @@
+"""
+This module is for testing:
+"""
+
 import pygame
 import sys
 import os
@@ -14,7 +18,7 @@ from src.systems.BattleAnimator import BattleAnimator
 from src.graphics.Renderer import Renderer
 from src.sound.sound import Sound
 
-from src.players.Human import Player
+from src.players.Player import Player
 from src.players.Computer import Computer
 
 # #Uncomment this code to count lines in project:
