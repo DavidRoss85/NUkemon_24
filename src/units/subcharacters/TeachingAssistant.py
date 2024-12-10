@@ -7,6 +7,7 @@ from src.units.SkillClasses import Skill
 
 
 class TeachingAssistant(Character):
+    """Teaching Assistant Character"""
     def __init__(self, name, level, hp, mp, strength, intel, sprite, x=0, y=0):
         super().__init__(name, level, hp, mp, strength, intel, sprite, x, y)
         self.set_profession("TA")

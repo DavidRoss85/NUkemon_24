@@ -4,6 +4,7 @@ from src.units.Character import Character
 
 
 class Genius(Character):
+    """Highly intelligent student"""
     def __init__(self, name, level, hp, mp, strength, intel, sprite, x=0, y=0):
         super().__init__(name, level, hp, mp, strength, intel, sprite, x, y)
         self.set_profession("Genius")
