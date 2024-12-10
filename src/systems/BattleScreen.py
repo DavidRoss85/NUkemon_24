@@ -338,21 +338,23 @@ class BattleScreen:
         menu=self.__menu_list[self.__target_menu.get_visible()]
 
         for event in event_list:
+            if event.type == btn.QUIT:  # Click close
+                self.__running = False  # end loop
+
+            elif event.type == UC.MUSIC_EVENT_END:  # Music ends
+                self.__music_mixer.repeat_music()  # Repeat battle music
+
+                if self.__turn_system.get_battle_status() == "victory":  # Check for victory status
+                    pass
+                    # self.__running=False
+
             if event.type == KEYDOWN:
 
                 #These are always listed for:
                 if event.key== btn.K_ESCAPE:    #Escape key
                     self.__running = False  #end loop
 
-                elif event.type == btn.QUIT:    #Click close
-                    self.__running = False  #end loop
 
-                elif event.type == UC.MUSIC_EVENT_END:  #Music ends
-                    self.__music_mixer.repeat_music()   #Repeat battle music
-
-                    if self.__turn_system.get_battle_status() == "victory": #Check for victory status
-                        pass
-                        # self.__running=False
 
                 #These are only listened for when is player turn and no animations occurring:
                 if player_turn and not animating:

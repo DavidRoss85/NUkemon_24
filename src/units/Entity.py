@@ -1,5 +1,4 @@
 import copy
-import random
 from random import randint
 
 from src.globals.balance import  VARIABILITY, SHIELD_MULTIPLIER
@@ -7,17 +6,30 @@ from src.units.SkillClasses import *
 from src.utils.utils import merge_dictionaries
 
 class Entity:
+    """
+    Base class that forms the basis for all characters in the game.
+    Entities represent a unit's basic stats and abilities
+    """
     def __init__(self,name,level,hp,mp,strength,intel):
-        self.__name=name
-        self.__level = level
-        self.__base_stats=Stats(hp,mp,strength,intel)
-        self.__battle_stats=Stats(hp,mp,strength,intel)
-        self.__condition=Condition()
-        self.__target=self
-        self.__owner=self
-        self.__profession=None
-        self.__messenger=None
-        self.__attack_move=Skill("Punch",["physical"],self.__base_stats.strength,0,None)
+        self.__name=name    #Name
+        self.__level = level    #Level
+        self.__base_stats=Stats(hp,mp,strength,intel)   #Base stats. These are not affected in battle
+        self.__battle_stats=Stats(hp,mp,strength,intel) #Battle stats. These change in battle but return to normal when it ends
+        self.__condition=Condition()    #Unit condition such as effects and status
+        self.__owner=self   #Owner of this character (ie Player or Computer)
+        self.__profession=None  #Used by child classes
+        self.__messenger=None   #Handles messages
+
+        #Basic attack skill:
+        self.__attack_move=Skill(
+            "Punch",
+            ["physical"],
+            self.__base_stats.strength,
+            0,
+            None
+        )
+
+        #List of moves. Child classes can add to these to create longer moves lists
         self.__move_dict={
             "Attack": {
                 "name": "Attack",
@@ -73,9 +85,6 @@ class Entity:
 
     def get_move_dictionary(self):
         return self.__move_dict
-
-    def get_target(self):
-        return self.__target
 
     def get_battle_effects(self):
         return self.__battle_stats.effects
@@ -138,9 +147,6 @@ class Entity:
     def set_profession(self,profession):
         self.__profession=profession
 
-    def set_target(self,target):
-        self.__target=target
-
     def set_messenger(self,messenger):
         self.__messenger=messenger
 
@@ -148,12 +154,27 @@ class Entity:
         self.__condition=condition
     #=======================================================================================================
     def calculate_start_battle_stats(self):
+        """
+        Battle stats are calculated from base stats. At the start of battle.
+        Battle stats are normal, but effects can modify them
+        Battle stats return to normal after battle ends.
+        """
+        #Copy base stats to battle stats
         self.__battle_stats=copy.deepcopy(self.__base_stats)
+        #Update the battle stats using calculations
         self.get_battle_stats().update_calculations(self.__level)
 
     #=======================================================================================================
-    @staticmethod
-    def perform_special_move(user,target,move):
+
+    def perform_special_move(self,user,target,move):
+        """
+        Child classes call on this to perform special moves. This handles all
+        the calculations before delivering the move
+        :param user: Unit executing the move
+        :param target: Receives the move
+        :param move: The action being performed
+        """
+        self.execute_move()
         #Get battle stats
         stats = user.get_battle_stats()
 
@@ -163,19 +184,37 @@ class Entity:
         if "physical" in current_move.s_types:
             determiner=stats.atk
 
+        #Calculate skill power or potency of effect:
+        #Add between 0-10 percent of ATK/SKL_ATK/Potency to itself to determine dmg or effect
         if user.get_curr_mp()>= current_move.cost:
             user.set_curr_mp(user.get_curr_mp() - current_move.cost)
             current_move.dmg = (determiner + randint(0, int(determiner * VARIABILITY))) * current_move.dmg
             current_move.potency += (stats.potency + randint(0, int(stats.potency * VARIABILITY))) * current_move.potency
             target.receive_attack(current_move)
         else:
+            #user did not have enough mp (Will lose a turn)
             user.deliver_message(f"Not enough mp.\n ")
+    # =======================================================================================================
+    def execute_move(self):
+        """
+        Call this function whenever the user tries to execute a move
+        """
+        # Drop shields to execute a move
+        self.__condition.shield_up = False
     #=======================================================================================================
     def attack(self,target=None):
+        """
+        Carry out a physical attack. Calls the target's receive_attack method.
+        :param target: Receiver of the attack
+        """
+        #Get ready to execute a move
+        self.execute_move()
 
+        #Ensure there is a target
         if target is None:
             target=self
 
+        #Confusion causes a player to attack themselves
         if "confused" in self.__battle_stats.effects:
             self.deliver_message(f"{self.__name} is confused and attacks themself...\n ")
             target=self
@@ -185,17 +224,28 @@ class Entity:
         base_damage=self.__battle_stats.atk
         current_move.dmg= base_damage + randint(0,int(base_damage*VARIABILITY))
 
+        #Deliver message and attack to target
         self.deliver_message(f"{self.__name} attacks with {self.__attack_move.name}!\n ")
         target.receive_attack(current_move)
+
+        #Return the target owner
         return target.get_owner()
     #=======================================================================================================
     def defend(self,args=None):
+        """
+        Double defense but lose a turn
+        :param args: Arguments
+        """
         self.deliver_message(f"{self.__name} guards themself.\n ")
         self.__condition.shield_up=True
         return self.get_owner()
 
     #=======================================================================================================
     def receive_attack(self,attack):
+        """
+        Any attack/heal/skill carried out is received here by the target.
+        Depending on what is contained in the attack object will determine the outcome
+        """
 
         final_dmg=attack.dmg    #Final damage starts at attack damage
 
@@ -222,10 +272,7 @@ class Entity:
         self.calculate_status_effect(attack)
         self.set_curr_hp(self.get_curr_hp()-final_dmg)
 
-    #=======================================================================================================
-    def execute_move(self,command):
-        self.__condition.shield_up=False
-        # self.__move_dict[command]()
+
     #=======================================================================================================
     def update_move_dictionary(self, move):
         self.__move_dict.update(merge_dictionaries(move,self.__move_dict))
@@ -256,10 +303,19 @@ class Entity:
         return defense
     #=======================================================================================================
     def calculate_affinity(self,final_dmg,attack):
+        """
+        Determines the affinity effect of an attack
+        Affinities lower the damage or double the positive effects of some moves
+        Aversion increase the damage or reduce the positive effects of some moves
+        :param final_dmg: Starting damage
+        :param attack: Attack object
+        :return: Modified damage
+        """
+        #Get affinities player affinities and aversions
         affinities = self.__condition.affinities
         aversions = self.__condition.aversions
 
-
+        #Check for the attack type: Ex "physical", "mental", "fire", "ice"
         for s_type in attack.s_types:
             if s_type in affinities:
                 # Update message
@@ -279,6 +335,11 @@ class Entity:
         return final_dmg
     # =======================================================================================================
     def calculate_heals(self,final_dmg,attack):
+        """
+        Heal types increase health
+        :param final_dmg: Starting "damage/heal"
+        :param attack: Skill object
+        """
         heals = self.__condition.heal_affinity
         # Check for healing:
         is_heal = False  # Check if "Attack heals"
@@ -297,29 +358,41 @@ class Entity:
         return {"heal":is_heal,"damage":int(final_dmg)}
     # =======================================================================================================
     def calculate_status_effect(self,attack):
+        """
+        Applies, modifies or removes status effects based on the attack.
+        Attack types "remedy" fix anything in their list beginning with "un-".
+        For example: {s_type:"remedy", effect: "un-confused"} fixes "confused" status
+        :param attack: Skill object containing details of the attack
+        """
         remedy=False
+        #Attack has effects:
         if attack.effects is not None:
-            #Check for immunity:
+            #Check if status is a remedy
             if "remedy" in attack.s_types:remedy=True
+
+            #Check each status effect:
             for effect in attack.effects:
                 #Check for remedies to statuses and fix:
                 if remedy:
                     if effect[0:3]=="un-":
-                        print('UNDOING SOMETHING')
                         effect=effect[3:]
-                        print(f"Undoing {effect}")
                         if effect in self.__battle_stats.effects:
                             del self.__battle_stats.effects[effect]
                             self.deliver_message(f"{self.get_name()} is no longer {effect}.\n ")
                             continue
-
+                # Check for immunity:
                 if effect in self.__condition.immunities:
                     self.deliver_message(f"{self.get_name()} is immune.\n ")
                     continue
+
+                #Not immune:
                 #Calculate resistance:
                 resistance=self.__battle_stats.resist
                 resistance+=randint(0,int(resistance*VARIABILITY))
+
+                #If not resistant enough
                 if attack.potency>resistance:
+                    #implement effect if not already under the effect
                     if effect not in self.__battle_stats.effects:
                         self.deliver_message(f"{self.get_name()} is {effect}.\n ")
                         self.__battle_stats.effects[effect]=attack.effect_duration

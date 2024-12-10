@@ -8,15 +8,18 @@ class Skill:
     This is a class to hold skill properties
     """
     def __init__(self, name,s_types,dmg,cost,effects=None,potency=0,effect_duration=0):
-        self.name = name
-        self.s_types=s_types
-        self.dmg=dmg
-        self.cost=cost
-        self.effects=effects
-        self.effect_duration=effect_duration
-        self.potency=potency
-#-----------------------Base Stats---------------------------
+        self.name = name    #Name of skill
+        self.s_types=s_types    #Skill types Ex "physical","fire","ice"
+        self.dmg=dmg    #Base damage multiplier. Damage is based on user stats and this multiplier
+        self.cost=cost  #Mana cost of the skill
+        self.effects=effects    #Effects ("confusion","injured", etc)
+        self.effect_duration=effect_duration    #Duration of the effects in turns
+        self.potency=potency    #Potency multiplier (How likely is the effect to work). Countered by resistance.
+#-----------------------Stats---------------------------
 class Stats:
+    """
+    This class is for unit stats
+    """
     def __init__(self,hp,mp,strength, intel):
         self.max_hp=hp
         self.max_mp=mp
@@ -33,6 +36,10 @@ class Stats:
         self.effects=dict() #status effects
 
     def update_calculations(self,level=1):
+        """
+        Battle stats are calculated using these formulas
+        :param level: Level is multiplied with base stats
+        """
         self.max_hp=self.strength*HP_MULTIPLIER*level
         self.max_mp=self.intel*MP_MULTIPLIER*level
         self.hp=self.max_hp
@@ -46,6 +53,7 @@ class Stats:
 
 #----------------------Condition-------------------------------
 class Condition:
+    """Conditions"""
     def __init__(self):
         self.shield_up=False
         self.immunities=[]
