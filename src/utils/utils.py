@@ -2,6 +2,9 @@ import os
 
 
 def merge_dictionaries(dictionary1, dictionary2):
+    """
+    Recursive tool for merging nested dictionaries while preserving structure
+    """
     my_dict = dictionary1.copy()
     for key, value in dictionary2.items():
         if key in my_dict and isinstance(my_dict[key], dict) and isinstance(value, dict):

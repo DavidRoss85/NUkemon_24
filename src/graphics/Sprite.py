@@ -8,7 +8,11 @@ from pygame.locals import RLEACCEL
 
 class Sprite(pygame.sprite.Sprite):
     """
-    Contains a pygame __sprite
+    Inherits from Pygame's Sprite object
+    Sprite Objects handle all information regarding the image to be rendered
+    including masking (transparency), blending colors, resizing, and stretching
+    of images on the screen. Final product is a pygame surface which can be drawn
+    onto the screen.
     """
 
     def __init__(self, x, y, width, height, image=None, mask_color=MASK, blend_color: tuple = None,
@@ -99,12 +103,15 @@ class Sprite(pygame.sprite.Sprite):
         :return:
         """
         new_surf=surface.copy()
+
+        #Stretches/shrinks the new image onto the surface if this is toggled on:
         if scale:
             new_surf=pygame.transform.scale(new_surf,(self.__rect.width,self.__rect.height))
 
         rect = new_surf.get_rect()
         rect.x = x
         rect.y = y
+        #Draw sprite onto this surface
         self.__surface.blit(new_surf, rect)
 
     def restore(self):
@@ -136,4 +143,5 @@ class Sprite(pygame.sprite.Sprite):
         new_mask = (min(blend_color[0] + mask_color[0], 255),
                     min(blend_color[1] + mask_color[1], 255),
                     min(blend_color[2] + mask_color[2], 255))
+        
         return new_mask
