@@ -167,8 +167,11 @@ class StatBox:
         #Draw read bar onto sprite:
         self.__sprite.draw_on_surface(health_bar_red.get_surface(),rect_red.x,rect_red.y)
 
+        # Calculate the width of the health bar:
+        green_bar_width = max(int(rect_red.width * health_fraction), 1)
+
         #The overlaying green bar that shows current hp
-        health_bar_green=Sprite(rect_red.x, rect_red.y, int(rect_red.width * health_fraction), rect_red.height, None, (1, 1, 1), (0, 255, 0))
+        health_bar_green=Sprite(rect_red.x, rect_red.y, green_bar_width, rect_red.height, None, (1, 1, 1), (0, 255, 0))
         #Drawn the green bar on to sprite:
         self.__sprite.draw_on_surface(health_bar_green.get_surface(),rect_red.x,rect_red.y)
 
@@ -212,8 +215,11 @@ class StatBox:
         #Draw red bar onto sprite
         self.__sprite.draw_on_surface(mana_bar_red.get_surface(), rect_red.x, rect_red.y)
 
+        # Calculate the width of the mana bar:
+        blue_bar_width = max(int(rect_red.width * mana_fraction), 1)
+
         #The overlying blue bar that shows current mp
-        mana_bar_blue = Sprite(rect_red.x, rect_red.y, int(rect_red.width * mana_fraction), rect_red.height, None,
+        mana_bar_blue = Sprite(rect_red.x, rect_red.y, blue_bar_width, rect_red.height, None,
                                (1, 1, 1), (0, 0, 255))
         #Draw onto sprite
         self.__sprite.draw_on_surface(mana_bar_blue.get_surface(), rect_red.x, rect_red.y)
