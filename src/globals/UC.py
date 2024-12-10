@@ -59,6 +59,7 @@ class UC:
     }
     battle_music= f"rivalry-sulyya.ogg"
     victory_music=f"victory1.ogg"
+    failure_music=f"failure.ogg"
 
 #Music Credits:
     #Individual music credits can be found in cites.txt in the music directory

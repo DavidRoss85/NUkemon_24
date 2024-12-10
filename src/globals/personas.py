@@ -28,24 +28,24 @@ class Personas:
 
     enemy2=Character("Evil",1,145,100,10,10,Sprites.emoji_chill)
 
-    math_professor_a=MathProfessor("Math Professor", 1, 200, 100, 5, 6, Sprites.professor_a)
+    math_professor_a=MathProfessor("Math Professor", 100, 200, 100, 5, 6, Sprites.professor_a)
 
-    professor_b = Character("Professor B", 1, 200, 100, 5, 5, Sprites.professor_b)
+    professor_b = Character("Professor B", 3, 200, 100, 5, 5, Sprites.professor_b)
 
-    teaching_assistant_a = TeachingAssistant("Teach Assist A",1,150,150,4,4,Sprites.teaching_assistant_a)
+    teaching_assistant_a = TeachingAssistant("Teach Assist A",4,150,150,4,4,Sprites.teaching_assistant_a)
 
-    nu_husky_a= Husky("NU Husky",1,100,0,5,0,Sprites.nu_husky)
+    nu_husky_a= Husky("NU Husky",3,100,0,5,0,Sprites.nu_husky)
 
 class Crews:
     """
     Default Teams comprised of personas
     """
     default_player=[
-        Personas.big_g,
+        # Personas.big_g,
         Personas.rory,
-        Personas.lin,
-        Personas.chris,
-        Personas.jen
+        # Personas.lin,
+        # Personas.chris,
+        # Personas.jen
     ]
     default_enemy=[
         Personas.math_professor_a,

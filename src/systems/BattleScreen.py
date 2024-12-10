@@ -50,7 +50,7 @@ class BattleScreen:
 
         self.__fps=30  #Controls game speed (Frames per second)
         self.__intro_started=False  #Controls the intro starting
-        self.__playing_victory_music=False  #Victory music check
+        self.__playing_end_music=False  #Victory music check
 
         self.__running=False    #Controls main battle loop
 
@@ -357,7 +357,7 @@ class BattleScreen:
 
 
                 #These are only listened for when is player turn and no animations occurring:
-                if player_turn and not animating:
+                if player_turn and not animating and self.__turn_system.get_battle_status()=="ongoing":
 
                     #Switch Case:
                     match event.key:
@@ -555,9 +555,13 @@ class BattleScreen:
             self.__clock.tick(self.__fps)
 
             #Check for end of battle:
-            if self.__turn_system.get_battle_status()=="victory" and not animating and player_turn and not self.__playing_victory_music:
+            if self.__turn_system.get_battle_status()=="victory" and not animating and player_turn and not self.__playing_end_music:
                self.change_music(UC.victory_music)
-               self.__playing_victory_music=True
+               self.__playing_end_music=True
+
+            if self.__turn_system.get_battle_status()=="loss" and not animating and player_turn and not self.__playing_end_music:
+               self.change_music(UC.failure_music)
+               self.__playing_end_music=True
 
 
 

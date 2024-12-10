@@ -24,7 +24,7 @@ class Team:
                 "description": "Change characters"
             },
         }
-
+        self.__no_team_options={}
         #Set messenger for receiving text
         self.__messanger=None
 
@@ -209,7 +209,10 @@ class Team:
         """
         :return: menu options for teams
         """
-        return self.__menu_options
+        if len(self.__team)>1:
+            return self.__menu_options
+        else:
+            return self.__no_team_options
 
     def set_curr_hp(self, value):
         """

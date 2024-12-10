@@ -47,7 +47,7 @@ class TurnSystem:
 
         #Get effects and status:
         effects=character.get_battle_effects()
-
+        print(f"Turnsystem.decrement_status_effect: {effects} ")
         #Keeps a list of statuses/effects to remove
         delete_list=[]
 
@@ -65,6 +65,7 @@ class TurnSystem:
         #Delete all effects scheduled for deletion:
         for effect in delete_list:
             del effects[effect]
+
 
     # =======================================================================================================
     @staticmethod
@@ -117,6 +118,8 @@ class TurnSystem:
         :param verb: Dictionary with the action to be performed
         :param o_ject: Dictionary containing the receiver of action and owner
         """
+
+        do_action=True
         o_ject["owner"].freeze_frame()
 
         #Tick status effects on current player:
@@ -126,24 +129,27 @@ class TurnSystem:
         results = TurnSystem.evaluate_status_effects(subject.get_current_character())
         if (len(results["allowed"]) == 0 or verb["name"] not in results["allowed"]) and "all" not in results["allowed"]:
             o_ject["owner"].unfreeze_frame()
-            return
+            do_action=False
 
-        # Execute the stored function on the target (current_character)
-        owner = verb["function"](o_ject["receiver"])
+        if do_action:
+            # Execute the stored function on the target (current_character)
+            owner = verb["function"](o_ject["receiver"])
 
-        # Add an animation to the paused animation __queue
-        # Game events will wait for these animations to complete
-        self.__animator.pause_and_animate({
-            "subject": subject,
-            "action": verb["name"]
-        })
+            # Add an animation to the paused animation __queue
+            # Game events will wait for these animations to complete
+            self.__animator.pause_and_animate({
+                "subject": subject,
+                "action": verb["name"]
+            })
 
-        self.__animator.pause_and_animate({
-            "object": owner,
-            "action": verb["name"]
-        })
+            self.__animator.pause_and_animate({
+                "object": owner,
+                "action": verb["name"]
+            })
+
         for member in subject.get_team().values():
-            TurnSystem.decrement_status_effects(member)
+            self.decrement_status_effects(member)
+
     # =======================================================================================================
     def cpu_perform_action(self):
         """
@@ -210,9 +216,13 @@ class TurnSystem:
 
             #Otherwise Game Over
             else:
-                print("GAME OVER")
-                self.__battle_over=True
-                self.__player_victory=False
+                if not self.__battle_over:
+                    self.__deliver_message(f"You Failed to defeat the enemy!\n Try again next time...\n "
+                                           f"GAME OVER\n")
+                    self.__battle_over=True
+                    self.__player_victory=False
+                    return True
+        return False
 
     # =======================================================================================================
     def check_win_conditions(self):
