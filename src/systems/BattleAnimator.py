@@ -2,12 +2,18 @@ import math
 from random import randint
 
 from src.globals.special_effects import SpecialEffects
-from src.graphics.Sprite import Sprite
 from src.globals.UC import UC
-from src.sound.sound import Sound
+
 
 
 class BattleAnimator:
+    """
+    Object that handles all the animation of effects in the Battle
+    Items in the queue are handled one at a time, and player and
+    enemy actions are halted while animations are ensue.
+    """
+
+    #Constants for tweaking animation timing
     SHAKE_AMT=10
     EXIT_AMT=30
     ATK_AMT=10
@@ -26,15 +32,15 @@ class BattleAnimator:
     SCREEN_TRANSITION_LENGTH=90
 
     def __init__(self,mixer=None):
-        self.__queue=[]
+        self.__queue=[] #List of all animations to carry out
         self.__object_dictionary=dict()   #Store game objects here to be used in animations
-        self.__sounds_dict=dict()
-        self.__animating=False
-        self.__tick=0
-        self.__volume=0.7
+        self.__sounds_dict=dict()   #Dictionary of sounds to play during animations
+        self.__animating=False  #Animation status
+        self.__tick=0   #Timing variable
+        self.__volume=0.7   #Volume of sound
 
-        self.__middle_x=UC.screen_width/2
-        self.__middle_y=UC.screen_height/2
+        self.__middle_x=UC.screen_width/2   #Middle of screen x
+        self.__middle_y=UC.screen_height/2  #Middle of screen y
 
         #Stores the original coords of objects that were moved around:
         self.__org_x=0
@@ -42,17 +48,29 @@ class BattleAnimator:
         self.__org_x3=0
         self.__org_y=0
         self.__done_bool=False
+
+        #Dictionaries that tell the object which animation to perform
         self.subject_animation_dictionary=dict()
         self.object_animation_dictionary=dict()
-
+        #Initialize the dictionaries:
         self.initialize_animation_dictionary()
+
+        #initialize sounds
         self.set_sounds_dictionary(UC.animator_sound_dictionary)
+        #Sound mixer:
         self.__mixer=mixer
 
     def set_sounds_dictionary(self,sounds_dict):
+        """
+        Change sounds
+        :param sounds_dict: New dictionary of sounds
+        """
         self.__sounds_dict=sounds_dict
     #======================================================================================================
     def initialize_animation_dictionary(self):
+        """
+        Initialize the animation dictionaries with their related function
+        """
         self.subject_animation_dictionary={
             "Attack": self.animate_attack,
             "Defend": self.animate_defend,
@@ -82,32 +100,62 @@ class BattleAnimator:
         }
     #======================================================================================================
     def set_mixer(self,mixer):
+        """
+        Changes the sound mixer
+        :param mixer: Sound Object
+        """
         self.__mixer=mixer
     #======================================================================================================
     def update_object_dictionary(self,item:dict):
+        """
+        Updates the objects in the dictionary for animations
+        :params item: Dictionary with game objects
+        """
         self.__object_dictionary.update(item)
     #======================================================================================================
     def get_object_dictionary(self):
+        """
+        return: Object Dictionary
+        """
         return self.__object_dictionary
     #======================================================================================================
     def get_animating_status(self):
+        """
+        :return: Animating status (True/False)
+        """
         return self.__animating
     #======================================================================================================
     def set_animating_status(self,value):
+        """
+        Set animating status
+        """
         self.__animating=value
     #======================================================================================================
     def pause_and_animate(self,animation):
+        """
+        Adds an animation to the queue and changes animation status
+        """
         self.__queue.append(animation)
         self.__animating=True
     #======================================================================================================
     def animate_list(self):
+        """
+        For each item in the animation queue carry out all actions then remove it from queue
+        """
+
+        #If items are in the queue:
         if len(self.__queue)>0:
-            # print(self.__queue)
+
+            #Get the action that is being done:
             action= self.__queue[0]["action"]
+            #If the action isn't in the directory, use default action instead:
             if (self.__queue[0]["action"] not in self.subject_animation_dictionary and
                 self.__queue[0]["action"] not in self.object_animation_dictionary):
                 action="Other"
 
+            #Is subject or object animation?
+            #Every action has a reaction. Depending on if it's the subject or the object,
+            #the animation will change.
             if "subject" in self.__queue[0]:
                 subject=self.__queue[0]["subject"]
                 if self.subject_animation_dictionary[action](subject):
@@ -120,7 +168,14 @@ class BattleAnimator:
                     self.__queue.pop(0)
                     self.__animating=False
     #======================================================================================================
+
+    #All animations use the 'tick' variable to increment
     def animate_attack(self,subject):
+        """
+        Animation for attack
+        :param subject: The object to perform animation on
+        :return: True if animation complete, False if not complete
+        """
         self.__animating=True
         if self.__tick<1:
             self.__org_y = subject.get_y()
@@ -141,6 +196,12 @@ class BattleAnimator:
             return False
     #======================================================================================================
     def animate_defend(self, subject):
+        """
+        Animation for defend
+        :param subject: The object to perform animation on
+        :return: True if animation complete, False if not complete
+        """
+
         self.__animating = True
         self.__tick += 1
         if self.__tick<self.DEFEND_LENGTH:
@@ -155,6 +216,12 @@ class BattleAnimator:
             return False
     #======================================================================================================
     def animate_receive_damage(self, subject):
+        """
+        Animation for receiving damage
+        :param subject: The object to perform animation on
+        :return: True if animation complete, False if not complete
+        """
+
         self.__animating = True
         a_layer = self.__object_dictionary["animation_layer"]
         punches = SpecialEffects.punches
@@ -198,6 +265,12 @@ class BattleAnimator:
             return False
     #======================================================================================================
     def animate_switch_out(self,subject):
+        """
+        Animation for swapping characters
+        :param subject: The object to perform animation on
+        :return: True if animation complete, False if not complete
+        """
+
         self.__animating = True
         subject.set_visible(True)
 
@@ -213,6 +286,12 @@ class BattleAnimator:
             return False
     #======================================================================================================
     def animate_switch_in(self,subject):
+        """
+        Animation for character switch in
+        :param subject: The object to perform animation on
+        :return: True if animation complete, False if not complete
+        """
+
         self.__animating = True
         subject.set_visible(True)
         self.__tick += 1
@@ -227,6 +306,12 @@ class BattleAnimator:
             return False
     #======================================================================================================
     def animate_death_1(self,subject):
+        """
+        Animation for death
+        :param subject: The object to perform animation on
+        :return: True if animation complete, False if not complete
+        """
+
         self.__animating = True
         if self.__tick<1:
             self.__mixer.play("base_boom")
@@ -247,6 +332,12 @@ class BattleAnimator:
             return False
     #======================================================================================================
     def animate_eko(self,subject):
+        """
+        Animation for enemy Knock out (Differs from KO since characters slide in from different direction)
+        :param subject: The object to perform animation on
+        :return: True if animation complete, False if not complete
+        """
+
         self.__animating = True
         if self.__tick<1:
             self.__mixer.play("base_boom")
@@ -272,6 +363,12 @@ class BattleAnimator:
             return False
     #======================================================================================================
     def animate_ko(self, subject):
+        """
+        Animation for Knock out (Differs from eKO since characters slide in from different direction)
+        :param subject: The object to perform animation on
+        :return: True if animation complete, False if not complete
+        """
+
         self.__animating = True
         if self.__tick<1:
             self.__mixer.play("base_boom")
@@ -294,6 +391,12 @@ class BattleAnimator:
             return False
     #======================================================================================================
     def animate_screen_transition(self,subject):
+        """
+        Animation for the screen transition in the beginning of the battle.
+        :param subject: The object to perform animation on
+        :return: True if animation complete, False if not complete
+        """
+
         self.__animating=True
         player = self.__object_dictionary["player"]
         enemy = self.__object_dictionary["enemy"]
@@ -327,6 +430,12 @@ class BattleAnimator:
             return False
     #======================================================================================================
     def show_intro(self,args):
+        """
+        Animation for characters sliding in the beginning
+        :param args: Not used
+        :return: True if animation complete, False if not complete
+        """
+
         self.__animating=True
         player=self.__object_dictionary["player"]
         enemy=self.__object_dictionary["enemy"]
@@ -375,6 +484,12 @@ class BattleAnimator:
             return False
     #======================================================================================================
     def animate_discreet_math(self,subject):
+        """
+        Animation for discreet math
+        :param subject: The object to perform animation on
+        :return: True if animation complete, False if not complete
+        """
+
         self.__animating=True
 
         a_layer = self.__object_dictionary["animation_layer"]
@@ -400,8 +515,20 @@ class BattleAnimator:
             return False
     #======================================================================================================
     def animate_confusion(self,subject):
+        """
+        Animation for confusion
+        :param subject: The object to perform animation on
+        :return: True if animation complete, False if not complete
+        """
+        #Stub
         return True
     #======================================================================================================
 
     def animate_nothing(self,subject):
+        """
+        Just a blank function to do nothing
+        :param subject: The object to perform animation on
+        :return: True if animation complete, False if not complete
+        """
+
         return True
