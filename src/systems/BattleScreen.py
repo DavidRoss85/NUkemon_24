@@ -385,11 +385,11 @@ class BattleScreen:
                     case btn.K_9:
                         self.__fps=30
                         print(self.__fps)
-                    case btn.K_KP_PLUS:  # Numpad +
+                    case btn.K_EQUALS:  # Numpad +
                         self.__fps += 10  # Speed up game
                         print(self.__fps)
 
-                    case btn.K_KP_MINUS:  # Numpad -
+                    case btn.K_MINUS:  # Numpad -
                         self.__fps -= 10  # Slow down game
                         print(self.__fps)
                     case btn.K_ESCAPE:    #Escape key
