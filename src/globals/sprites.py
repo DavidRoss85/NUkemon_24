@@ -3,7 +3,7 @@ from src.globals.UC import *
 
 class Sprites:
     """
-    Holds sprites for use in game
+    Sprites a constructed and stored here:
     """
     male_normal_backpack_behind = Sprite(
         200, 400, 450, 450,

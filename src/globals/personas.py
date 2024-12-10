@@ -11,7 +11,7 @@ from src.units.subcharacters.TeachingAssistant import TeachingAssistant
 
 class Personas:
     """
-    Characters in the game that have different attributes.
+    Playable characters in the game are constructed and stored as static variables here
     """
 
     big_g=AllPowerful("He-Man", 10, 10, 10, 6, 6, Sprites.male_normal_backpack_behind)
@@ -38,7 +38,7 @@ class Personas:
 
 class Crews:
     """
-    Teams comprised of personas
+    Default Teams comprised of personas
     """
     default_player=[
         Personas.big_g,

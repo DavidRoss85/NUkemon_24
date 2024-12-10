@@ -21,7 +21,6 @@ from src.systems.Messenger import Messenger
 from src.graphics.Renderer import Renderer
 from src.globals.UC import *
 from src.systems.TurnSystem import TurnSystem
-from src.utils.utils import generate_battle_transition
 
 
 class BattleScreen:
@@ -410,7 +409,7 @@ class BattleScreen:
 
         intro_effect=Effect(
             0,0,UC.screen_width,UC.screen_height,
-            generate_battle_transition(surf.get_surface(),9,10)
+            Effect.generate_battle_transition(surf.get_surface(),9,10)
         )
         self.__animator.pause_and_animate({"action":"Screen_Transition","subject": intro_effect})
         self.__animator.pause_and_animate({"action":"Intro","subject":"errbody"})

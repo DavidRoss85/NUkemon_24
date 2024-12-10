@@ -1,4 +1,6 @@
-
+"""
+These Variables are used for game balancing. May move to UC class later
+"""
 
 ATK_MULTIPLIER = 2
 DEF_MULTIPLIER = 0.5

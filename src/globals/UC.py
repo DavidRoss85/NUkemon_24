@@ -1,5 +1,4 @@
 import os
-
 import pygame
 
 
@@ -13,8 +12,8 @@ class UC:
     screen_height=768   #Screen height
     image_mask_color=(64,177,64)    #Mask color for sprites (R,G,B) tuple
     game_back_color=(0,0,0) #Background color (R,G,B) tuple
-    MUSIC_EVENT_END= pygame.USEREVENT + 13
-    music_repeat_point=MUSIC_EVENT_END
+    MUSIC_EVENT_END= pygame.USEREVENT + 13  #Custom event to track music completion
+    # music_repeat_point=MUSIC_EVENT_END
 
 #Image assets:
     image_path=f"{absolute_path}/assets/images/"
@@ -35,8 +34,9 @@ class UC:
     nu_husky_image_01=f"{character_path}NU_Husky_transparent.png"
 
     #Special Effects:
-    punch_effect_image=f"{absolute_path}/assets/images/effects/punches_effect.bmp"
-    discreet_math_effect_image=f"{absolute_path}/assets/images/effects/discreet_math_effect.bmp"
+    special_effect_path=f"{absolute_path}/assets/images/effects/"
+    punch_effect_image=f"{special_effect_path}punches_effect.bmp"
+    discreet_math_effect_image=f"{special_effect_path}discreet_math_effect.bmp"
 
  #Default Font settings:
     default_font= f"{absolute_path}/assets/fonts/Grand9K_Pixel.ttf"
@@ -59,11 +59,20 @@ class UC:
     }
     battle_music= f"rivalry-sulyya.ogg"
     victory_music=f"victory1.ogg"
-# Music from #Uppbeat
-# https://uppbeat.io/t/sulyya/rivalry
-# License code: BTSQ70TOAU4SG7RB
 
-# Sound Effects from Mixkit
-# https://mixkit.co/free-sound-effects/click/
-# Sound Effects under free license can be used in video games 
-# for commercial and non-commercial projects
+#Music Credits:
+    #Individual music credits can be found in cites.txt in the music directory
+    # Music from #Uppbeat
+    # https://uppbeat.io/t/sulyya/rivalry
+    # License code: BTSQ70TOAU4SG7RB
+
+    # Sound Effects from Mixkit
+    # https://mixkit.co/free-sound-effects/click/
+    # Sound Effects under free license can be used in video games
+    # for commercial and non-commercial projects
+
+#Image Credits:
+    # Images generated using a combination of AI tools:
+    # - Microsoft Co-Pilot (Powered by Dal-E)
+    # - Adobe Photoshop (Generative Fill)
+    # - Openart.ai - Free Generative AI character generation
