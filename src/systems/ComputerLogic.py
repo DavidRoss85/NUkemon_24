@@ -13,8 +13,10 @@ def careful_ai(computer,player,move_dictionary,action=null_func):
     """
     #Moves List:
     attack=move_dictionary["Attack"]
-    switch=move_dictionary["Switch"]
-    switch["name"]="eSwitch"
+    switch=move_dictionary["Attack"]
+    if "Switch" in move_dictionary:
+        switch=move_dictionary["Switch"]
+        switch["name"]="eSwitch"
     defend=move_dictionary["Defend"]
 
     #Characters and targets
