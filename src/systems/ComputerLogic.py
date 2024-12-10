@@ -63,8 +63,10 @@ def berserk_ai(computer,player,move_dictionary,action=null_func):
     """
     #Moves List:
     attack=move_dictionary["Attack"]
-    switch=move_dictionary["Switch"]
-    switch["name"]="eSwitch"
+    switch = move_dictionary["Attack"]
+    if "Switch" in move_dictionary:
+        switch = move_dictionary["Switch"]
+        switch["name"] = "eSwitch"
     defend=move_dictionary["Defend"]
 
     #Characters and targets
@@ -94,8 +96,10 @@ def math_professor_ai(computer,player,move_dictionary,action=null_func):
     #Moves List:
     attack=move_dictionary["Attack"]
     discreet_math= move_dictionary["Skill"]["menu"]["Discreet Math"]
-    switch=move_dictionary["Switch"]
-    switch["name"]="eSwitch"
+    switch = move_dictionary["Attack"]
+    if "Switch" in move_dictionary:
+        switch = move_dictionary["Switch"]
+        switch["name"] = "eSwitch"
     defend=move_dictionary["Defend"]
 
     #Characters and targets
@@ -144,8 +148,10 @@ def husky_ai(computer,player,move_dictionary,action=null_func):
     #Moves List:
     attack=move_dictionary["Attack"]
     growl= move_dictionary["Skill"]["menu"]["Growl"]
-    switch=move_dictionary["Switch"]
-    switch["name"]="eSwitch"
+    switch = move_dictionary["Attack"]
+    if "Switch" in move_dictionary:
+        switch = move_dictionary["Switch"]
+        switch["name"] = "eSwitch"
     defend=move_dictionary["Defend"]
 
     #Characters and targets
