@@ -48,7 +48,7 @@ class BattleScreen:
         self.__sound_mixer=sound_mixer  #Sound Effect player
         self.__animator=BattleAnimator(sound_mixer) #Handles animating effects. Sound effects passed in
 
-        self.__fps=120  #Controls game speed (Frames per second)
+        self.__fps=30  #Controls game speed (Frames per second)
         self.__intro_started=False  #Controls the intro starting
         self.__playing_victory_music=False  #Victory music check
 
@@ -311,7 +311,7 @@ class BattleScreen:
 
                 #Evaluate statuses of non-active team members:
                 for team_member in self.__team_dict.values():
-                    TurnSystem.evaluate_status(team_member["receiver"],False)
+                    TurnSystem.evaluate_status_effects(team_member["receiver"], False)
 
                 #Execute action from in the dictionary:
                 self.__turn_system.perform_action(self.__player, self.__queued_action, name)
@@ -521,7 +521,7 @@ class BattleScreen:
         #Turn on loop
         self.__running=True
         #Show intro scene
-        self.show_battle_intro()
+        # self.show_battle_intro()
         #Start music
         self.__music_mixer.play_music(start=0,repeat_time=13.19)
         #Initialize player and enemy stats:

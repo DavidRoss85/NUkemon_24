@@ -32,3 +32,4 @@ class TeachingAssistant(Character):
     def shoo_away(self,target):
         self.deliver_message(f"{self.get_name()} used Shoo!\n 'Ew! Get away from me!'\n ")
         self.perform_special_move(self,target,self.__profession_move)
+        return self

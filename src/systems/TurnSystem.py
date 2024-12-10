@@ -1,6 +1,5 @@
-from src.players.Computer import Computer
-from src.units.SkillClasses import Skill
-
+from src.units.SkillClasses import Skill, Stats
+from src.globals.balance import *
 
 class TurnSystem:
     """
@@ -10,49 +9,50 @@ class TurnSystem:
         self.__player_turn=True
         self.__battle_running=False
         self.__player=player
-        self.__enemy:Computer=enemy
+        self.__enemy=enemy
         self.__messenger=messenger
         self.__animator=animator
         self.__battle_over=False
         self.__player_victory=False
     # =======================================================================================================
     @staticmethod
-    def evaluate_status(character,active:bool=True):
-        """
-        Evaluates a players effect status, counts down its timer and returns a list of moves allowed to carry out
-        :param character: character being evaluated
-        :param active: boolean if the user is active or not
-        :return: list of allowed moves Ex: ['Switch','Attack']
-        """
+    def tick_status_effects(character):
+        effects = character.get_battle_effects()
+        stats = character.get_battle_stats()
 
-        allowed_moves=['all']   #Default, all moves allowed
+        # key is name of effect, value is how many turns left
+        for key, value in effects.items():
+            # Player is immobile:
+            if key == "asleep" or key == "paralyzed" or key == "frozen" or key=="overwhelmed":
+                character.deliver_message(f"{character.get_name()} cannot move. They are {key}.\n ")
+
+            # Player will lose health each turn if injured
+            if key == "injured":
+                character.deliver_message(f"{character.get_name()} is {key}.\n ")
+                character.receive_attack(
+                    Skill(
+                        "",
+                        ["physical"],
+                        stats.blk + max(stats.max_hp // 20, 1),
+                        0
+                    )
+                )
+    # =======================================================================================================
+    @staticmethod
+    def decrement_status_effects(character):
+        """
+        Decrement a players effect status
+        :param character: character being evaluated
+        """
 
         #Get effects and status:
         effects=character.get_battle_effects()
-        stats=character.get_battle_stats()
 
         #Keeps a list of statuses/effects to remove
         delete_list=[]
 
         #key is name of effect, value is how many turns left
         for key,value in effects.items():
-            #Player is immobile:
-            if key=="asleep" or key=="paralyzed" or key=="frozen":
-                character.deliver_message(f"{character.get_name()} is {key}.\n ")
-                allowed_moves=["Switch"]
-
-            #Player will lose health each turn if injured
-            if key=="injured":
-                character.deliver_message(f"{character.get_name()} is {key}.\n ")
-                character.receive_attack(
-                    Skill(
-                        "",
-                        ["physical"],
-                        stats.blk+max(stats.max_hp//20,1),
-                        0
-                    )
-                )
-
             #Decrement the value:
             value-=1
             effects[key]=value
@@ -66,8 +66,92 @@ class TurnSystem:
         for effect in delete_list:
             del effects[effect]
 
+    # =======================================================================================================
+    @staticmethod
+    def evaluate_status_effects(character,active:bool=True):
+        """
+        Evaluates a players effect status, and returns a list of moves allowed to carry out
+        :param character: character being evaluated
+        :param active: boolean if the user is active or not
+        :return: list of allowed moves Ex: ['Switch','Attack']
+        """
+
+        results={
+            "allowed":["all"],
+            "negatives":[],
+            "boost":Stats(1,1,1,1),
+        }
+
+        #Get effects and status:
+        effects=character.get_battle_effects()
+        stats=character.get_battle_stats()
+
+        #key is name of effect, value is how many turns left
+        for key,value in effects.items():
+            #Player is immobile:
+            if key=="asleep" or key=="paralyzed" or key=="frozen" or key=="overwhelmed":
+                results["allowed"]=["Switch"]
+
+            #Player will lose health each turn if injured
+            match key:
+                case "injured":
+                    results["negatives"].append(key)
+                case "stronger":
+                    results["boost"].atk*=BOOST_FACTOR
+                case "smarter":
+                    results["boost"].sk_atk*=BOOST_FACTOR
+                case "afraid":
+                    results["boost"].atk*=DOWN_FACTOR
+                case "disheartened":
+                    results["boost"].resist*=DOWN_FACTOR
+
+
+
         #Return a list of moves allowed
-        return allowed_moves
+        return results
+    # =======================================================================================================
+    def perform_action(self, subject, verb, o_ject):
+        """
+        Handles actions performed by player and enemy and schedules animations
+        :param subject: Actor performing the action
+        :param verb: Dictionary with the action to be performed
+        :param o_ject: Dictionary containing the receiver of action and owner
+        """
+        o_ject["owner"].freeze_frame()
+
+        #Tick status effects on current player:
+        TurnSystem.tick_status_effects(subject.get_current_character())
+
+        # Evaluate the current character status and only do move if allowed:
+        results = TurnSystem.evaluate_status_effects(subject.get_current_character())
+        if (len(results["allowed"]) == 0 or verb["name"] not in results["allowed"]) and "all" not in results["allowed"]:
+            o_ject["owner"].unfreeze_frame()
+            return
+
+        # Execute the stored function on the target (current_character)
+        owner = verb["function"](o_ject["receiver"])
+
+        # Add an animation to the paused animation __queue
+        # Game events will wait for these animations to complete
+        self.__animator.pause_and_animate({
+            "subject": subject,
+            "action": verb["name"]
+        })
+
+        self.__animator.pause_and_animate({
+            "object": owner,
+            "action": verb["name"]
+        })
+        for member in subject.get_team().values():
+            TurnSystem.decrement_status_effects(member)
+    # =======================================================================================================
+    def cpu_perform_action(self):
+        """
+        Evaluate computer status and perform actions
+        """
+        #Execute move by computer (Current character status is evaluated in perform move
+        self.__player_turn=self.__enemy.execute_move(self.__player,self.perform_action)
+
     # =======================================================================================================
     def get_battle_status(self):
         """
@@ -107,50 +191,7 @@ class TurnSystem:
         self.__player_turn=not self.__player_turn
 
     # =======================================================================================================
-    def perform_action(self, subject, verb, o_ject):
-        """
-        Handles actions performed by player and enemy and schedules animations
-        :param subject: Actor performing the action
-        :param verb: Dictionary with the action to be performed
-        :param o_ject: Dictionary containing the receiver of action and owner
-        """
-        o_ject["owner"].freeze_frame()
 
-        # Evaluate the current character status and only do move if allowed:
-        allowed_moves = TurnSystem.evaluate_status(subject.get_current_character())
-        if (len(allowed_moves) == 0 or verb["name"] not in allowed_moves) and "all" not in allowed_moves:
-            o_ject["owner"].unfreeze_frame()
-            return
-
-        # Execute the stored function on the target (current_character)
-        owner = verb["function"](o_ject["receiver"])
-
-        # Add an animation to the paused animation __queue
-        # Game events will wait for these animations to complete
-        self.__animator.pause_and_animate({
-            "subject": subject,
-            "action": verb["name"]
-        })
-
-        self.__animator.pause_and_animate({
-            "object": owner,
-            "action": verb["name"]
-        })
-
-    # =======================================================================================================
-    def cpu_perform_action(self):
-        """
-        Evaluate computer status and perform actions
-        """
-        #Check teammates statuses:
-        for character in self.__enemy.get_team().values():
-            if character!=self.__enemy.get_current_character():
-                m= TurnSystem.evaluate_status(character,character==self.__enemy.get_current_character())
-
-        #Execute move by computer (Current character status is evaluated in perform move
-        self.__player_turn=self.__enemy.execute_move(self.__player,self.perform_action)
-
-    # =======================================================================================================
     def check_loss_conditions(self):
         """
         Controls KO of player and Game Over

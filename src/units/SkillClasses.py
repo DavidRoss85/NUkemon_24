@@ -27,12 +27,12 @@ class Stats:
         self.mp = mp  # magic points
         self.strength = strength  # determines physical attributes
         self.intel=intel    #determines ability aptitude
-        self.atk=0
-        self.blk=0
-        self.sk_atk=0
-        self.sk_blk=0
-        self.potency=0
-        self.resist=0
+        self.atk=1
+        self.blk=1
+        self.sk_atk=1
+        self.sk_blk=1
+        self.potency=1
+        self.resist=1
         self.effects=dict() #status effects
 
     def update_calculations(self,level=1):

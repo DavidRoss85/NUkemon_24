@@ -2,6 +2,7 @@ import copy
 from random import randint
 
 from src.globals.balance import  VARIABILITY, SHIELD_MULTIPLIER
+from src.systems.TurnSystem import TurnSystem
 from src.units.SkillClasses import *
 from src.utils.utils import merge_dictionaries
 
@@ -176,7 +177,19 @@ class Entity:
         """
         self.execute_move()
         #Get battle stats
-        stats = user.get_battle_stats()
+        stats = copy.deepcopy(user.get_battle_stats())
+
+        #Modify battle stats from temporary statuses:
+        user_effects=TurnSystem.evaluate_status_effects(user)
+        boosts=user_effects["boost"]
+
+        #For each boost, multiply it by the stats
+        for key in vars(boosts):
+            if key=="effects":continue  #This is not multiplyable
+            factor=getattr(boosts,key)
+            base=getattr(stats,key)
+            setattr(stats,key,base*factor)
+
 
         current_move = copy.deepcopy(move)
         determiner=stats.sk_atk

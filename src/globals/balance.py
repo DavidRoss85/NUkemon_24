@@ -2,6 +2,7 @@
 These Variables are used for game balancing. May move to UC class later
 """
 
+
 ATK_MULTIPLIER = 2
 DEF_MULTIPLIER = 0.5
 SHIELD_MULTIPLIER=2
@@ -14,3 +15,6 @@ HP_MULTIPLIER = 10
 MP_MULTIPLIER = 3
 
 VARIABILITY = 0.10
+
+BOOST_FACTOR=1.2
+DOWN_FACTOR=0.8
