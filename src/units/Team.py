@@ -19,7 +19,7 @@ class Team:
         self.__menu_options={
             "Switch": {
                 "name": "Switch",
-                "target": "team",
+                "target": "teammates",
                 "function":self.change_character,
                 "description": "Change characters"
             },

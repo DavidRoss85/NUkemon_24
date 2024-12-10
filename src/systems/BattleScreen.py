@@ -395,7 +395,8 @@ class BattleScreen:
                         case btn.K_KP_MINUS:    #Numpad -
                             self.__fps-=10  #Slow down game
                             print(self.__fps)
-
+                        case btn.K_1:
+                            self.__player.get_current_character().set_curr_hp(1)
                         case btn.K_LEFT:    #Left key
                             pass
 
