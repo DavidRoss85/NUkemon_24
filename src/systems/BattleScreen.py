@@ -540,7 +540,7 @@ class BattleScreen:
     # =======================================================================================================
     def change_music(self,new_song,start=0,repeat_time=-1):
         """
-        Calls on mixer to play new song
+        Calls on mixer to play new song.
         :param new_song: Song file to play
         :param start: Start time of music
         :param repeat_time: Time signature to loop on music end
