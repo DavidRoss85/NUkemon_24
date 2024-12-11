@@ -17,7 +17,12 @@ class Messenger:
         :param text: String to add
         """
         self.__history+=text
-        self.stream_text()
+        # self.stream_text()
+    def get_message_history(self):
+        """
+        :return: message history
+        """
+        return self.__history
 
     def stream_text(self):
         """

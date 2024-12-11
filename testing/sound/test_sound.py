@@ -4,7 +4,7 @@ sys.path.insert(0,os.path.join(os.path.dirname(__file__),'../..'))
 
 import pygame
 import time
-from sound import Sound
+from src.sound.sound import Sound
 
 def test_play():
     pygame.init()
@@ -54,6 +54,8 @@ def test_play_music():
             break
 
     pygame.quit()
+
+
 
 if __name__=="__main__":
     test_play()
