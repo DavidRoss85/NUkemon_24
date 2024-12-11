@@ -32,6 +32,11 @@ class UC:
     professor_b_image_01= f"{character_path}Male_Professor_2_transparent.png"
     t_a_image_01=f"{character_path}Female_TA1_transparent.png"
     nu_husky_image_01=f"{character_path}NU_Husky_transparent.png"
+    nu_husky_image_02=f"{character_path}NU_Husky_shadowed.png"
+    professor_female_image_01=f"{character_path}Female_Professor_2.png"
+    man_in_sweats_image_01=f"{character_path}Man_in_sweats1.png"
+    new_rory_full_image=f"{character_path}New_Rory_Full_2.png"
+
 
     #Special Effects:
     special_effect_path=f"{absolute_path}/assets/images/effects/"

@@ -5,6 +5,7 @@ class Sprites:
     """
     Sprites a constructed and stored here:
     """
+
     male_normal_backpack_behind = Sprite(
         200, 400, 450, 450,
         UC.male_normal_behind_image,
@@ -14,6 +15,12 @@ class Sprites:
     male_muscular_shirtless_behind= Sprite(
         200, 400, 550, 550,
         UC.male_muscle_behind_image,
+        (64, 177, 64),
+    )
+
+    guy_tall_slender_backpack= Sprite(
+        200, 400, 850, 850,
+        UC.new_rory_full_image,
         (64, 177, 64),
     )
 
@@ -53,6 +60,11 @@ class Sprites:
         (64, 177, 64),
     )
 
+    professor_female_a = Sprite(
+        200,400,475,475,
+        UC.professor_female_image_01,
+        (64, 177, 64),
+    )
     teaching_assistant_a = Sprite(
         200,400,350,350,
         UC.t_a_image_01,

@@ -7,7 +7,7 @@ class MathProfessor(Character):
     """Math Professor"""
     def __init__(self,name,level,hp,mp,strength,intel,sprite,x=0,y=0):
         super().__init__(name,level,hp,mp,strength,intel,sprite,x,y)
-        self.set_profession("Math professor")
+        self.set_profession("Math Professor")
         self.get_condition().immunities=["confused"]
         self.__profession_move=Skill("Discreet Math", ["mental"], 0, 10, ["confused"], 1, 4)
         self.__profession_dict = {

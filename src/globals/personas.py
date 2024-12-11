@@ -2,6 +2,7 @@ from src.units.Character import Character
 from src.globals.sprites import Sprites
 from src.units.subcharacters.AllPowerful import AllPowerful
 from src.units.subcharacters.Brute import Brute
+from src.units.subcharacters.CSProfessor import CSProfessor
 from src.units.subcharacters.Genius import Genius
 from src.units.subcharacters.Husky import Husky
 from src.units.subcharacters.LazyStudent import LazyStudent
@@ -16,7 +17,7 @@ class Personas:
 
     big_g=AllPowerful("He-Man", 10, 10, 10, 6, 6, Sprites.male_normal_backpack_behind)
 
-    rory=LazyStudent("Rory", 1, 10, 10, 5, 5, Sprites.male_normal_backpack_behind)
+    rory=LazyStudent("Rory", 1, 10, 10, 5, 5, Sprites.guy_tall_slender_backpack)
 
     lin=Genius("Lin",1,10,10,4,6,Sprites.girl_black_hair)
 
@@ -30,6 +31,8 @@ class Personas:
 
     math_professor_a=MathProfessor("Math Professor", 1, 200, 100, 5, 6, Sprites.professor_a)
 
+    cs_professor_a=CSProfessor("CS Professor", 10, 200, 100, 5, 6, Sprites.professor_female_a)
+
     professor_b = Character("Professor B", 3, 200, 100, 5, 5, Sprites.professor_b)
 
     teaching_assistant_a = TeachingAssistant("Teach Assist A",4,150,150,4,4,Sprites.teaching_assistant_a)
@@ -42,12 +45,13 @@ class Crews:
     """
     default_player=[
         Personas.big_g,
-        # Personas.rory,
-        # Personas.lin,
-        # Personas.chris,
+        Personas.rory,
+        Personas.lin,
+        Personas.chris,
         # Personas.jen
     ]
     default_enemy=[
+        Personas.cs_professor_a,
         Personas.math_professor_a,
         Personas.professor_b,
         Personas.nu_husky_a,

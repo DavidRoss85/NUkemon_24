@@ -26,17 +26,19 @@ class TurnSystem:
             if key == "asleep" or key == "paralyzed" or key == "frozen" or key=="overwhelmed":
                 character.deliver_message(f"{character.get_name()} cannot move. They are {key}.\n ")
 
-            # Player will lose health each turn if injured
-            if key == "injured":
-                character.deliver_message(f"{character.get_name()} is {key}.\n ")
-                character.receive_attack(
-                    Skill(
-                        "",
-                        ["physical"],
-                        stats.blk + max(stats.max_hp // 20, 1),
-                        0
+
+            match key:
+                # Player will lose health each turn if injured
+                case "injured":
+                    character.deliver_message(f"{character.get_name()} is {key}.\n ")
+                    character.receive_attack(
+                        Skill(
+                            "",
+                            ["physical"],
+                            stats.blk + max(stats.max_hp // 20, 1),
+                            0
+                        )
                     )
-                )
     # =======================================================================================================
     @staticmethod
     def decrement_status_effects(character):
@@ -56,6 +58,14 @@ class TurnSystem:
             #Decrement the value:
             value-=1
             effects[key]=value
+
+            match key:
+                case "laggy":
+                    if value % 2 == 0:
+                        character.deliver_message(f"{character.get_name()}'s n2 lag is paused for 1 turn.\n ")
+                case "laggy AF":
+                    if value % 3 == 0:
+                        character.deliver_message(f"{character.get_name()}'s n3 is paused for 1 turn.\n ")
 
             #If effect has run out, remove it from list:
             if value<=0:
@@ -95,6 +105,12 @@ class TurnSystem:
 
             #Player will lose health each turn if injured
             match key:
+                case "laggy AF":
+                    if value % 3 != 0:
+                        results["allowed"] = ["Switch", "Defend"]
+                case "laggy":
+                    if value%2!=0:
+                        results["allowed"]=["Switch","Defend"]
                 case "injured":
                     results["negatives"].append(key)
                 case "stronger":
@@ -122,13 +138,11 @@ class TurnSystem:
         do_action=True
         o_ject["owner"].freeze_frame()
 
-        #Tick status effects on current player:
-        TurnSystem.tick_status_effects(subject.get_current_character())
-
-        # Evaluate the current character status and only do move if allowed:
+                # Evaluate the current character status and only do move if allowed:
         results = TurnSystem.evaluate_status_effects(subject.get_current_character())
         if (len(results["allowed"]) == 0 or verb["name"] not in results["allowed"]) and "all" not in results["allowed"]:
             o_ject["owner"].unfreeze_frame()
+            self.__deliver_message(f"{subject.get_current_character().get_name()} cannot use {verb['name']}.\n ")
             do_action=False
 
         if do_action:
@@ -146,6 +160,9 @@ class TurnSystem:
                 "object": owner,
                 "action": verb["name"]
             })
+
+        # Tick status effects on current player:
+        TurnSystem.tick_status_effects(subject.get_current_character())
 
         for member in subject.get_team().values():
             self.decrement_status_effects(member)
