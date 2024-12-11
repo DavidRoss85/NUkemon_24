@@ -1,4 +1,4 @@
-
+from src.systems.TurnSystem import TurnSystem
 from src.units.Character import Character
 
 class Team:
@@ -74,6 +74,13 @@ class Team:
 
         #Add team moves:
         self.__move_dict.update(self.get_team_dictionary())
+
+        #Append status if move is blocked:
+        allowed=TurnSystem.evaluate_status_effects(self.__current_character)["allowed"]
+        if 'all' not in allowed:
+            for key in self.__move_dict:
+                if key not in allowed:
+                    self.__move_dict[key].update({"status":"blocked"})
 
         #Return updated dictionary
         return self.__move_dict

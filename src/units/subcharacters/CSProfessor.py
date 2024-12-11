@@ -10,7 +10,7 @@ class CSProfessor(Character):
         self.set_profession("CS Professor")
         self.get_condition().immunities=["confused","lagging", "lagging AF"]
         self.__algorithms_move=Skill("Algorithms", ["mental"], 0, 10, ["stronger", "smarter"], 5, 4)
-        self.__n2_move=Skill("ON2", ["mental"], 0, 10, ["laggy"], 2, 11)
+        self.__n2_move=Skill("ON2", ["mental"], 0, 10, ["lagging"], 2, 11)
         self.__n3_move=Skill("ON3", ["mental"], 0, 20, ["laggy AF"], 2, 10)
         self.__profession_dict = {
             "Skill": {

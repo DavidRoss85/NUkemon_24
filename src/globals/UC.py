@@ -50,7 +50,8 @@ class UC:
     default_font_pixel_height=40    #How much pixel height to reserve for fonts
 
 #Game menu:
-    default_menu_item_selected_color = "blue"   #Selected text color
+    menu_item_selected_color = "blue"   #Selected text color
+    menu_item_restricted_color="red"
 
 #Sound dictionary:
     sound_path= f"{absolute_path}/assets/sounds/"

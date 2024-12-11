@@ -60,7 +60,7 @@ class TurnSystem:
             effects[key]=value
 
             match key:
-                case "laggy":
+                case "lagging":
                     if value % 2 == 0 and "laggy AF" not in effects:
                         character.deliver_message(f"{character.get_name()} can attack next turn.\n ")
                 case "laggy AF":
@@ -106,11 +106,25 @@ class TurnSystem:
             #Player will lose health each turn if injured
             match key:
                 case "laggy AF":
-                    if value % 3 != 0:
+                    if value % 3 != 0 and results["allowed"] !=["all"]:
+                        matches=[]
+                        for effect in ["Switch","Defend"]:
+                            if effect in results["allowed"]:
+                                matches.append(effect)
+                        results["allowed"]=matches
+                    else:
                         results["allowed"] = ["Switch", "Defend"]
-                case "laggy":
-                    if value%2!=0 and "laggy AF" not in effects:
-                        results["allowed"]=["Switch","Defend"]
+
+                case "lagging":
+                    if value%2!=0 and "laggy AF" not in effects and results["allowed"] !=["all"]:
+                        matches=[]
+                        for effect in ["Switch","Defend"]:
+                            if effect in results["allowed"]:
+                                matches.append(effect)
+                        results["allowed"]=matches
+                    else:
+                        results["allowed"] = ["Switch", "Defend"]
+
                 case "injured":
                     results["negatives"].append(key)
                 case "stronger":

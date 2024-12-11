@@ -13,11 +13,13 @@ class BattleMenu:
     when the user confirms their selection
     """
     #Static:
-    DEFAULT_PIC = UC.menu_box_image #Default image
-    DEFAULT_FONT = UC.default_font  #Default font
-    DEFAULT_FONT_SIZE = UC.default_font_size    #Default font size
-    DEFAULT_FONT_COLOR = UC.default_font_color  #Default font color
-    DEFAULT_SELECTED_COLOR= UC.default_menu_item_selected_color #Default selected menu color
+    PIC = UC.menu_box_image #Default image
+    FONT = UC.default_font  #Default font
+    FONT_SIZE = UC.default_font_size    #Default font size
+    FONT_COLOR = UC.default_font_color  #Default font color
+    SELECTED_COLOR= UC.menu_item_selected_color #Default selected menu color
+    RESTRICTED_COLOR=UC.menu_item_restricted_color #Items that can't be used
+
     DEFAULT_TEXT_TO_PIXEL_SCALE_WIDTH = 10  #Used for text placement
     DEFAULT_TEXT_TO_PIXEL_SCALE_HEIGHT = UC.default_font_pixel_height   #Used for text placement
     DEFAULT_TEXT_START_PERCENT_X = 8    #Used for text placement
@@ -46,15 +48,16 @@ class BattleMenu:
         self.__current_selection_number=0   #Index of current selection
         self.__current_selection="" #Title of current selection (Used for dictionary reference)
 
-        self.__background_pic=BattleMenu.DEFAULT_PIC    #Picture of the box
-        self.__font=BattleMenu.DEFAULT_FONT #Font
-        self.__font_size = BattleMenu.DEFAULT_FONT_SIZE #Font size
-        self.__font_color = BattleMenu.DEFAULT_FONT_COLOR   #Font color
-        self.__font_color_selected=BattleMenu.DEFAULT_SELECTED_COLOR    #Selected color
-        self.__text_pixel_scale_width = BattleMenu.DEFAULT_TEXT_TO_PIXEL_SCALE_WIDTH    #Controls width of font sprite
-        self.__text_pixel_scale_height = BattleMenu.DEFAULT_TEXT_TO_PIXEL_SCALE_HEIGHT  #controls height of font sprite
-        self.__text_start_percent_x = BattleMenu.DEFAULT_TEXT_START_PERCENT_X   #Where to begin drawing text
-        self.__text_end_percent_x = BattleMenu.DEFAULT_TEXT_END_PERCENT_X   #Where to end drawing text
+        self.__background_pic=self.PIC    #Picture of the box
+        self.__font=self.FONT #Font
+        self.__font_size = self.FONT_SIZE #Font size
+        self.__font_color = self.FONT_COLOR   #Font color
+        self.__font_color_selected=self.SELECTED_COLOR    #Selected color
+        self.__font_color_restricted= self.RESTRICTED_COLOR
+        self.__text_pixel_scale_width = self.DEFAULT_TEXT_TO_PIXEL_SCALE_WIDTH    #Controls width of font sprite
+        self.__text_pixel_scale_height = self.DEFAULT_TEXT_TO_PIXEL_SCALE_HEIGHT  #controls height of font sprite
+        self.__text_start_percent_x = self.DEFAULT_TEXT_START_PERCENT_X   #Where to begin drawing text
+        self.__text_end_percent_x = self.DEFAULT_TEXT_END_PERCENT_X   #Where to end drawing text
 
         #Generate sprite:
         self.__sprite=Sprite(x, y, width, height, self.__background_pic, self.__mask_color, self.__color)
@@ -187,15 +190,21 @@ class BattleMenu:
             selection_list.append(item)
 
             m_color = self.__font_color    #modify font color
-
-            #if current selection is this item add an arrow in front and update color:
+            w_item=item
+           #if current selection is this item add an arrow in front and update color:
             if i == self.__current_selection_number:
                 self.__current_selection=item
-                item="> "+ item
+                w_item="> "+ item
                 m_color=self.__font_color_selected
 
+            #Check for blocked menu items and color appropriately
+            if "status" in self.__menu_dictionary[item] and self.__menu_dictionary[item]["status"] == "blocked":
+                m_color = self.__font_color_restricted
+                if i == self.__current_selection_number:
+                    w_item = "X " + item
+
             #Generate font surface and get dimensions:
-            font_surface= self.write_line(item, m_color)
+            font_surface= self.write_line(w_item, m_color)
             rect=font_surface.get_rect()
 
             # Set the x location of the text based on __width of box
