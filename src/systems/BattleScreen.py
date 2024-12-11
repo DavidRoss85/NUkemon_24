@@ -313,6 +313,11 @@ class BattleScreen:
         #   "menu" tells it that the next values are part of a sub menu
         #   Otherwise it looks for an object to direct the action to
         if isinstance(name,dict):
+            if "status" in name:
+                if name["status"]=="blocked":
+                    self.go_down_one_menu_level()
+                    return
+
             if "target" in name:
                 #Get the appropriate menu for the type of target required by the action:
                 items=self.__target_dictionary[name["target"]]
