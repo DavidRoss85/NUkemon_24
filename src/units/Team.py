@@ -23,9 +23,22 @@ class Team:
                 "function":self.change_character,
                 "description": "Change characters"
             },
+            "Pass": {
+                "name":"Pass",
+                "target": "self",
+                "function": self.nothing_func,
+                "description": "Do nothing this round"
+            }
         }
         #Empty menu dictionary when there are no characters left to switch to:
-        self.__no_team_options={}
+        self.__no_team_options={
+            "Pass": {
+                "name": "Pass",
+                "target": "self",
+                "function": self.nothing_func,
+                "description": "Do nothing this round"
+            }
+        }
 
         #Set messenger for receiving text
         self.__messanger=None
@@ -264,4 +277,7 @@ class Team:
         :param message:String of text to be displayed
         """
         self.__messanger.process_message(message)
+
+    def nothing_func(self,args=None):
+        return self
 

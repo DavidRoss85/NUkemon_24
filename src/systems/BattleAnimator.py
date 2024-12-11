@@ -100,6 +100,7 @@ class BattleAnimator:
             "Growl": self.animate_nothing,
             "Algorithms": self.animate_defend,
             "Combo Attack": self.animate_receive_combo_punch,
+            "Sleep":self.animate_sleep,
             "n2":self.animate_defend,
             "n3":self.animate_defend,
             "KO": self.animate_switch_in,

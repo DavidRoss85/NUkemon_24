@@ -15,15 +15,21 @@ class TurnSystem:
         self.__battle_over=False
         self.__player_victory=False
     # =======================================================================================================
-    @staticmethod
-    def tick_status_effects(character):
+    def tick_status_effects(self,character):
         effects = character.get_battle_effects()
         stats = character.get_battle_stats()
 
         # key is name of effect, value is how many turns left
         for key, value in effects.items():
             # Player is immobile:
-            if key == "asleep" or key == "paralyzed" or key == "frozen" or key=="overwhelmed":
+            if key == "asleep":
+                character.deliver_message(f"{character.get_name()} cannot move. They are {key}.\n ")
+                self.__animator.pause_and_animate({
+                        "object": character.get_owner(),
+                        "action": "Sleep"
+                    })
+
+            if key == "paralyzed" or key == "frozen" or key=="overwhelmed":
                 character.deliver_message(f"{character.get_name()} cannot move. They are {key}.\n ")
 
 
@@ -39,6 +45,11 @@ class TurnSystem:
                             0
                         )
                     )
+                    self.__animator.pause_and_animate({
+                        "object": character.get_owner(),
+                        "action": "Attack"
+                    })
+
     # =======================================================================================================
     @staticmethod
     def decrement_status_effects(character):
@@ -184,7 +195,7 @@ class TurnSystem:
             })
 
         # Tick status effects on current player:
-        TurnSystem.tick_status_effects(subject.get_current_character())
+        self.tick_status_effects(subject.get_current_character())
 
         for member in subject.get_team().values():
             self.decrement_status_effects(member)
