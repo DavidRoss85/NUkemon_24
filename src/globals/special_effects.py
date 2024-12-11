@@ -16,6 +16,10 @@ class SpecialEffects:
         250, 250,600,600,True,(255,255,255)
     ))
 
+    algorithms = Effect(0, 600, 600, 600, Effect.generate_effect_array(
+        UC.alorithms_effect_image,
+        250, 250, 600, 600, True, (255, 255, 255)
+    ))
 
 
 # xxx=generate_effect_array("../assets/images/backgrounds/Background8.png",100,100)

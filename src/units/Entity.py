@@ -410,7 +410,7 @@ class Entity:
                 if attack.potency>resistance:
                     #implement effect if not already under the effect
                     if effect not in self.__battle_stats.effects:
-                        self.deliver_message(f"{self.get_name()} is {effect}.\n ")
+                        self.deliver_message(f"{self.get_name()} is now {effect}.\n ")
                         self.__battle_stats.effects[effect]=attack.effect_duration
                     else:
                         self.deliver_message(f"{self.get_name()} is already {effect}.\n ")
