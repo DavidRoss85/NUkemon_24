@@ -42,4 +42,4 @@ class Genius(Character):
         self.deliver_message(f"{self.get_name()} Turned in all projects and assignments ahead of time!\n ")
         self.__profession_move2.cost=self.get_battle_stats().mp
         self.perform_special_move(self, target, self.__profession_move2)
-        return self
+        return target.get_owner()

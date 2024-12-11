@@ -29,4 +29,4 @@ class Husky(Character):
     def use_growl(self,target):
         self.deliver_message(f"{self.get_name()} used Growl!\n 'GRRRRR...'\n ")
         self.perform_special_move(self, target, self.__profession_move)
-        return self
+        return target.get_owner()

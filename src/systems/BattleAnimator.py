@@ -648,14 +648,105 @@ class BattleAnimator:
             return False
 
     # ======================================================================================================
+
+    def animate_sleep(self, subject):
+        """
+        Animation for sleep effect
+        :param subject: The object to perform animation on
+        :return: True if animation complete, False if not complete
+        """
+
+        self.__animating = True
+        a_layer = self.__object_dictionary["animation_layer"]
+        sleep = SpecialEffects.sleep
+        ani_ref=f"{subject.get_name()}sleep"
+
+        if self.__tick<1:
+            self.__org_x=subject.get_x()
+            self.__org_y=subject.get_y()
+            a_layer.add_to_queue(ani_ref, sleep, subject.get_x(), subject.get_y())
+
+        self.__tick += 1
+
+        sleep.set_frame_index(((self.__tick // 5) % sleep.get_max_frames()))
+
+        if self.__tick<=self.RECEIVE_COMBO_PUNCH_LENGTH:   #Do animation for designated ticks
+            # if self.__tick % 7 == 0:
+            #     pass
+            #     # self.__mixer.play("punch")
+            # y_bool=randint(0,1)
+            # if y_bool:
+            #     subject.set_y(subject.get_y() - self.SHAKE_AMT)
+            # else:
+            #     subject.set_y(subject.get_y() + self.SHAKE_AMT)
+            #
+            # if self.__tick % 2 == 0:
+            #     subject.set_x(subject.get_x() - self.SHAKE_AMT)
+            #     subject.get_sprite().blend_color((255,0,0))
+            # else:
+            #     subject.set_x(subject.get_x() + self.SHAKE_AMT)
+            #     subject.get_sprite().blend_color((0, 0, 0))
+            pass
+        else:
+            subject.set_x(self.__org_x)
+            subject.set_y(self.__org_y)
+            subject.get_sprite().restore()
+            a_layer.remove_from_queue(ani_ref)
+
+
+        if self.__tick > self.RECEIVE_COMBO_PUNCH_LENGTH+self.PAUSE_LENGTH: #Pause a bit before releasing animation
+            self.__tick = 0
+            return True
+        else:
+            return False
+    #======================================================================================================
     def animate_confusion(self,subject):
         """
         Animation for confusion
         :param subject: The object to perform animation on
         :return: True if animation complete, False if not complete
         """
-        #Stub
-        return True
+        self.__animating = True
+        a_layer = self.__object_dictionary["animation_layer"]
+        confused = SpecialEffects.confused
+        ani_ref = f"{subject.get_name()}sleep"
+
+        if self.__tick < 1:
+            self.__org_x = subject.get_x()
+            self.__org_y = subject.get_y()
+            a_layer.add_to_queue(ani_ref, confused, subject.get_x(), subject.get_y())
+
+        self.__tick += 1
+
+        confused.set_frame_index(((self.__tick // 5) % confused.get_max_frames()))
+
+        if self.__tick <= self.RECEIVE_COMBO_PUNCH_LENGTH:  # Do animation for designated ticks
+            if self.__tick % 7 == 0:
+                pass
+                # self.__mixer.play("punch")
+            y_bool = randint(0, 1)
+            if y_bool:
+                subject.set_y(subject.get_y() - self.SHAKE_AMT)
+            else:
+                subject.set_y(subject.get_y() + self.SHAKE_AMT)
+
+            if self.__tick % 2 == 0:
+                subject.set_x(subject.get_x() - self.SHAKE_AMT)
+                # subject.get_sprite().blend_color((255, 0, 0))
+            else:
+                subject.set_x(subject.get_x() + self.SHAKE_AMT)
+                # subject.get_sprite().blend_color((0, 0, 0))
+        else:
+            subject.set_x(self.__org_x)
+            subject.set_y(self.__org_y)
+            subject.get_sprite().restore()
+            a_layer.remove_from_queue(ani_ref)
+
+        if self.__tick > self.RECEIVE_COMBO_PUNCH_LENGTH + self.PAUSE_LENGTH:  # Pause a bit before releasing animation
+            self.__tick = 0
+            return True
+        else:
+            return False
     #======================================================================================================
 
     def animate_nothing(self,subject):

@@ -58,10 +58,10 @@ class CSProfessor(Character):
 
         self.deliver_message(f"{self.get_name()} used O ( n^2 )!\n ")
         self.perform_special_move(self, target, self.__n2_move)
-        return self
+        return target.get_owner()
 
     def use_n3(self,target=None):
 
         self.deliver_message(f"{self.get_name()} used O ( n^3 )!\n ")
         self.perform_special_move(self, target, self.__n3_move)
-        return self
+        return target.get_owner()

@@ -44,6 +44,8 @@ class UC:
     discreet_math_effect_image=f"{special_effect_path}discreet_math_effect.bmp"
     alorithms_effect_image=f"{special_effect_path}algorithms_effect.bmp"
     big_o_effect_image=f"{special_effect_path}BigO_effect.bmp"
+    confused_effect_image=f"{special_effect_path}Confused_effect.bmp"
+    sleep_effect_image=f"{special_effect_path}Sleep_effect.bmp"
 
  #Default Font settings:
     default_font= f"{absolute_path}/assets/fonts/Grand9K_Pixel.ttf"
