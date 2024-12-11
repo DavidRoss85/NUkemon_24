@@ -30,6 +30,7 @@ class BattleAnimator:
     KO_LENGTH=20
     PAUSE_LENGTH=30
     SCREEN_TRANSITION_LENGTH=90
+    RECEIVE_COMBO_PUNCH_LENGTH = 45
 
     def __init__(self,mixer=None):
         self.__queue=[] #List of all animations to carry out
@@ -79,6 +80,7 @@ class BattleAnimator:
             "Discreet Math": self.animate_discreet_math,
             "Growl":self.animate_defend,
             "Algorithms": self.animate_algorithms,
+            "Combo Attack": self.animate_attack,
             "KO": self.animate_ko,
             "eKO": self.animate_eko,
             "Die": self.animate_death_1,
@@ -95,6 +97,7 @@ class BattleAnimator:
             "Discreet Math": self.animate_confusion,
             "Growl": self.animate_nothing,
             "Algorithms": self.animate_defend,
+            "Combo Attack": self.animate_receive_combo_punch,
             "KO": self.animate_switch_in,
             "eKO": self.animate_switch_out,
             "Die": self.animate_death_1,
@@ -152,7 +155,7 @@ class BattleAnimator:
             action= self.__queue[0]["action"]
             #If the action isn't in the directory, use default action instead:
             if (self.__queue[0]["action"] not in self.subject_animation_dictionary and
-                self.__queue[0]["action"] not in self.object_animation_dictionary):
+                    self.__queue[0]["action"] not in self.object_animation_dictionary):
                 action="Other"
 
             #Is subject or object animation?
@@ -549,6 +552,56 @@ class BattleAnimator:
             a_layer.remove_from_queue(ani_ref)
 
         if self.__tick > 70:
+            self.__tick = 0
+            return True
+        else:
+            return False
+
+    # ======================================================================================================
+
+    def animate_receive_combo_punch(self, subject):
+        """
+        Animation for receiving damage
+        :param subject: The object to perform animation on
+        :return: True if animation complete, False if not complete
+        """
+
+        self.__animating = True
+        a_layer = self.__object_dictionary["animation_layer"]
+        punches = SpecialEffects.punches
+        ani_ref = f"{subject.get_name()}punches"
+
+        if self.__tick < 1:
+            self.__org_x = subject.get_x()
+            self.__org_y = subject.get_y()
+            a_layer.add_to_queue(ani_ref, punches, subject.get_x(), subject.get_y())
+
+        self.__tick += 1
+
+        punches.set_frame_index(((self.__tick // 5) % punches.get_max_frames()))
+
+        if self.__tick <= self.RECEIVE_COMBO_PUNCH_LENGTH:  # Do animation for designated ticks
+            if self.__tick % 7 == 0:
+                self.__mixer.play("punch")
+            y_bool = randint(0, 1)
+            if y_bool:
+                subject.set_y(subject.get_y() - self.SHAKE_AMT)
+            else:
+                subject.set_y(subject.get_y() + self.SHAKE_AMT)
+
+            if self.__tick % 2 == 0:
+                subject.set_x(subject.get_x() - self.SHAKE_AMT)
+                subject.get_sprite().blend_color((255, 0, 0))
+            else:
+                subject.set_x(subject.get_x() + self.SHAKE_AMT)
+                subject.get_sprite().blend_color((0, 0, 0))
+        else:
+            subject.set_x(self.__org_x)
+            subject.set_y(self.__org_y)
+            subject.get_sprite().restore()
+            a_layer.remove_from_queue(ani_ref)
+
+        if self.__tick > self.RECEIVE_COMBO_PUNCH_LENGTH + self.PAUSE_LENGTH:  # Pause a bit before releasing animation
             self.__tick = 0
             return True
         else:
