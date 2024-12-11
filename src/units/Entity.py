@@ -16,7 +16,7 @@ class Entity:
         self.__level = level    #Level
         self.__base_stats=Stats(hp,mp,strength,intel)   #Base stats. These are not affected in battle
         self.__battle_stats=Stats(hp,mp,strength,intel) #Battle stats. These change in battle but return to normal when it ends
-        self.__condition=Condition()    #Unit condition such as effects and status
+        self.__condition=Attributes()    #Unit condition such as effects and status
         self.__owner=self   #Owner of this character (ie Player or Computer)
         self.__profession=None  #Used by child classes
         self.__messenger=None   #Handles messages
@@ -151,7 +151,7 @@ class Entity:
     def set_messenger(self,messenger):
         self.__messenger=messenger
 
-    def set_condition(self,condition:Condition):
+    def set_condition(self, condition:Attributes):
         self.__condition=condition
     #=======================================================================================================
     def calculate_start_battle_stats(self):

@@ -55,13 +55,13 @@ class Sprites:
     )
 
     professor_b= Sprite(
-        200,400,350,350,
+        200,400,375,375,
         UC.professor_b_image_01,
         (64, 177, 64),
     )
 
     professor_female_a = Sprite(
-        200,400,475,475,
+        200,400,450,450,
         UC.professor_female_image_01,
         (64, 177, 64),
     )

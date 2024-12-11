@@ -51,8 +51,8 @@ class Stats:
         self.potency=self.intel*SKL_MULTIPLIER*level
         self.resist=self.intel*SKL_RESIST_MULTIPLIER*level
 
-#----------------------Condition-------------------------------
-class Condition:
+#----------------------Attributes-------------------------------
+class Attributes:
     """Conditions"""
     def __init__(self):
         self.shield_up=False
