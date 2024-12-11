@@ -315,6 +315,9 @@ class BattleScreen:
             if "target" in name:
                 #Get the appropriate menu for the type of target required by the action:
                 items=self.__target_dictionary[name["target"]]
+                if items is None or items == {}:
+                    pass
+                    items={"":""}
                 #Queue the action function with a reference name:
                 self.__queued_action={"name": name["name"], "function": name["function"]}
 
@@ -332,19 +335,20 @@ class BattleScreen:
                 self.__target_menu.set_visible(True)
 
             else:
-                #Clear the menu tree, returning to main menu:
-                self.__menu_tree.clear()
-                self.__target_menu.set_visible(False) #Hide menu
+                if items is not None or items!={} or items!={"":""}:
+                    #Clear the menu tree, returning to main menu:
+                    self.__menu_tree.clear()
+                    self.__target_menu.set_visible(False) #Hide menu
 
-                #Evaluate statuses of non-active team members:
-                for team_member in self.__team_dict.values():
-                    TurnSystem.evaluate_status_effects(team_member["receiver"], False)
+                    # #Evaluate statuses of non-active team members:
+                    # for team_member in self.__team_dict.values():
+                    #     TurnSystem.evaluate_status_effects(team_member["receiver"], False)
 
-                #Execute action from in the dictionary:
-                self.__turn_system.perform_action(self.__player, self.__queued_action, name)
+                    #Execute action from in the dictionary:
+                    self.__turn_system.perform_action(self.__player, self.__queued_action, name)
 
-                # Switch to __enemy turn
-                self.__turn_system.set_player_turn(False)
+                    # Switch to __enemy turn
+                    self.__turn_system.set_player_turn(False)
 
         #Display tooltip at the top:
         self.show_description(self.__menu_list[self.__target_menu.get_visible()])

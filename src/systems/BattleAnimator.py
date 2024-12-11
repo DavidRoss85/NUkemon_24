@@ -176,18 +176,21 @@ class BattleAnimator:
         :param subject: The object to perform animation on
         :return: True if animation complete, False if not complete
         """
+        #Set initial values for animation
         self.__animating=True
         if self.__tick<1:
             self.__org_y = subject.get_y()
             self.__mixer.play("swish")
 
+        #Increment animation timer
         self.__tick+=1
 
+        #Apply a sin wave to the character's y value to go up and down smoothly:
         if self.__tick<self.ATTACK_LENGTH:
             subject.set_y(subject.get_y() + (math.sin(self.__tick)) * self.ATK_AMT)
 
 
-
+        #End animation when timer reaches required value:
         if self.__tick>self.ATTACK_LENGTH+self.PAUSE_LENGTH:
             self.__tick=0
             subject.set_y(self.__org_y)

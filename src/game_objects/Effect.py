@@ -130,14 +130,14 @@ class Effect:
     def generate_effect_array(image, width, height, new_width, new_height, stretch: bool = False, mask=(64, 177, 64)):
         """
         Takes an image and splits it into an array of smaller images to use for animation frames
-        :param image:
-        :param width:
-        :param height:
-        :param new_width:
-        :param new_height:
-        :param stretch:
-        :param mask:
-        :return:
+        :param image: Image to cut
+        :param width:   Width of frame
+        :param height:  Height of frame
+        :param new_width:  Stretch to this width
+        :param new_height:  Stetch to this height
+        :param stretch: Boolean to stretch or not
+        :param mask:   Transparent color
+        :return: List of sprites
         """
         sprite_list = []  # Stores the sprite frames
 
