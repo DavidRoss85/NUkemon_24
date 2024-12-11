@@ -61,11 +61,11 @@ class TurnSystem:
 
             match key:
                 case "laggy":
-                    if value % 2 == 0:
-                        character.deliver_message(f"{character.get_name()}'s n2 lag is paused for 1 turn.\n ")
+                    if value % 2 == 0 and "laggy AF" not in effects:
+                        character.deliver_message(f"{character.get_name()} can attack next turn.\n ")
                 case "laggy AF":
                     if value % 3 == 0:
-                        character.deliver_message(f"{character.get_name()}'s n3 is paused for 1 turn.\n ")
+                        character.deliver_message(f"{character.get_name()} can attack next turn.\n ")
 
             #If effect has run out, remove it from list:
             if value<=0:
@@ -109,7 +109,7 @@ class TurnSystem:
                     if value % 3 != 0:
                         results["allowed"] = ["Switch", "Defend"]
                 case "laggy":
-                    if value%2!=0:
+                    if value%2!=0 and "laggy AF" not in effects:
                         results["allowed"]=["Switch","Defend"]
                 case "injured":
                     results["negatives"].append(key)
@@ -166,6 +166,8 @@ class TurnSystem:
 
         for member in subject.get_team().values():
             self.decrement_status_effects(member)
+
+        self.__deliver_message("   \n ")
 
     # =======================================================================================================
     def cpu_perform_action(self):

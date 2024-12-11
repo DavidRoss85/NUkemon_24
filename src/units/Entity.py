@@ -277,7 +277,9 @@ class Entity:
             final_dmg=res["damage"]*-1
         else:
             # Update message
-            self.deliver_message(f"{self.__name} receives {res["damage"]} points of damage.\n ")
+            if res["damage"]>0:
+                self.deliver_message(f"{self.__name} receives {res["damage"]} points of damage.\n ")
+
             final_dmg=res["damage"]
 
 
@@ -395,7 +397,7 @@ class Entity:
                             continue
                 # Check for immunity:
                 if effect in self.__condition.immunities:
-                    self.deliver_message(f"{self.get_name()} is immune.\n ")
+                    self.deliver_message(f"{self.get_name()} is immune to being {effect}.\n ")
                     continue
 
                 #Not immune:
@@ -411,3 +413,4 @@ class Entity:
                         self.__battle_stats.effects[effect]=attack.effect_duration
                     else:
                         self.deliver_message(f"{self.get_name()} is already {effect}.\n ")
+
