@@ -81,6 +81,8 @@ class BattleAnimator:
             "Growl":self.animate_defend,
             "Algorithms": self.animate_algorithms,
             "Combo Attack": self.animate_attack,
+            "n2":self.animate_big_o,
+            "n3":self.animate_big_o,
             "KO": self.animate_ko,
             "eKO": self.animate_eko,
             "Die": self.animate_death_1,
@@ -98,6 +100,8 @@ class BattleAnimator:
             "Growl": self.animate_nothing,
             "Algorithms": self.animate_defend,
             "Combo Attack": self.animate_receive_combo_punch,
+            "n2":self.animate_defend,
+            "n3":self.animate_defend,
             "KO": self.animate_switch_in,
             "eKO": self.animate_switch_out,
             "Die": self.animate_death_1,
@@ -558,7 +562,43 @@ class BattleAnimator:
             return False
 
     # ======================================================================================================
+    def animate_big_o(self, subject):
+        """
+        Animation for discreet math
+        :param subject: The object to perform animation on
+        :return: True if animation complete, False if not complete
+        """
 
+        self.__animating = True
+
+        a_layer = self.__object_dictionary["animation_layer"]
+        effect = SpecialEffects.big_o
+        ani_ref = f"{subject.get_name()}discreet_math"
+
+        if self.__tick < 1:
+            self.__org_x = self.__middle_x - 250
+            self.__org_y = self.__middle_y - 450
+            a_layer.add_to_queue(ani_ref, effect, self.__org_x, self.__org_y)
+
+        self.__tick += 1
+
+        effect.set_frame_index(((self.__tick // 5) % effect.get_max_frames()))
+
+        if self.__tick < self.DEFEND_LENGTH:
+            subject.get_sprite().blend_color(
+                (self.__tick * self.DFND_AMT, self.__tick * self.DFND_AMT, self.__tick * self.DFND_AMT))
+        else:
+            subject.get_sprite().restore()
+
+        if self.__tick > 60:
+            a_layer.remove_from_queue(ani_ref)
+
+        if self.__tick > 70:
+            self.__tick = 0
+            return True
+        else:
+            return False
+    # ======================================================================================================
     def animate_receive_combo_punch(self, subject):
         """
         Animation for receiving damage

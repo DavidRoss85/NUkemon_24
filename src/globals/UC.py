@@ -43,6 +43,7 @@ class UC:
     punch_effect_image=f"{special_effect_path}punches_effect.bmp"
     discreet_math_effect_image=f"{special_effect_path}discreet_math_effect.bmp"
     alorithms_effect_image=f"{special_effect_path}algorithms_effect.bmp"
+    big_o_effect_image=f"{special_effect_path}BigO_effect.bmp"
 
  #Default Font settings:
     default_font= f"{absolute_path}/assets/fonts/Grand9K_Pixel.ttf"
