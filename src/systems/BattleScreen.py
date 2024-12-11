@@ -583,7 +583,7 @@ class BattleScreen:
         #Turn on loop
         self.__running=True
         #Show intro scene
-        # self.show_battle_intro()
+        self.show_battle_intro()
         #Start music
         self.__music_mixer.play_music(start=0,repeat_time=13.19)
         #Initialize player and enemy stats:

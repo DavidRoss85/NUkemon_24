@@ -44,15 +44,15 @@ class Crews:
     Default Teams comprised of personas
     """
     default_player=[
-        Personas.big_g,
+        # Personas.big_g,
         Personas.rory,
         Personas.lin,
         Personas.chris,
-        # Personas.jen
+        Personas.jen
     ]
     default_enemy=[
-        Personas.cs_professor_a,
         Personas.math_professor_a,
+        Personas.cs_professor_a,
         Personas.professor_b,
         Personas.nu_husky_a,
         Personas.teaching_assistant_a

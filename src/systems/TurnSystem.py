@@ -112,22 +112,22 @@ class TurnSystem:
         for key,value in effects.items():
             #Player is immobile:
             if key=="asleep" or key=="paralyzed" or key=="frozen" or key=="overwhelmed":
-                results["allowed"]=["Switch"]
+                results["allowed"]=["Switch","Pass"]
 
             #Laggy causes the player to have to skip specific numbers of turns
             match key:
                 case "laggy AF":
                     if value % 3 != 0:
-                        results['allowed']=['Switch','Defend']
+                        results['allowed']=['Switch','Defend','Pass']
 
                         if 'all' not in results["allowed"]:
                             matches=[]
-                            for effect in ["Switch","Defend"]:
+                            for effect in ["Switch","Defend","Pass"]:
                                 if effect in results["allowed"]:
                                     matches.append(effect)
                             results["allowed"]=matches
                         else:
-                            results["allowed"] = ["Switch", "Defend"]
+                            results["allowed"] = ["Switch", "Defend","Pass"]
                     else:
                         pass
 
@@ -135,12 +135,12 @@ class TurnSystem:
                     if value%2!=0:
                         if "laggy AF" not in effects and "all" not in results["allowed"]:
                             matches=[]
-                            for effect in ["Switch","Defend"]:
+                            for effect in ["Switch","Defend","Pass"]:
                                 if effect in results["allowed"]:
                                     matches.append(effect)
                             results["allowed"]=matches
                         else:
-                            results["allowed"] = ["Switch", "Defend"]
+                            results["allowed"] = ["Switch", "Defend","Pass"]
                     else:
                         pass
 
