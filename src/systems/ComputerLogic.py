@@ -172,7 +172,7 @@ def cs_professor_ai(computer,player,move_dictionary,action=null_func):
         action(computer,algorithms,myself)
 
     elif health_percent > 40:
-        if num>5 and "laggy" not in player_effects and "laggy AF" not in player_effects:   #50% Chance to use big O if Health over 30%
+        if num>8 and "laggy" not in player_effects and "laggy AF" not in player_effects:   #50% Chance to use big O if Health over 30%
             vlist=[n2,n3]
             rn=randint(0,1)
             action(computer, vlist[rn], o_ject)
