@@ -49,7 +49,7 @@ class TurnSystem:
 
         #Get effects and status:
         effects=character.get_battle_effects()
-        print(f"Turnsystem.decrement_status_effect: {effects} ")
+        # print(f"{character.get_name()}: {effects}")
         #Keeps a list of statuses/effects to remove
         delete_list=[]
 
@@ -103,27 +103,35 @@ class TurnSystem:
             if key=="asleep" or key=="paralyzed" or key=="frozen" or key=="overwhelmed":
                 results["allowed"]=["Switch"]
 
-            #Player will lose health each turn if injured
+            #Laggy causes the player to have to skip specific numbers of turns
             match key:
                 case "laggy AF":
-                    if value % 3 != 0 and results["allowed"] !=["all"]:
-                        matches=[]
-                        for effect in ["Switch","Defend"]:
-                            if effect in results["allowed"]:
-                                matches.append(effect)
-                        results["allowed"]=matches
+                    if value % 3 != 0:
+                        results['allowed']=['Switch','Defend']
+
+                        if 'all' not in results["allowed"]:
+                            matches=[]
+                            for effect in ["Switch","Defend"]:
+                                if effect in results["allowed"]:
+                                    matches.append(effect)
+                            results["allowed"]=matches
+                        else:
+                            results["allowed"] = ["Switch", "Defend"]
                     else:
-                        results["allowed"] = ["Switch", "Defend"]
+                        pass
 
                 case "lagging":
-                    if value%2!=0 and "laggy AF" not in effects and results["allowed"] !=["all"]:
-                        matches=[]
-                        for effect in ["Switch","Defend"]:
-                            if effect in results["allowed"]:
-                                matches.append(effect)
-                        results["allowed"]=matches
+                    if value%2!=0:
+                        if "laggy AF" not in effects and "all" not in results["allowed"]:
+                            matches=[]
+                            for effect in ["Switch","Defend"]:
+                                if effect in results["allowed"]:
+                                    matches.append(effect)
+                            results["allowed"]=matches
+                        else:
+                            results["allowed"] = ["Switch", "Defend"]
                     else:
-                        results["allowed"] = ["Switch", "Defend"]
+                        pass
 
                 case "injured":
                     results["negatives"].append(key)

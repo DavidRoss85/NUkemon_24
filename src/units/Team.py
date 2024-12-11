@@ -76,14 +76,27 @@ class Team:
         self.__move_dict.update(self.get_team_dictionary())
 
         #Append status if move is blocked:
+        #Get allowed moves by evaluating the player's status:
         allowed=TurnSystem.evaluate_status_effects(self.__current_character)["allowed"]
+
+
         if 'all' not in allowed:
             for key in self.__move_dict:
+                #Block all moves that are not in the allowed list:
                 if key not in allowed:
                     self.__move_dict[key].update({"status":"blocked"})
 
+                #Unblock others:
+                elif "status" in self.__move_dict[key]:
+                    self.__move_dict[key].update({"status":"allowed"})
+
+        else:
+            #If all items allowed re-enable everything:
+            for key in self.__move_dict:
+                self.__move_dict[key].update({"status":"allowed"})
+
         #Return updated dictionary
-        return self.__move_dict
+        return self.__move_dict.copy()
 
     def set_visible(self,value:bool=True):
         """

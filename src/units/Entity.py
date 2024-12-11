@@ -291,6 +291,7 @@ class Entity:
     #=======================================================================================================
     def update_move_dictionary(self, move):
         self.__move_dict.update(merge_dictionaries(move,self.__move_dict))
+        x=self.__move_dict
     #=======================================================================================================
     def stub_command(self):
         pass
