@@ -28,7 +28,7 @@ class Personas:
 
     enemy2=Character("Evil",1,145,100,10,10,Sprites.emoji_chill)
 
-    math_professor_a=MathProfessor("Math Professor", 100, 200, 100, 5, 6, Sprites.professor_a)
+    math_professor_a=MathProfessor("Math Professor", 1, 200, 100, 5, 6, Sprites.professor_a)
 
     professor_b = Character("Professor B", 3, 200, 100, 5, 5, Sprites.professor_b)
 
@@ -41,8 +41,8 @@ class Crews:
     Default Teams comprised of personas
     """
     default_player=[
-        # Personas.big_g,
-        Personas.rory,
+        Personas.big_g,
+        # Personas.rory,
         # Personas.lin,
         # Personas.chris,
         # Personas.jen

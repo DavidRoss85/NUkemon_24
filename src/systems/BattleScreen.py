@@ -299,10 +299,11 @@ class BattleScreen:
         """
         self.__previous_screen=sprite
 
-    def execute_menu(self,name):
+    def execute_menu(self,name,out=False):
         """
         Carries out an action when user selects an item from the battle menu
         :param name: A dictionary containing either another dictionary (sub menu) or Object (target)
+        :param out: Optional parameter to
         :return:
         """
         items={"":""}
@@ -315,6 +316,9 @@ class BattleScreen:
             if "target" in name:
                 #Get the appropriate menu for the type of target required by the action:
                 items=self.__target_dictionary[name["target"]]
+                if items is None or items == {}:
+                    pass
+                    items = {"-": ""}
                 #Queue the action function with a reference name:
                 self.__queued_action={"name": name["name"], "function": name["function"]}
 
@@ -332,24 +336,64 @@ class BattleScreen:
                 self.__target_menu.set_visible(True)
 
             else:
-                #Clear the menu tree, returning to main menu:
-                self.__menu_tree.clear()
-                self.__target_menu.set_visible(False) #Hide menu
+                if items is not None or items != {} or items != {"": ""}:
+                    # Clear the menu tree, returning to main menu:
+                    self.__menu_tree.clear()
+                    self.__target_menu.set_visible(False)  # Hide menu
+                    #Evaluate statuses of non-active team members:
+                    for team_member in self.__team_dict.values():
+                        TurnSystem.evaluate_status_effects(team_member["receiver"], False)
 
-                #Evaluate statuses of non-active team members:
-                for team_member in self.__team_dict.values():
-                    TurnSystem.evaluate_status_effects(team_member["receiver"], False)
+                    #Execute action from in the dictionary:
+                    self.__turn_system.perform_action(self.__player, self.__queued_action, name)
 
-                #Execute action from in the dictionary:
-                self.__turn_system.perform_action(self.__player, self.__queued_action, name)
-
-                # Switch to __enemy turn
-                self.__turn_system.set_player_turn(False)
+                    # Switch to __enemy turn
+                    self.__turn_system.set_player_turn(False)
+        else:
+            self.go_down_one_menu_level()
 
         #Display tooltip at the top:
         self.show_description(self.__menu_list[self.__target_menu.get_visible()])
 
 
+    # =======================================================================================================
+    def go_up_one_menu_level(self):
+        """
+        Navigate up one menu level
+        """
+        name = 0
+        # Get menu dictionary
+        self.__player.get_menu_dictionary()
+
+        # If base menu, get base menu item, else get side menu item
+        if len(self.__menu_tree) == 0:
+            name = self.__menu_list[0].get_current_selection()
+        else:
+            name = self.__menu_list[1].get_current_selection()
+
+        # Add new menu to the stack and execute
+        self.__menu_tree.append(name)
+        self.execute_menu(name)
+    # =======================================================================================================
+    def go_down_one_menu_level(self):
+        """
+        Navigate down one menu level
+        """
+        # Go down one menu level
+        self.__queued_action = None
+        # Pops the last menu from the menu tree
+        if len(self.__menu_tree) > 0:
+            self.__menu_tree.pop()
+
+        # Hide side menu if base menu reached
+        if len(self.__menu_tree) == 0:
+            self.__target_menu.set_visible(False)
+        else:
+            self.execute_menu(self.__menu_tree[-1])
+
+        # Display help text
+        menu = self.__menu_list[self.__target_menu.get_visible()]
+        self.show_description(menu)
     # =======================================================================================================
     def listen_for_input_and_events(self,event_list):
         """
@@ -379,6 +423,8 @@ class BattleScreen:
 
                 #These are always listed for:
                 match event.key:
+                    case btn.K_1:
+                        self.__player.get_current_character().set_curr_hp(1)
                     case btn.K_0:
                         self.__fps=240
                         print(self.__fps)
@@ -423,36 +469,10 @@ class BattleScreen:
                             self.show_description(menu)
 
                         case btn.K_BACKSPACE:   #Backspace key
-                            #Go down one menu level
-                            self.__queued_action=None
-                            #Pops the last menu from the menu tree
-                            if len(self.__menu_tree)>0:
-                                self.__menu_tree.pop()
-
-                            #Hide side menu if base menu reached
-                            if len(self.__menu_tree)==0:
-                                self.__target_menu.set_visible(False)
-                            else:
-                                self.execute_menu(self.__menu_tree[-1])
-
-                            #Display help text
-                            menu = self.__menu_list[self.__target_menu.get_visible()]
-                            self.show_description(menu)
+                            self.go_down_one_menu_level()
 
                         case btn.K_RETURN:  #Enter/Return Key
-                            name=0
-                            #Get menu dictionary
-                            self.__player.get_menu_dictionary()
-
-                            #If base menu, get base menu item, else get side menu item
-                            if len(self.__menu_tree)==0:
-                                name=self.__menu_list[0].get_current_selection()
-                            else:
-                                name = self.__menu_list[1].get_current_selection()
-
-                            #Add new menu to the stack and execute
-                            self.__menu_tree.append(name)
-                            self.execute_menu(name)
+                            self.go_up_one_menu_level()
 
 
 
