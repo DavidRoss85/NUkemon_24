@@ -8,7 +8,7 @@ class Brute(Character):
         super().__init__(name, level, hp, mp, strength, intel, sprite, x, y)
         self.set_profession("Brute")
         self.__profession_move=Skill("Combo Attack", ["physical"], 2, 10, ["injured"], 2, 3)
-        self.get_condition().immunities = ["injured"]
+        self.get_condition().immunities = ["injured", "afraid"]
         self.__profession_dict = {
             "Skill": {
                 "description": "Use a special ability",
@@ -22,7 +22,7 @@ class Brute(Character):
                 }
             }
         }
-
+        self.set_atk_move_name("a Roundhouse kick")
         self.update_move_dictionary(self.__profession_dict)
 
     def combo_attack(self,target):

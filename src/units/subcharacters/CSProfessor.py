@@ -43,6 +43,7 @@ class CSProfessor(Character):
                 }
             }
         }
+        self.set_atk_move_name("a Hard Drive")
 
         self.update_move_dictionary(self.__profession_dict)
 

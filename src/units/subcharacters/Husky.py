@@ -9,7 +9,7 @@ class Husky(Character):
         super().__init__(name,level,hp,mp,strength,intel,sprite,x,y)
         self.set_profession("Husky")
         self.get_condition().immunities=["confused"]
-        self.__profession_move = Skill("Growl", ["mental"], 0, 10, ["afraid"], 1, 3)
+        self.__profession_move = Skill("Growl", ["mental"], 0, 10, ["afraid"], 3, 3)
         self.__profession_dict={
             "Skill":{
                 "description": "Use a special ability",
@@ -23,6 +23,7 @@ class Husky(Character):
                 }
             }
         }
+        self.set_atk_move_name("Bite")
 
         self.update_move_dictionary(self.__profession_dict)
 

@@ -23,7 +23,7 @@ class MathProfessor(Character):
                 }
             }
         }
-
+        self.set_atk_move_name("a protractor")
         self.update_move_dictionary(self.__profession_dict)
 
     def use_discreet_math(self,target=None):

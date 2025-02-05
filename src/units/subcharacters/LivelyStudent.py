@@ -3,22 +3,22 @@ from src.units.SkillClasses import Skill
 from src.units.Character import Character
 
 
-class LazyStudent(Character):
+class LivelyStudent(Character):
     """Student with lazy characteristics"""
     def __init__(self, name, level, hp, mp, strength, intel, sprite, x=0, y=0):
         super().__init__(name, level, hp, mp, strength, intel, sprite, x, y)
-        self.set_profession("Lazy Student")
-        self.__profession_move=Skill("Sleep in Class", ["heal"], 2.5, 10, ["asleep"], 1, 4)
-        self.get_condition().immunities = ["lagging", "laggy AF"]
+        self.set_profession("Lively Student")
+        self.__profession_move=Skill("Excuses", ["mental"], 0, 10, ["asleep"], 2, 2)
+        self.get_condition().immunities = ["alseep", "laggy AF"]
         self.__profession_dict = {
             "Skill": {
                 "description": "Use a special ability",
                 "menu": {
-                    "Sleep in Class": {
-                        "name": "Sleep in Class",
-                        "target": "self",
-                        "function": self.sleep_in_class,
-                        "description": "Student falls asleep for 3 turns, but recovers health in the process."
+                    "Explain Myself": {
+                        "name": "Explain Myself",
+                        "target": "enemies",
+                        "function": self.explain_myself,
+                        "description": "Student tries desperately to explain their mistakes."
                     }
                 }
             }
@@ -26,7 +26,7 @@ class LazyStudent(Character):
         self.set_atk_move_name("a slap")
         self.update_move_dictionary(self.__profession_dict)
 
-    def sleep_in_class(self,target):
-        self.deliver_message(f"{self.get_name()} falls asleep 'Zzz'...\n ")
+    def explain_myself(self,target):
+        self.deliver_message(f"{self.get_name()} Tries to explain themself... \n ")
         self.perform_special_move(self,target,self.__profession_move)
         return self

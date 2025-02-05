@@ -30,7 +30,7 @@ class Genius(Character):
                 }
             }
         }
-
+        self.set_atk_move_name("a textbook")
         self.update_move_dictionary(self.__profession_dict)
 
     def explain(self,target):

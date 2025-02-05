@@ -172,7 +172,7 @@ def cs_professor_ai(computer,player,move_dictionary,action=null_func):
         action(computer,algorithms,myself)
 
     elif health_percent > 40:
-        if num>8 and "laggy" not in player_effects and "laggy AF" not in player_effects:   #50% Chance to use big O if Health over 30%
+        if num>5 and "lagging" not in player_effects and "laggy AF" not in player_effects:   #50% Chance to use big O if Health over 30%
             vlist=[n2,n3]
             rn=randint(0,1)
             action(computer, vlist[rn], o_ject)
@@ -226,7 +226,8 @@ def husky_ai(computer,player,move_dictionary,action=null_func):
 
     num=randint(1,10)
     #20% Chance to use "Growl" if enough mp
-    if num<=2 and my_character.get_curr_mp()>10:
+    print(f"rand = {num}")
+    if num<=5 and my_character.get_curr_mp()>10:
         action(computer,growl,o_ject)
     else:
         #Otherwise attack

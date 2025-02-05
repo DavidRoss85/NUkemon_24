@@ -100,6 +100,9 @@ class Entity:
         return self.__condition
     #=======================================================================================================
     #Setters
+    def set_atk_move_name(self,name):
+        self.__attack_move.name=name
+
     def set_name(self,name):
         self.__name=name
 

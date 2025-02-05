@@ -12,7 +12,7 @@ class TeachingAssistant(Character):
         super().__init__(name, level, hp, mp, strength, intel, sprite, x, y)
         self.set_profession("TA")
         self.get_condition().immunities = []
-        self.__profession_move = Skill("Shoo", ["mental"], 0, 10, ["disheartened"], 1, 3)
+        self.__profession_move = Skill("Shoo", ["mental"], 0, 10, ["disheartened"], 3, 3)
         self.__profession_dict = {
             "Skill": {
                 "description": "Use a special ability",

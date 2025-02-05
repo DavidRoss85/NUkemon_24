@@ -8,7 +8,7 @@ from src.units.subcharacters.MathProfessor import MathProfessor
 from src.units.subcharacters.TeachingAssistant import TeachingAssistant
 
 
-class AllPowerful(Husky,LazyStudent,MathProfessor,TeachingAssistant,Brute,CSProfessor,Genius):
+class AllPowerful(LazyStudent,Husky,MathProfessor,TeachingAssistant,Brute,CSProfessor,Genius):
     """This class inherits from everything. Used for testing"""
     def __init__(self, name, level, hp, mp, strength, intel, sprite, x=0, y=0):
         super().__init__(name, level, hp, mp, strength, intel, sprite, x, y)

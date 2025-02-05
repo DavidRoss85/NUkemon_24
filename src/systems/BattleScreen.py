@@ -428,6 +428,10 @@ class BattleScreen:
 
                 #These are always listed for:
                 match event.key:
+                    case btn.K_5:
+                        self.__enemy.set_curr_hp(10)
+                    case btn.K_2:
+                        self.__player.get_current_character().set_curr_mp(100)
                     case btn.K_1:
                         self.__player.get_current_character().set_curr_hp(1)
                     case btn.K_0:
@@ -583,7 +587,7 @@ class BattleScreen:
         #Turn on loop
         self.__running=True
         #Show intro scene
-        # self.show_battle_intro()
+        self.show_battle_intro()
         #Start music
         self.__music_mixer.play_music(start=0,repeat_time=13.19)
         #Initialize player and enemy stats:
